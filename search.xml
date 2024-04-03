@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>start</title>
+    <url>/2024/04/03/start/</url>
+    <content><![CDATA[<h2 id="第一篇博客"><a href="#第一篇博客" class="headerlink" title="第一篇博客"></a>第一篇博客</h2><h3 id="不知道写什么"><a href="#不知道写什么" class="headerlink" title="不知道写什么"></a>不知道写什么</h3>]]></content>
+  </entry>
+  <entry>
     <title>Linux提权</title>
     <url>/2024/04/03/Linux%E6%8F%90%E6%9D%83/</url>
     <content><![CDATA[<h1 id="Part1-sudo介绍"><a href="#Part1-sudo介绍" class="headerlink" title="Part1 sudo介绍"></a>Part1 sudo介绍</h1><h2 id="什么是sudo"><a href="#什么是sudo" class="headerlink" title="什么是sudo"></a>什么是sudo</h2><p>简单的说，sudo 是一种&#x3D;&#x3D;权限管理机制&#x3D;&#x3D;，管理员可以授权于一些普通用户去执行一些 root 执行的操作，提示输入密码时该密码为当前用户的密码，而不需要知道 root 的密码。不过有时间限制，Ubuntu默认为一次时长15分钟</p>
@@ -43,10 +48,5 @@
 </li>
 </ol>
 ]]></content>
-  </entry>
-  <entry>
-    <title>start</title>
-    <url>/2024/04/03/start/</url>
-    <content><![CDATA[<h2 id="第一篇博客"><a href="#第一篇博客" class="headerlink" title="第一篇博客"></a>第一篇博客</h2><h3 id="不知道写什么"><a href="#不知道写什么" class="headerlink" title="不知道写什么"></a>不知道写什么</h3>]]></content>
   </entry>
 </search>

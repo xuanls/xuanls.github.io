@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Linux提权</title>
+    <url>/2024/04/03/Linux%E6%8F%90%E6%9D%83/</url>
+    <content><![CDATA[<h1 id="Part1-sudo介绍"><a href="#Part1-sudo介绍" class="headerlink" title="Part1 sudo介绍"></a>Part1 sudo介绍</h1><h2 id="什么是sudo"><a href="#什么是sudo" class="headerlink" title="什么是sudo"></a>什么是sudo</h2><p>简单的说，sudo 是一种&#x3D;&#x3D;权限管理机制&#x3D;&#x3D;，管理员可以授权于一些普通用户去执行一些 root 执行的操作，提示输入密码时该密码为当前用户的密码，而不需要知道 root 的密码。不过有时间限制，Ubuntu默认为一次时长15分钟</p>
+<span id="more"></span>
+<p>严谨些说，sudo 允许一个已授权用户以超级用户或者其它用户的角色运行一个命令。当然，能做什么不能做什么都是通过安全策略来指定的。sudo 支持插件架构的安全策略，并能把输入输出写入日志。第三方可以开发并发布自己的安全策略和输入输出日志插件，并让它们无缝的和 sudo 一起工作。默认的安全策略记录在 &#x3D;&#x3D;&#x2F;etc&#x2F;sudoers&#x3D;&#x3D; 文件中。而安全策略可能需要用户通过密码来验证他们自己。也就是在用户执行 sudo 命令时要求用户输入&#x3D;&#x3D;自己账号的密码。&#x3D;&#x3D;如果验证失败，sudo 命令将会退出。</p>
+<p>默认的etc&#x2F;sudoers配置文件：</p>
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C1.png" alt="图片"></p>
+<br/>
+
+<h1 id="Part2-CVE-2021-3156漏洞"><a href="#Part2-CVE-2021-3156漏洞" class="headerlink" title="Part2 CVE-2021-3156漏洞"></a>Part2 CVE-2021-3156漏洞</h1><h2 id="1-漏洞简介"><a href="#1-漏洞简介" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>2021年1月26日，Linux安全工具&#x3D;&#x3D;sudo&#x3D;&#x3D;被发现严重的基于&#x3D;&#x3D;堆缓冲区溢出&#x3D;&#x3D;漏洞。利用这一漏洞，攻击者无需知道用户密码，一样可以获得root权限，并且是在默认配置下。此漏洞已分配为CVE-2021-3156，危险等级评分为7分。</p>
+<h2 id="2-原理介绍"><a href="#2-原理介绍" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><p>漏洞发生的原因在于sudo错误地转义了参数中的反斜杠。</p>
+<p>sudo命令允许用户以超级用户或&#x2F;etc&#x2F;sudoers文件中指定的其他用户的身份运行指定命令cmd。设置真实和有效用户ID与用户组ID，以匹配&#x2F;etc&#x2F;passwd文件中指定的目标用户和&#x2F;etc&#x2F;group文件中指定的用户组（除非指定了“-P”选项）。如果调用者是超级用户，或目标用户与调用者是同一用户，则无须提供密码。否则，sudo通常要求用户提供密码进行认证。注意，按照默认的配置，这里所谓的密码认证指的是用户的密码，不是超级用户的密码。</p>
+<p>一旦获得认证，立即更新&#x2F;var&#x2F;run&#x2F;sudo目录中的用户时间记录。在之后的短时间内（5分钟，除非sudoers文件中另有设定），用户可以随时运行sudo命令而不必提供密码。</p>
+<p>sudo与sudoedit是一个程序两个名字。运行sudoedit命令，相当于运行“sudo -e”命令。sudoedit命令主要用于编辑&#x2F;etc&#x2F;sudoers文件，参见“-e”选项的说明。</p>
+<p>当sudo通过-s或-i命令行选项在shell模式下运行命令时，它将在命令参数中使用反斜杠转义特殊字符。但使用-s或-i标志运行sudoedit时，实际上并未进行转义，从而可能导致缓冲区溢出。因此只要存在sudoers文件（通常是&#x2F;etc&#x2F;sudoers），攻击者就可以使用本地普通用户利用sudo获得系统root权限。</p>
+<h2 id="3-影响版本"><a href="#3-影响版本" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>受影响版本<br>Sudo 1.8.2 – 1.8.31p2<br>Sudo 1.9.0 – 1.9.5p1</p>
+<p>不受影响版本<br>sudo &#x3D;&gt;1.9.5p2</p>
+<h2 id="4-漏洞复现"><a href="#4-漏洞复现" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><br/>
+
+<h1 id="Part3-CVE-2023-22809漏洞"><a href="#Part3-CVE-2023-22809漏洞" class="headerlink" title="Part3 CVE-2023-22809漏洞"></a>Part3 CVE-2023-22809漏洞</h1><h2 id="1-漏洞简介-1"><a href="#1-漏洞简介-1" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>在Sudo 版本 1.9.12p1中使用sudoedit时，sudoers的保护机制可能被绕过，从而导致通过编辑未经授权的文件实现权限升级，Sudo中的sudoedit对处理用户提供的环境变量（如SUDO_EDITOR、VISUAL和EDITOR）中传递的额外参数存在缺陷。当用户指定的编辑器包含绕过sudoers策略的“–”参数时，拥有sudoedit访问权限的本地攻击者可通过将任意条目附加到要处理的文件列表中，最终在目标系统上实现权限提升（由普通用户到超级用户，即”root”）</p>
+<h2 id="2-原理介绍-1"><a href="#2-原理介绍-1" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><br/>
+
+<h2 id="3-影响版本-1"><a href="#3-影响版本-1" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>sudo 1.8.0-sudo 1.9.12p1</p>
+<h2 id="4-漏洞复现-1"><a href="#4-漏洞复现-1" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><ol>
+<li>查看当前sudo版本</li>
+</ol>
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C2.png"></p>
+<p>如上，为受影响版本，若不是，则在<a href="https://">https://www.sudo.ws/dist/</a>下载相应版本后解压、配置、编译并安装</p>
+<br/>
+
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C3.png" alt="图片"></p>
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C4.png" alt="图片"></p>
+<br/>
+
+<h2 id="5-缓解措施"><a href="#5-缓解措施" class="headerlink" title="5. 缓解措施"></a>5. 缓解措施</h2><p>1、为防止 sudoedit 使用用户指定的编辑器，可向 sudoers 文件中添加以下内容： Defaults!sudoedit env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR”<br>2、使用“Cmnd_Alias”限制编辑器编辑指定文件时，如： Cmnd_Alias EDIT_MOTD &#x3D; sudoedit &#x2F;etc&#x2F;motd Defaults!EDIT_MOTD env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR” user ALL &#x3D; EDIT_MOTD</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><p><a href="https://">https://www.cnblogs.com/20181309lzy/p/14710439.html</a></p>
+</li>
+<li><p><a href="https://">https://wker.com/linux-command/sudo-sudoedit.html</a></p>
+</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
+    <title>start</title>
+    <url>/2024/04/03/start/</url>
+    <content><![CDATA[<h2 id="第一篇博客"><a href="#第一篇博客" class="headerlink" title="第一篇博客"></a>第一篇博客</h2><h3 id="不知道写什么"><a href="#不知道写什么" class="headerlink" title="不知道写什么"></a>不知道写什么</h3>]]></content>
+  </entry>
+</search>

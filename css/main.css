@@ -1163,7 +1163,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #902583;
+  background: #aff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2380,32 +2380,60 @@ body {
   background-size: cover;
   background-position: center;
 }
+.post {
+  margin-top: 60px;
+  padding: 20px;
+  margin-bottom: 60px;
+  -webkit-box-shadow: 0 0 5px #788072;
+  -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
+}
+.post {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  padding: 25px;
+  -webkit-box-shadow: 0 0 5px rgba(202,203,203,0.5);
+  -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
+}
+​ > .sub-menu,
 .main-inner > .sub-menu,
+​ .main-inner,
+.main-inner .main-inner,
+​ > .post-block,
 .main-inner > .post-block,
+​ > .tabs-comment,
 .main-inner > .tabs-comment,
+​ > .comments,
 .main-inner > .comments,
+​ > .pagination,
 .main-inner > .pagination {
   background: rgba(245,245,245,0.42);
 }
-body {
+​ body,
+.main-inner body {
   color: #000;
 }
-.posts-expand .post-title-link {
+​ .posts-expand .post-title-link,
+.main-inner .posts-expand .post-title-link {
   color: #000;
 }
-.posts-expand .post-meta-container {
+​ .posts-expand .post-meta-container,
+.main-inner .posts-expand .post-meta-container {
   color: #800;
 }
-.sidebar {
+​ .sidebar,
+.main-inner .sidebar {
   opacity: 0.7;
 }
-.header-inner {
+​ .header-inner,
+.main-inner .header-inner {
   background: rgba(255,255,255,0.7);
 }
-.popup {
+​ .popup,
+.main-inner .popup {
   opacity: 0.5;
 }
-.main-inner {
+​ .main-inner,
+.main-inner .main-inner {
   background-color: rgba(255,255,255,0);
   padding: 0px 40px 40px 40px;
 }

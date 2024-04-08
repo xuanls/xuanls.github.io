@@ -19,7 +19,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"xuanls.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":200,"display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideDownBigOut"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"xuanls.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":200,"display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideDownBigOut"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="此贴为WHU_网安院计网实验备忘（每次都忘记基本指令和参数之类的(&#x2F;(ㄒoㄒ)&#x2F;~~)），写一些基本命令，以及注意事项之类的，不涉及详细实验步骤（我也想写，但是实验报告太多惹🆘）">
@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://xuanls.github.io/2024/04/08/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/1.%E8%B7%AF%E7%94%B1%E5%99%A8.png">
 <meta property="article:published_time" content="2024-04-08T05:28:02.000Z">
-<meta property="article:modified_time" content="2024-04-08T06:59:55.182Z">
+<meta property="article:modified_time" content="2024-04-08T15:45:43.094Z">
 <meta property="article:author" content="萱萱子">
 <meta property="article:tag" content="备忘">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-04-08 13:28:02 / 修改时间：14:59:55" itemprop="dateCreated datePublished" datetime="2024-04-08T13:28:02+08:00">2024-04-08</time>
+              <time title="创建时间：2024-04-08 13:28:02 / 修改时间：23:45:43" itemprop="dateCreated datePublished" datetime="2024-04-08T13:28:02+08:00">2024-04-08</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,14 +237,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
+              <span>2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -269,8 +269,8 @@
 <h2 id="实验内容（补充中）"><a href="#实验内容（补充中）" class="headerlink" title="实验内容（补充中）"></a>实验内容（补充中）</h2><ol>
 <li>静态路由实验</li>
 <li>动态路由实验<ol>
-<li>rip路由协议（包含dhcp协议、md5加密）</li>
-<li>osfp路由协议</li>
+<li>RIP路由协议（包含dhcp协议、md5加密）</li>
+<li>OSFP路由协议</li>
 </ol>
 </li>
 </ol>
@@ -292,6 +292,24 @@
 <blockquote>
 <p>推荐另一个命令<code>tracert 目标IP</code>可以显示通信的路径，方便调试</p>
 </blockquote>
+<p><strong>补充</strong>：三层交换机配置方法<br>一直是我队友配的这个，所以非常不熟呃呃呃，仅供参考!</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不做配置，可以直接当二层交换机使用</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="动态路由实验"><a href="#动态路由实验" class="headerlink" title="动态路由实验"></a>动态路由实验</h3><blockquote>
+<p>记得进config再配路由器哦🌹</p>
+</blockquote>
+<h4 id="RIP路由协议"><a href="#RIP路由协议" class="headerlink" title="RIP路由协议"></a>RIP路由协议</h4><p>先连线</p>
+<p>再配各个路由器的IP（跟上边一样）</p>
+<p>然后配DHCP，给各个主机自动分配IP</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; ip dhcp pool student  <span class="comment">// student应该可以随便改</span></span><br><span class="line">&gt; network <span class="number">192.168</span><span class="number">.1</span><span class="number">.0</span> <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span> <span class="comment">// 只给相连的子网配</span></span><br><span class="line">&gt; <span class="keyword">default</span>-router <span class="number">192.168</span><span class="number">.1</span><span class="number">.254</span>   <span class="comment">// 默认网关</span></span><br><span class="line">&gt; service dhcp <span class="comment">// 开启dhcp服务</span></span><br></pre></td></tr></table></figure>
+<p>配完记得在PC上查看下有没有成功</p>
+<p>接着配RIP，让其动态学习路由</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; route rip <span class="comment">// 开启rip协议</span></span><br><span class="line">&gt; version <span class="number">2</span> <span class="comment">// 声明版本，1和2差别挺大好像，学过的忘完了已经（去世）</span></span><br><span class="line">&gt; no <span class="keyword">auto</span>-summary <span class="comment">// 关闭自动汇总，所配即所得</span></span><br><span class="line">&gt; network <span class="number">192.168</span><span class="number">.1</span><span class="number">.0</span>   <span class="comment">// 申明本设备的直连网段</span></span><br><span class="line">&gt; network <span class="number">192.169</span><span class="number">.1</span><span class="number">.0</span>   <span class="comment">// 直连的有几个写几个，不用写子网掩码</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<p>RIP验证，用md5来做，可是我们没弄这个，就不谈了，私密吗喽🙇</p>
+<p>接下来查看各个路由器的路由表，应该多了几个’r’开头的路由，即为路由器自己学习到的路由，然后就直接开ping!!!</p>
+<h4 id="OSFP路由协议"><a href="#OSFP路由协议" class="headerlink" title="OSFP路由协议"></a>OSFP路由协议</h4><p>照例，先连线，配主机IP（可以用DHCP配，不过主机少的话，手配更省事点），路由器的IP（什么时候这个也能自动化）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 我也没太搞懂这个</span></span><br><span class="line">&gt; osfp <span class="number">1</span>    <span class="comment">// 应该是版本？</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">个人理解：area是提前规划好的，有单区域、多区域（配起来好像没啥区别），所有和路由器端口直连的网段的IP都写上，子网掩码格式变了（没试过别的行不行）</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">&gt; network <span class="number">192.168</span><span class="number">.2</span><span class="number">.0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.255</span> area <span class="number">2</span> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>配好之后，路由器之间会开始泛洪，互相交换链路信息，可以查看路由表，其中’o’开头的即为学习到的路由，带有时间信息，可以查看彼此之间学习的先后顺序（没啥用），至此，应该就可以测试连通性了</p>
 
     </div>
 
@@ -389,7 +407,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9%EF%BC%88%E8%A1%A5%E5%85%85%E4%B8%AD%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">实验内容（补充中）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text">实验步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E9%AA%8C"><span class="nav-number">2.1.</span> <span class="nav-text">1.静态路由实验</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9%EF%BC%88%E8%A1%A5%E5%85%85%E4%B8%AD%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">实验内容（补充中）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text">实验步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E9%AA%8C"><span class="nav-number">2.1.</span> <span class="nav-text">1.静态路由实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E9%AA%8C"><span class="nav-number">2.2.</span> <span class="nav-text">动态路由实验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RIP%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.2.1.</span> <span class="nav-text">RIP路由协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OSFP%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.2.2.</span> <span class="nav-text">OSFP路由协议</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -473,7 +491,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">4k</span>
+    <span title="站点总字数">5k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>

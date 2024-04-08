@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>01-docker-初识</title>
-    <url>/2024/04/04/01-docker-%E5%88%9D%E8%AF%86/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>docker容器</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux提权</title>
     <url>/2024/04/03/Linux%E6%8F%90%E6%9D%83/</url>
     <content><![CDATA[<h1 id="Part1-sudo介绍"><a href="#Part1-sudo介绍" class="headerlink" title="Part1 sudo介绍"></a>Part1 sudo介绍</h1><h2 id="什么是sudo"><a href="#什么是sudo" class="headerlink" title="什么是sudo"></a>什么是sudo</h2><p>简单的说，sudo 是一种&#x3D;&#x3D;权限管理机制&#x3D;&#x3D;，管理员可以授权于一些普通用户去执行一些 root 执行的操作，提示输入密码时该密码为当前用户的密码，而不需要知道 root 的密码。不过有时间限制，Ubuntu默认为一次时长15分钟</p>
@@ -53,9 +45,12 @@
 ]]></content>
   </entry>
   <entry>
-    <title>start</title>
-    <url>/2024/04/03/start/</url>
-    <content><![CDATA[<h2 id="第一篇博客"><a href="#第一篇博客" class="headerlink" title="第一篇博客"></a>第一篇博客</h2><h3 id="不知道写什么"><a href="#不知道写什么" class="headerlink" title="不知道写什么"></a>不知道写什么</h3>]]></content>
+    <title>01-docker-初识</title>
+    <url>/2024/04/04/01-docker-%E5%88%9D%E8%AF%86/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>docker容器</tag>
+      </tags>
   </entry>
   <entry>
     <title>Markdown语法</title>
@@ -108,7 +103,7 @@
 这里写"More"会在网页中隐藏后面内容,跳转到详情页才能看 -->
 
 <p>超链接用法:<br>[超链接显示名] (超链接地址 “超链接title”)<br><a href="%E8%B6%85%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80" title="超链接title">超链接显示名</a></p>
-<p><a href="mailto:&#49;&#x32;&#x33;&#x40;&#113;&#113;&#46;&#x63;&#111;&#x6d;">&#49;&#x32;&#x33;&#x40;&#113;&#113;&#46;&#x63;&#111;&#x6d;</a> &lt;邮箱&gt;</p>
+<p><a href="mailto:&#49;&#50;&#51;&#x40;&#113;&#x71;&#x2e;&#x63;&#x6f;&#109;">&#49;&#50;&#51;&#x40;&#113;&#x71;&#x2e;&#x63;&#x6f;&#109;</a> &lt;邮箱&gt;</p>
 <p><a href="https://123.com/">https://123.com</a> &lt;网址&gt;</p>
 ]]></content>
       <tags>
@@ -116,15 +111,56 @@
       </tags>
   </entry>
   <entry>
+    <title>start</title>
+    <url>/2024/04/03/start/</url>
+    <content><![CDATA[<h2 id="第一篇博客"><a href="#第一篇博客" class="headerlink" title="第一篇博客"></a>第一篇博客</h2><h3 id="不知道写什么"><a href="#不知道写什么" class="headerlink" title="不知道写什么"></a>不知道写什么</h3>]]></content>
+  </entry>
+  <entry>
     <title>《战争史》初读</title>
     <url>/2024/04/07/%E3%80%8A%E6%88%98%E4%BA%89%E5%8F%B2%E3%80%8B%E5%88%9D%E8%AF%BB/</url>
     <content><![CDATA[<hr>
 <h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><h3 id="书名：战争史"><a href="#书名：战争史" class="headerlink" title="书名：战争史"></a>书名：战争史</h3><h3 id="作者：John-Keegan（英）"><a href="#作者：John-Keegan（英）" class="headerlink" title="作者：John Keegan（英）"></a>作者：John Keegan（英）</h3><h3 id="译者：林华"><a href="#译者：林华" class="headerlink" title="译者：林华"></a>译者：林华</h3><hr>
 <p>以下为初读摘抄</p>
-<h2 id="导言"><a href="#导言" class="headerlink" title="导言"></a>导言</h2><p>&emsp; 战争无疑与经济、外交和政治相关。但相关并不等于不同，甚至不等于相似。战争与外交和政治完全不同，因为真正打仗的人在价值观和技能方面与外交家和政治家迥然相异。军人的价值观和技能属于另一个世界，那是一个非常古老的世界，与日常的世界并存但不相属。随着时间的流逝，两个世界都在变化，武士世界按照平民世界的变化调整自己。然而，它总是和</p>
+<h2 id="导言"><a href="#导言" class="headerlink" title="导言"></a>导言</h2><p>&emsp; 战争无疑与经济、外交和政治相关。但相关并不等于不同，甚至不等于相似。战争与外交和政治完全不同，因为真正打仗的人在价值观和技能方面与外交家和政治家迥然相异。军人的价值观和技能属于另一个世界，那是一个非常古老的世界，与日常的世界并存但不相属。随着时间的流逝，两个世界都在变化，武士世界按照平民世界的变化调整自己。然而，它总是和平民世界保持一定的距离</p>
 ]]></content>
       <tags>
         <tag>战争史</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计网实验</title>
+    <url>/2024/04/08/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/</url>
+    <content><![CDATA[<blockquote>
+<p>此贴为WHU_网安院计网实验备忘（每次都忘记基本指令和参数之类的(&#x2F;(ㄒoㄒ)&#x2F;~~)），写一些基本命令，以及注意事项之类的，不涉及详细实验步骤（我也想写，但是实验报告太多惹🆘）</p>
+</blockquote>
+<span id="more"></span>
+
+<blockquote>
+<p>实验平台：<a href="http://10.201.133.200:8080/szy">http://10.201.133.200:8080/szy</a></p>
+<p>账号密码：********（看不到吧，老师会给你自己的）</p>
+</blockquote>
+<hr>
+<h2 id="实验内容（补充中）"><a href="#实验内容（补充中）" class="headerlink" title="实验内容（补充中）"></a>实验内容（补充中）</h2><ol>
+<li>静态路由实验</li>
+<li>动态路由实验<ol>
+<li>rip路由协议（包含dhcp协议、md5加密）</li>
+<li>osfp路由协议</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><p><strong>注意</strong>：</p>
+<ul>
+<li>需要连线！需要连线！路由配置好了不连线是行不通滴🤡</li>
+<li>关以太网！关以太网！机架中当PC用的电脑要关掉以太网，不然你会ping不通的</li>
+</ul>
+<h3 id="1-静态路由实验"><a href="#1-静态路由实验" class="headerlink" title="1.静态路由实验"></a>1.静态路由实验</h3><p>先规划好各个接口的IP地址，给设备连线。端口别接错了，只有中间几个口能用（i dont’t know why），防止迷糊，放个图：</p>
+<img src="/2024/04/08/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/1.%E8%B7%AF%E7%94%B1%E5%99%A8.png" class="" title="图片">
+
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 命令有缺省，为了方便（好吧，是因为记不住）</span></span><br><span class="line"><span class="comment">// 先进控制台</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置设备要进config模式</span></span><br><span class="line">&gt;&gt; enable</span><br><span class="line">&gt;&gt; config</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改个名</span></span><br><span class="line">&gt;&gt; hostname 名字    <span class="comment">// RA、RB、RC之类的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查看配置信息</span></span><br><span class="line">&gt;&gt; show ip route    <span class="comment">// 查看路由表，我个人用的最多</span></span><br><span class="line">&gt;&gt; show running     <span class="comment">// 查看当前配置</span></span><br><span class="line">&gt;&gt; show interface   <span class="comment">// 查看接口</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置路由器各个端口的IP</span></span><br><span class="line"><span class="comment">// 先进入端口</span></span><br><span class="line"><span class="comment">// 命令全称：interface gigabitEthernet 0/1（这么长，记个毛线）</span></span><br><span class="line">&gt;&gt; <span class="type">int</span> g0/<span class="number">0</span>     <span class="comment">// 表示0端口，g0/1表示1端口</span></span><br><span class="line">&gt;&gt; ip add IP地址 子网掩码</span><br><span class="line">&gt;&gt; no shutdown  <span class="comment">// 打开端口，我也不知道不写有没有影响</span></span><br><span class="line">&gt;&gt; <span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置静态路由</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>备忘</tag>
       </tags>
   </entry>
 </search>

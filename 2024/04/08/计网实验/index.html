@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://xuanls.github.io/2024/04/08/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/1.%E8%B7%AF%E7%94%B1%E5%99%A8.png">
 <meta property="article:published_time" content="2024-04-08T05:28:02.000Z">
-<meta property="article:modified_time" content="2024-04-08T06:18:25.569Z">
+<meta property="article:modified_time" content="2024-04-08T06:32:32.646Z">
 <meta property="article:author" content="萱萱子">
 <meta property="article:tag" content="备忘">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-04-08 13:28:02 / 修改时间：14:18:25" itemprop="dateCreated datePublished" datetime="2024-04-08T13:28:02+08:00">2024-04-08</time>
+              <time title="创建时间：2024-04-08 13:28:02 / 修改时间：14:32:32" itemprop="dateCreated datePublished" datetime="2024-04-08T13:28:02+08:00">2024-04-08</time>
             </span>
 
           <br>
@@ -228,7 +228,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>778</span>
+              <span>1.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -274,7 +274,15 @@
 <h3 id="1-静态路由实验"><a href="#1-静态路由实验" class="headerlink" title="1.静态路由实验"></a>1.静态路由实验</h3><p>先规划好各个接口的IP地址，给设备连线。端口别接错了，只有中间几个口能用（i dont’t know why），防止迷糊，放个图：</p>
 <img src="/2024/04/08/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/1.%E8%B7%AF%E7%94%B1%E5%99%A8.png" class="" title="图片">
 
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 命令有缺省，为了方便（好吧，是因为记不住）</span></span><br><span class="line"><span class="comment">// 先进控制台</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置设备要进config模式</span></span><br><span class="line">&gt;&gt; enable</span><br><span class="line">&gt;&gt; config</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改个名</span></span><br><span class="line">&gt;&gt; hostname 名字    <span class="comment">// RA、RB、RC之类的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查看配置信息</span></span><br><span class="line">&gt;&gt; show ip route    <span class="comment">// 查看路由表，我个人用的最多</span></span><br><span class="line">&gt;&gt; show running     <span class="comment">// 查看当前配置</span></span><br><span class="line">&gt;&gt; show interface   <span class="comment">// 查看接口</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置路由器各个端口的IP</span></span><br><span class="line"><span class="comment">// 先进入端口</span></span><br><span class="line"><span class="comment">// 命令全称：interface gigabitEthernet 0/1（这么长，记个毛线）</span></span><br><span class="line">&gt;&gt; <span class="type">int</span> g0/<span class="number">0</span>     <span class="comment">// 表示0端口，g0/1表示1端口</span></span><br><span class="line">&gt;&gt; ip add IP地址 子网掩码</span><br><span class="line">&gt;&gt; no shutdown  <span class="comment">// 打开端口，我也不知道不写有没有影响</span></span><br><span class="line">&gt;&gt; <span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置静态路由</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 命令有缺省，为了方便（好吧，是因为记不住）</span></span><br><span class="line"><span class="comment">// 先进控制台</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置设备要进config模式</span></span><br><span class="line">&gt;&gt; enable</span><br><span class="line">&gt;&gt; config</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改个名</span></span><br><span class="line">&gt;&gt; hostname 名字    <span class="comment">// RA、RB、RC之类的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查看配置信息</span></span><br><span class="line">&gt;&gt; show ip route    <span class="comment">// 查看路由表，我个人用的最多</span></span><br><span class="line">&gt;&gt; show running     <span class="comment">// 查看当前配置</span></span><br><span class="line">&gt;&gt; show interface   <span class="comment">// 查看接口</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置路由器各个端口的IP</span></span><br><span class="line"><span class="comment">// 组内协商好，不要用本地网段全0的，不要互相冲突</span></span><br><span class="line"><span class="comment">// 先进入端口</span></span><br><span class="line"><span class="comment">// 命令全称：interface gigabitEthernet 0/1（这么长，记个毛线）</span></span><br><span class="line">&gt;&gt; <span class="type">int</span> g0/<span class="number">0</span>     <span class="comment">// 表示0端口，g0/1表示1端口</span></span><br><span class="line">&gt;&gt; ip add IP地址 子网掩码</span><br><span class="line">&gt;&gt; no shutdown  <span class="comment">// 打开端口，我也不知道不写有没有影响</span></span><br><span class="line">&gt;&gt; <span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置静态路由</span></span><br><span class="line"><span class="comment">// 目标网络不要填具体的主机Ip，哪怕该网络只有一台主机</span></span><br><span class="line"><span class="comment">// 下一跳地址为相连的下一个路由器的端口IP，不是本路由器的转发端口</span></span><br><span class="line">&gt;&gt; ip route 目标网络 子网掩码 下一跳地址</span><br><span class="line">&gt;&gt; ip route <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>     <span class="comment">// 默认地址设置，没用过</span></span><br><span class="line">&gt;&gt; no ip route ……   <span class="comment">// 配错路由的时候反悔用的</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<p>配好各个路由器之后，记得检查有无漏的错的</p>
+<p><strong>！！！</strong> PC的IP要自己手配哦（应该都会吧？先不细说了，有空再）</p>
+<p>都搞好后就可以开始在控制台和各个PC的CMD中尽情地ping了</p>
+<blockquote>
+<p>推荐另一个命令<code>tracert 目标IP</code>可以显示通信的路径，方标调试</p>
+</blockquote>
 
     </div>
 
@@ -453,7 +461,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3 分钟</span>
+    <span title="站点阅读时长">4 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>

@@ -22,17 +22,22 @@
     var CONFIG = {"hostname":"xuanls.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":200,"display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideDownBigOut"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="选择有时候比努力更重要">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李申选&#39;Blog">
-<meta property="og:url" content="http://xuanls.github.io/tags/Linux/index.html">
+  <meta name="description" content="机器学习自身安全吗？   本文为WHU_NCC内容安全课堂笔记（记了学完就忘，不记根本不学😭）内容碎片化且片面，仅供娱乐，别学习了 第七讲——对抗机器学习（这是第一篇，前面的大概率不会补了）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对抗机器学习(AML)">
+<meta property="og:url" content="http://xuanls.github.io/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/index.html">
 <meta property="og:site_name" content="李申选&#39;Blog">
-<meta property="og:description" content="选择有时候比努力更重要">
+<meta property="og:description" content="机器学习自身安全吗？   本文为WHU_NCC内容安全课堂笔记（记了学完就忘，不记根本不学😭）内容碎片化且片面，仅供娱乐，别学习了 第七讲——对抗机器学习（这是第一篇，前面的大概率不会补了）">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xuanls.github.io/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML%5C1_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.png">
+<meta property="og:image" content="http://xuanls.github.io/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML%5C2_%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.png">
+<meta property="article:published_time" content="2024-04-11T14:29:49.000Z">
+<meta property="article:modified_time" content="2024-04-11T15:03:24.008Z">
 <meta property="article:author" content="萱萱子">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://xuanls.github.io/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML%5C1_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.png">
 
-<link rel="canonical" href="http://xuanls.github.io/tags/Linux/">
+<link rel="canonical" href="http://xuanls.github.io/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/">
 
 
 <script id="page-configurations">
@@ -40,12 +45,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: Linux | 李申选'Blog</title>
+  <title>对抗机器学习(AML) | 李申选'Blog</title>
   
 
 
@@ -183,51 +188,129 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">Linux
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xuanls.github.io/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="萱萱子">
+      <meta itemprop="description" content="选择有时候比努力更重要">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李申选'Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          对抗机器学习(AML)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-04-11 22:29:49 / 修改时间：23:03:24" itemprop="dateCreated datePublished" datetime="2024-04-11T22:29:49+08:00">2024-04-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%86%85%E5%AE%B9%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">内容安全</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>376</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2024</span>
+        <p><strong>机器学习自身安全吗？</strong></p>
+<hr>
+<blockquote>
+<p>本文为WHU_NCC内容安全课堂笔记（记了学完就忘，不记根本不学😭）内容碎片化且片面，仅供娱乐，别学习了</p>
+<p>第七讲——对抗机器学习（这是第一篇，前面的大概率不会补了）</p>
+</blockquote>
+<span id="more"></span>
+
+<hr>
+<h2 id="引入：ML-AML"><a href="#引入：ML-AML" class="headerlink" title="引入：ML &amp; AML"></a>引入：ML &amp; AML</h2><p>什么是机器学习，放张图不细讲惹（因为自己也不会）<br><img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML%5C1_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.png" alt="机器学习"></p>
+<p>那什么是对抗机器学习呢？<br><img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML%5C2_%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.png" alt="对抗机器学习"><br>如上图，输入的图片是经过处理后的攻击图片，人眼很难分辨出与原图的差距，模型却把它们识别成了完全不同的东西（分别是鹈鹕、快艇和牛仔裤），听起来并没有多可怕，但试想一下，哪天你坐车里吃着火锅唱着歌，你的车载AI把前面的STOP路牌看成了限速120，想想都刺激（bushi）</p>
+<p>总之，这是一个亟需重视的领域，如果说在GPT等大模型出来之前，AML只是垃圾邮件对抗之类的小打小闹，那现在随着人工职能的井喷式发展，它可能就是悬在人类头上的“达摩克里斯之剑”了（突然严肃）</p>
+<hr>
+<h2 id="AML基本介绍"><a href="#AML基本介绍" class="headerlink" title="AML基本介绍"></a>AML基本介绍</h2>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
+        
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2024-04-03T07:05:57+08:00"
-              content="2024-04-03">
-          04-03
-        </time>
-      </div>
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>萱萱子
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xuanls.github.io/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/" title="对抗机器学习(AML)">http://xuanls.github.io/2024/04/11/对抗机器学习-AML/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2024/04/03/Linux%E6%8F%90%E6%9D%83/" itemprop="url">
-            <span itemprop="name">Linux提权</span>
-          </a>
-      </div>
 
-    </header>
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/04/08/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/" rel="prev" title="计网实验">
+      <i class="fa fa-chevron-left"></i> 计网实验
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
@@ -280,6 +363,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E5%85%A5%EF%BC%9AML-AML"><span class="nav-number">1.</span> <span class="nav-text">引入：ML &amp; AML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AML%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">AML基本介绍</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

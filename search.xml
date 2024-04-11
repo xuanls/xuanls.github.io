@@ -61,11 +61,6 @@
       </tags>
   </entry>
   <entry>
-    <title>start</title>
-    <url>/2024/04/03/start/</url>
-    <content><![CDATA[<h2 id="第一篇博客"><a href="#第一篇博客" class="headerlink" title="第一篇博客"></a>第一篇博客</h2><h3 id="不知道写什么"><a href="#不知道写什么" class="headerlink" title="不知道写什么"></a>不知道写什么</h3>]]></content>
-  </entry>
-  <entry>
     <title>Markdown基础语法</title>
     <url>/2024/04/07/Markdown%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<blockquote>
@@ -120,7 +115,7 @@
 这里写"More"会在网页中隐藏后面内容,跳转到详情页才能看 -->
 
 <p>超链接用法:<br>[超链接显示名] (超链接地址 “超链接title”)<br><a href="%E8%B6%85%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80" title="超链接title">超链接显示名</a></p>
-<p><a href="mailto:&#x31;&#50;&#x33;&#64;&#x71;&#113;&#46;&#x63;&#111;&#109;">&#x31;&#50;&#x33;&#64;&#x71;&#113;&#46;&#x63;&#111;&#109;</a> &lt;邮箱&gt;</p>
+<p><a href="mailto:&#49;&#x32;&#51;&#x40;&#113;&#113;&#46;&#99;&#111;&#109;">&#49;&#x32;&#51;&#x40;&#113;&#113;&#46;&#99;&#111;&#109;</a> &lt;邮箱&gt;</p>
 <p><a href="https://123.com/">https://123.com</a> &lt;网址&gt;</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph TB</span><br><span class="line">  A(把大象放进去) --&gt; B&#123;&quot;冰箱小不小？&quot;&#125;</span><br><span class="line">  B --&gt; |不小| C[把冰箱门关上]</span><br><span class="line">  B --&gt;   |小| D[换个大点的冰箱]</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
@@ -129,6 +124,11 @@
       <tags>
         <tag>备忘</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>start</title>
+    <url>/2024/04/03/start/</url>
+    <content><![CDATA[<h2 id="第一篇博客"><a href="#第一篇博客" class="headerlink" title="第一篇博客"></a>第一篇博客</h2><h3 id="不知道写什么"><a href="#不知道写什么" class="headerlink" title="不知道写什么"></a>不知道写什么</h3>]]></content>
   </entry>
   <entry>
     <title>《战争史》初读</title>
@@ -188,7 +188,10 @@
 <li>不影响合法用户对系统功能正常使用的同时, 达到规避检测的目的</li>
 </ul>
 </li>
-<li><h2 id="可用性违规-Availability-violation-危害合法用户对系统功能正常使用-甚至造成系统对用户的拒绝服务"><a href="#可用性违规-Availability-violation-危害合法用户对系统功能正常使用-甚至造成系统对用户的拒绝服务" class="headerlink" title="可用性违规 (Availability violation)- 危害合法用户对系统功能正常使用, 甚至造成系统对用户的拒绝服务"></a>可用性违规 (Availability violation)<br>- 危害合法用户对系统功能正常使用, 甚至造成系统对用户的拒绝服务</h2></li>
+<li>可用性违规 (Availability violation) <ul>
+<li>危害合法用户对系统功能正常使用, 甚至造成系统对用户的拒绝服务</li>
+</ul>
+</li>
 </ul>
 <h4 id="敌手知识-Adversary-knowledge"><a href="#敌手知识-Adversary-knowledge" class="headerlink" title="敌手知识 (Adversary knowledge)"></a>敌手知识 (Adversary knowledge)</h4><p>攻击者掌握的机器学习模型的相关知识，可包括:</p>
 <ol>

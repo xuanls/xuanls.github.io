@@ -115,7 +115,7 @@
 这里写"More"会在网页中隐藏后面内容,跳转到详情页才能看 -->
 
 <p>超链接用法:<br>[超链接显示名] (超链接地址 “超链接title”)<br><a href="%E8%B6%85%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80" title="超链接title">超链接显示名</a></p>
-<p><a href="mailto:&#x31;&#50;&#51;&#64;&#x71;&#113;&#46;&#x63;&#x6f;&#109;">&#x31;&#50;&#51;&#64;&#x71;&#113;&#46;&#x63;&#x6f;&#109;</a> &lt;邮箱&gt;</p>
+<p><a href="mailto:&#49;&#50;&#51;&#64;&#113;&#113;&#46;&#99;&#111;&#109;">&#49;&#50;&#51;&#64;&#113;&#113;&#46;&#99;&#111;&#109;</a> &lt;邮箱&gt;</p>
 <p><a href="https://123.com/">https://123.com</a> &lt;网址&gt;</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph TB</span><br><span class="line">  A(把大象放进去) --&gt; B&#123;&quot;冰箱小不小？&quot;&#125;</span><br><span class="line">  B --&gt; |不小| C[把冰箱门关上]</span><br><span class="line">  B --&gt;   |小| D[换个大点的冰箱]</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
@@ -159,11 +159,23 @@
 <span id="more"></span>
 
 <hr>
-<h2 id="引入：ML-AML"><a href="#引入：ML-AML" class="headerlink" title="引入：ML &amp; AML"></a>引入：ML &amp; AML</h2><p>什么是机器学习，放张图不细讲惹（因为自己也不会）<br><img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML%5C1_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.png" alt="机器学习"></p>
-<p>那什么是对抗机器学习呢？<br><img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML%5C2_%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.png" alt="对抗机器学习"><br>如上图，输入的图片是经过处理后的攻击图片，人眼很难分辨出与原图的差距，模型却把它们识别成了完全不同的东西（分别是鹈鹕、快艇和牛仔裤），听起来并没有多可怕，但试想一下，哪天你坐车里吃着火锅唱着歌，你的车载AI把前面的STOP路牌看成了限速120，想想都刺激（bushi）</p>
+<h2 id="引入：ML-AML"><a href="#引入：ML-AML" class="headerlink" title="引入：ML &amp; AML"></a>引入：ML &amp; AML</h2><p>什么是机器学习，放张图不细讲惹（因为自己也不会）</p>
+<img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/1_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.png" class="" title="机器学习">
+
+<p>那什么是对抗机器学习呢？</p>
+<img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/2_%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.png" class="" title="对抗机器学习">
+<p>如上图，输入的图片是经过处理后的攻击图片，人眼很难分辨出与原图的差距，模型却把它们识别成了完全不同的东西（分别是鹈鹕、快艇和牛仔裤），听起来并没有多可怕，但试想一下，哪天你坐车里吃着火锅唱着歌，你的车载AI把前面的STOP路牌看成了限速120，想想都刺激（bushi）</p>
 <p>总之，这是一个亟需重视的领域，如果说在GPT等大模型出来之前，AML只是垃圾邮件对抗之类的小打小闹，那现在随着人工职能的井喷式发展，它可能就是悬在人类头上的“达摩克里斯之剑”了（突然严肃）</p>
 <hr>
-<h2 id="AML基本介绍"><a href="#AML基本介绍" class="headerlink" title="AML基本介绍"></a>AML基本介绍</h2>]]></content>
+<h2 id="AML基本介绍"><a href="#AML基本介绍" class="headerlink" title="AML基本介绍"></a>AML基本介绍</h2><p>全称: Adversarial Machine Learning</p>
+<p>是机器学习和计算机安全的一个交叉领域，分为攻（欺骗检测器）防（确保准确）</p>
+<h3 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h3><p>先放图：</p>
+<img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/3_%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%97%B6%E9%97%B4%E7%BA%BF.png" class="" title="对抗机器学习时间线">
+<p>开创于2004年. Dalvi等针对垃圾邮件过滤问题提出对抗分类 (Adversarial classification)概念，其核心思想是分析机器学习算法在遭受特定攻击时的安全性。（比我想得要早）</p>
+<p>以下为一个简单演示：</p>
+<img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/4_%E5%9E%83%E5%9C%BE%E9%82%AE%E4%BB%B6%E5%88%86%E7%B1%BB.png" class="" title="垃圾邮件分类">
+<img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/5_%E5%9E%83%E5%9C%BE%E9%82%AE%E4%BB%B6%E6%94%BB%E5%87%BB.png" class="" title="垃圾邮件攻击">
+<img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/6_%E5%9E%83%E5%9C%BE%E9%82%AE%E4%BB%B6%E9%98%B2%E5%BE%A1.png" class="" title="垃圾邮件防御">]]></content>
       <categories>
         <category>内容安全</category>
       </categories>

@@ -61,6 +61,11 @@
       </tags>
   </entry>
   <entry>
+    <title>start</title>
+    <url>/2024/04/03/start/</url>
+    <content><![CDATA[<h2 id="第一篇博客"><a href="#第一篇博客" class="headerlink" title="第一篇博客"></a>第一篇博客</h2><h3 id="不知道写什么"><a href="#不知道写什么" class="headerlink" title="不知道写什么"></a>不知道写什么</h3>]]></content>
+  </entry>
+  <entry>
     <title>Markdown基础语法</title>
     <url>/2024/04/07/Markdown%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<blockquote>
@@ -115,7 +120,7 @@
 这里写"More"会在网页中隐藏后面内容,跳转到详情页才能看 -->
 
 <p>超链接用法:<br>[超链接显示名] (超链接地址 “超链接title”)<br><a href="%E8%B6%85%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80" title="超链接title">超链接显示名</a></p>
-<p><a href="mailto:&#49;&#50;&#51;&#64;&#113;&#113;&#46;&#99;&#111;&#109;">&#49;&#50;&#51;&#64;&#113;&#113;&#46;&#99;&#111;&#109;</a> &lt;邮箱&gt;</p>
+<p><a href="mailto:&#x31;&#50;&#x33;&#64;&#x71;&#113;&#46;&#x63;&#111;&#109;">&#x31;&#50;&#x33;&#64;&#x71;&#113;&#46;&#x63;&#111;&#109;</a> &lt;邮箱&gt;</p>
 <p><a href="https://123.com/">https://123.com</a> &lt;网址&gt;</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph TB</span><br><span class="line">  A(把大象放进去) --&gt; B&#123;&quot;冰箱小不小？&quot;&#125;</span><br><span class="line">  B --&gt; |不小| C[把冰箱门关上]</span><br><span class="line">  B --&gt;   |小| D[换个大点的冰箱]</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
@@ -124,11 +129,6 @@
       <tags>
         <tag>备忘</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>start</title>
-    <url>/2024/04/03/start/</url>
-    <content><![CDATA[<h2 id="第一篇博客"><a href="#第一篇博客" class="headerlink" title="第一篇博客"></a>第一篇博客</h2><h3 id="不知道写什么"><a href="#不知道写什么" class="headerlink" title="不知道写什么"></a>不知道写什么</h3>]]></content>
   </entry>
   <entry>
     <title>《战争史》初读</title>
@@ -165,7 +165,7 @@
 <p>那什么是对抗机器学习呢？</p>
 <img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/2_%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.png" class="" title="对抗机器学习">
 <p>如上图，输入的图片是经过处理后的攻击图片，人眼很难分辨出与原图的差距，模型却把它们识别成了完全不同的东西（分别是鹈鹕、快艇和牛仔裤），听起来并没有多可怕，但试想一下，哪天你坐车里吃着火锅唱着歌，你的车载AI把前面的STOP路牌看成了限速120，想想都刺激（bushi）</p>
-<p>总之，这是一个亟需重视的领域，如果说在GPT等大模型出来之前，AML只是垃圾邮件对抗之类的小打小闹，那现在随着人工职能的井喷式发展，它可能就是悬在人类头上的“达摩克里斯之剑”了（突然严肃）</p>
+<p>总之，这是一个亟需重视的领域，如果说在GPT等大模型出来之前，AML只是垃圾邮件对抗之类的小打小闹，那现在随着人工智能的井喷式发展，它可能就是悬在人类头上的“达摩克里斯之剑”了（突然严肃）</p>
 <hr>
 <h2 id="AML基本介绍"><a href="#AML基本介绍" class="headerlink" title="AML基本介绍"></a>AML基本介绍</h2><p>全称: Adversarial Machine Learning</p>
 <p>是机器学习和计算机安全的一个交叉领域，分为攻（欺骗检测器）防（确保准确）</p>
@@ -175,7 +175,70 @@
 <p>以下为一个简单演示：</p>
 <img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/4_%E5%9E%83%E5%9C%BE%E9%82%AE%E4%BB%B6%E5%88%86%E7%B1%BB.png" class="" title="垃圾邮件分类">
 <img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/5_%E5%9E%83%E5%9C%BE%E9%82%AE%E4%BB%B6%E6%94%BB%E5%87%BB.png" class="" title="垃圾邮件攻击">
-<img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/6_%E5%9E%83%E5%9C%BE%E9%82%AE%E4%BB%B6%E9%98%B2%E5%BE%A1.png" class="" title="垃圾邮件防御">]]></content>
+<img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/6_%E5%9E%83%E5%9C%BE%E9%82%AE%E4%BB%B6%E9%98%B2%E5%BE%A1.png" class="" title="垃圾邮件防御">
+<ul>
+<li>2005 年, Lowd 等提出对抗学习 (Adversarial learning) 概念</li>
+<li>2006年，Barreno 等提出机器学习系统的攻击分类和敌手建模 (Adversary Model）</li>
+<li>2010 年，Dasgupta 等将对抗机器学习形式化为学习器 (Learner) 与敌手 (Adversary) 围绕不同目标进行的博弈。其中, 学习器的目标是<strong>对数据进行正确预测或分类</strong>, 敌手的目标则是<strong>诱使学习器对相关的数据做出错误的预测</strong></li>
+</ul>
+<hr>
+<h3 id="AML敌手模型"><a href="#AML敌手模型" class="headerlink" title="AML敌手模型"></a>AML敌手模型</h3><p>听不懂思密达，觉得很高级就copy了下来</p>
+<h4 id="敌手目标-Adversary-goal"><a href="#敌手目标-Adversary-goal" class="headerlink" title="敌手目标 (Adversary goal)"></a>敌手目标 (Adversary goal)</h4><ul>
+<li>完整性违规 (Integrity violation)<ul>
+<li>不影响合法用户对系统功能正常使用的同时, 达到规避检测的目的</li>
+</ul>
+</li>
+<li><h2 id="可用性违规-Availability-violation-危害合法用户对系统功能正常使用-甚至造成系统对用户的拒绝服务"><a href="#可用性违规-Availability-violation-危害合法用户对系统功能正常使用-甚至造成系统对用户的拒绝服务" class="headerlink" title="可用性违规 (Availability violation)- 危害合法用户对系统功能正常使用, 甚至造成系统对用户的拒绝服务"></a>可用性违规 (Availability violation)<br>- 危害合法用户对系统功能正常使用, 甚至造成系统对用户的拒绝服务</h2></li>
+</ul>
+<h4 id="敌手知识-Adversary-knowledge"><a href="#敌手知识-Adversary-knowledge" class="headerlink" title="敌手知识 (Adversary knowledge)"></a>敌手知识 (Adversary knowledge)</h4><p>攻击者掌握的机器学习模型的相关知识，可包括:</p>
+<ol>
+<li>训练数据 D；</li>
+<li>特征集X⊆Rd; </li>
+<li>模型结构和参数 f : X→ R</li>
+</ol>
+<ul>
+<li>白盒攻击：假设攻击者可以完全获取目标模型的结构和参数等信息 </li>
+<li>黑盒攻击：假设攻击者只能获取模型的最终决策结果</li>
+</ul>
+<h4 id="敌手能力-Adversary-capability"><a href="#敌手能力-Adversary-capability" class="headerlink" title="敌手能力 (Adversary capability)"></a>敌手能力 (Adversary capability)</h4><p>指攻击者对机器学习模型的操作权限</p>
+<ul>
+<li>训练阶段：投毒攻击, 后门攻击</li>
+<li>测试阶段：规避攻击, 隐私窃取</li>
+</ul>
+<p>敌手能力可以形式化为优化问题中的约束条件 </p>
+<hr>
+<h2 id="对抗攻击技术"><a href="#对抗攻击技术" class="headerlink" title="对抗攻击技术"></a>对抗攻击技术</h2><h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p>大概分为两类</p>
+<img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/7_%E5%AF%B9%E6%8A%97%E6%94%BB%E5%87%BB%E5%88%86%E7%B1%BB.png" class="" title="对抗攻击分类">
+<p>数据投毒(Data poisoning )：归因性攻击（Causative attack）</p>
+<ul>
+<li>训练阶段</li>
+<li>攻击者通过干扰训练数据集来欺骗模型<ul>
+<li>训练集中加入恶意样本</li>
+<li>修改训练集的数据实例</li>
+<li>改变训练数据标签</li>
+</ul>
+</li>
+<li>攻击者试图干扰和破坏ML模型和算法）</li>
+</ul>
+<p>规避攻击(Evasion attack)：试探性攻击 (Exploratory attack)</p>
+<ul>
+<li>测试阶段</li>
+<li>攻击者无需修改ML模型，仅让模型出错，产生攻击者需要的输出</li>
+<li><strong>Evasion attack</strong> 是最常用的攻击手段</li>
+</ul>
+<p>其他分类：黑盒&#x2F;白盒攻击、有目标&#x2F;无目标攻击，此处不细讲</p>
+<h3 id="规避攻击"><a href="#规避攻击" class="headerlink" title="规避攻击"></a>规避攻击</h3><p>照例，先放张图</p>
+<img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/8_%E5%AF%B9%E6%8A%97%E6%94%BB%E5%87%BB1.png" class="" title="规避攻击">
+
+<h4 id="1-基于模仿"><a href="#1-基于模仿" class="headerlink" title="1. 基于模仿"></a>1. 基于模仿</h4><p>采用启发式算法, 直接修改文件结构或内容 </p>
+<p>向恶意样本添加良性样本的特征, 或向良性样本中添加恶意样本的特征, 使得修改后的样本在实现恶意功能的同时, 将结构差异降至最低, 从而规避分类器的检测，如<strong>垃圾邮件规避攻击</strong>（好词插入，坏词混淆）</p>
+<img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/9_%E5%9F%BA%E4%BA%8E%E6%A8%A1%E4%BB%BF%E7%9A%84%E8%A7%84%E9%81%BF%E6%94%BB%E5%87%BB.png" class="" title="基于模仿的规避攻击">
+
+<h4 id="2-基于梯度"><a href="#2-基于梯度" class="headerlink" title="2. 基于梯度"></a>2. 基于梯度</h4><p>利用梯度下降求解优化问题, 对输入样本执行细粒度的修改, 以最小化 (最大化) 样本被归类为恶意 (良性) 的概率 </p>
+<ol start="3">
+<li>基于迁移<br>利用了对抗样本的跨模型迁移性。可应用 于无法获取模型梯度的各种攻击场景</li>
+</ol>
+]]></content>
       <categories>
         <category>内容安全</category>
       </categories>

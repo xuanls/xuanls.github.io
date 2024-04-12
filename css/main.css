@@ -1137,7 +1137,7 @@ pre .javascript .function {
 }
 .sidebar-inner {
   color: #999;
-  padding: 10px 10px;
+  padding: 100px 10px;
   text-align: center;
 }
 .cc-license {
@@ -1188,7 +1188,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #a34598;
+  background: #ffffb9;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1504,7 +1504,7 @@ pre .javascript .function {
 }
 .back-to-top {
   background: transparent;
-  margin: 10px -10px -20px;
+  margin: -80px -10px -20px;
   opacity: 0;
 }
 .back-to-top.back-to-top-on {
@@ -2318,7 +2318,7 @@ ul.breadcrumb li + li:last-child {
   box-shadow: initial;
   box-sizing: border-box;
   padding: 40px;
-  width: calc(100% - 250px);
+  width: calc(100% - 340px);
 }
 @media (max-width: 991px) {
   .content-wrap {
@@ -2481,7 +2481,7 @@ ul.breadcrumb li + li:last-child {
 }
 .sidebar-inner.affix {
   position: fixed;
-  top: 10px;
+  top: 100px;
 }
 .sidebar-inner.affix-bottom {
   position: absolute;
@@ -2559,7 +2559,7 @@ ul.breadcrumb li + li:last-child {
 }
 .back-to-top {
   background: var(--body-bg-color);
-  margin: -2px -10px -18px;
+  margin: -92px -10px -18px;
 }
 .back-to-top.back-to-top-on {
   margin-top: 16px;

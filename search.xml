@@ -61,6 +61,11 @@
       </tags>
   </entry>
   <entry>
+    <title>start</title>
+    <url>/2024/04/03/start/</url>
+    <content><![CDATA[<h2 id="第一篇博客"><a href="#第一篇博客" class="headerlink" title="第一篇博客"></a>第一篇博客</h2><h3 id="不知道写什么"><a href="#不知道写什么" class="headerlink" title="不知道写什么"></a>不知道写什么</h3>]]></content>
+  </entry>
+  <entry>
     <title>Markdown基础语法</title>
     <url>/2024/04/07/Markdown%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<blockquote>
@@ -115,7 +120,7 @@
 这里写"More"会在网页中隐藏后面内容,跳转到详情页才能看 -->
 
 <p>超链接用法:<br>[超链接显示名] (超链接地址 “超链接title”)<br><a href="%E8%B6%85%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80" title="超链接title">超链接显示名</a></p>
-<p><a href="mailto:&#49;&#x32;&#51;&#x40;&#113;&#113;&#46;&#99;&#111;&#109;">&#49;&#x32;&#51;&#x40;&#113;&#113;&#46;&#99;&#111;&#109;</a> &lt;邮箱&gt;</p>
+<p><a href="mailto:&#x31;&#50;&#x33;&#x40;&#x71;&#x71;&#46;&#99;&#x6f;&#x6d;">&#x31;&#50;&#x33;&#x40;&#x71;&#x71;&#46;&#99;&#x6f;&#x6d;</a> &lt;邮箱&gt;</p>
 <p><a href="https://123.com/">https://123.com</a> &lt;网址&gt;</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph TB</span><br><span class="line">  A(把大象放进去) --&gt; B&#123;&quot;冰箱小不小？&quot;&#125;</span><br><span class="line">  B --&gt; |不小| C[把冰箱门关上]</span><br><span class="line">  B --&gt;   |小| D[换个大点的冰箱]</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
@@ -124,11 +129,6 @@
       <tags>
         <tag>备忘</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>start</title>
-    <url>/2024/04/03/start/</url>
-    <content><![CDATA[<h2 id="第一篇博客"><a href="#第一篇博客" class="headerlink" title="第一篇博客"></a>第一篇博客</h2><h3 id="不知道写什么"><a href="#不知道写什么" class="headerlink" title="不知道写什么"></a>不知道写什么</h3>]]></content>
   </entry>
   <entry>
     <title>《战争史》初读</title>
@@ -238,10 +238,35 @@
 <img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/9_%E5%9F%BA%E4%BA%8E%E6%A8%A1%E4%BB%BF%E7%9A%84%E8%A7%84%E9%81%BF%E6%94%BB%E5%87%BB.png" class="" title="基于模仿的规避攻击">
 
 <h4 id="2-基于梯度"><a href="#2-基于梯度" class="headerlink" title="2. 基于梯度"></a>2. 基于梯度</h4><p>利用梯度下降求解优化问题, 对输入样本执行细粒度的修改, 以最小化 (最大化) 样本被归类为恶意 (良性) 的概率 </p>
-<ol start="3">
-<li>基于迁移<br>利用了对抗样本的跨模型迁移性。可应用 于无法获取模型梯度的各种攻击场景</li>
-</ol>
-]]></content>
+<p>应用梯度下降函数, 在损失函数最可能增加的方向上扰动测试样本, 使恶意样本向着合法样本的区域移动, 从而被分类器错分为正常样本。</p>
+<ul>
+<li>L-BFGS：限制内存方法 (Limited-memory broyden fletcher goldfarb shanno)</li>
+<li>FGSM：快速梯度符号法 (Fast gradient sign method) </li>
+<li>JSMA：基于雅可比矩阵的显著图攻击算法 (Jacobian-base saliency map attack) </li>
+<li>C&amp;W 算法</li>
+</ul>
+<h4 id="3-基于迁移"><a href="#3-基于迁移" class="headerlink" title="3. 基于迁移"></a>3. 基于迁移</h4><p>利用了对抗样本的跨模型迁移性。可应用于无法获取模型梯度的各种攻击场景 </p>
+<p>基于对抗样本的跨模型迁移性。攻击者通过构建代理模型 (Surrogate model) 的方式, 利用已知机器学习模型构造对抗样本, 然后攻击相关的未知模型</p>
+<p>生成对抗网络 GAN（Generative adversarial networks ）<br>采用博弈论中的纳什均衡思想, 通过多回合的对抗训练, 使得生成器学到目标样本分布, 从而用于规避攻击</p>
+<img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/10_GAN.png" class="" title="GAN">
+
+<hr>
+<h3 id="投毒攻击"><a href="#投毒攻击" class="headerlink" title="投毒攻击"></a>投毒攻击</h3><p>对训练数据进行修改或者添加少量数据进行污染, 寻求全局或局部分布的扰动, 进而破坏模型可用性和完整性, 降低机器学习系统性能。</p>
+<p>投毒攻击是对主流机器学习算法的一种重要威胁, 包括<strong>支持向量机、贝叶斯分类器、层次聚类以及 逻辑回归</strong>等常规算法都受到了投毒攻击的危害 </p>
+<p>针对数据库发起投毒攻击, 可以实现 “立竿见影”的效果, 同时得到极为丰厚的回报, 使得投毒攻击发生更为频繁。</p>
+<p>卡巴斯基实验室被指控向 VirusTotal 注入假阳性样本（将良性的、系统关键文件标记为恶意文件），当对手在新样本上训练病毒扫描器时, 这些扫描器会将合法的系统文件标记为恶意, 从而毒害竞争对手的杀毒产品</p>
+<ul>
+<li>可用性攻击：降低分类器分类精度并产生高误报率, 从而无法为正常用户提供服务, 甚至使系统拒绝服务</li>
+<li>完整性攻击：使机器学习产生较高漏报率, 降低成功检测到恶意活动的几率</li>
+</ul>
+<img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/11_%E6%B2%B9%E8%9B%99%E6%94%BB%E5%87%BB.png" class="" title="油蛙攻击">
+
+<h2 id="常用规避攻击技术"><a href="#常用规避攻击技术" class="headerlink" title="常用规避攻击技术"></a>常用规避攻击技术</h2><h3 id="1-噪声攻击（Noise-attack）"><a href="#1-噪声攻击（Noise-attack）" class="headerlink" title="1.噪声攻击（Noise attack）"></a>1.噪声攻击（Noise attack）</h3><p>最简单的对抗攻击技术</p>
+<p>Noise is a random arrangement of pixels containing no information（不包含任何信息的随机像素排列）</p>
+<p>通过随机函数生成，是一种无目标的黑盒逃逸攻击</p>
+<img src="/2024/04/11/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/12-%E5%99%AA%E5%A3%B0%E6%94%BB%E5%87%BB.png" class="" title="噪声攻击">
+
+<h3 id="2-语义攻击（Semantic-attack）"><a href="#2-语义攻击（Semantic-attack）" class="headerlink" title="2.语义攻击（Semantic attack）"></a>2.语义攻击（Semantic attack）</h3><h3 id="3-快速梯度符号攻击（FGSM，Fast-gradient-sign-method-attack）"><a href="#3-快速梯度符号攻击（FGSM，Fast-gradient-sign-method-attack）" class="headerlink" title="3.快速梯度符号攻击（FGSM，Fast gradient sign method attack）"></a>3.快速梯度符号攻击（FGSM，Fast gradient sign method attack）</h3><h3 id="4-基础迭代攻击（BIM，Basic-iterative-method-attack）"><a href="#4-基础迭代攻击（BIM，Basic-iterative-method-attack）" class="headerlink" title="4.基础迭代攻击（BIM，Basic iterative method attack）"></a>4.基础迭代攻击（BIM，Basic iterative method attack）</h3><h3 id="5-投影梯度下降攻击（PGD，Projected-gradient-descent-attack）"><a href="#5-投影梯度下降攻击（PGD，Projected-gradient-descent-attack）" class="headerlink" title="5.投影梯度下降攻击（PGD，Projected gradient descent attack）"></a>5.投影梯度下降攻击（PGD，Projected gradient descent attack）</h3><h3 id="6-深度欺骗攻击（DeepFool-attack-）"><a href="#6-深度欺骗攻击（DeepFool-attack-）" class="headerlink" title="6.深度欺骗攻击（DeepFool attack ）"></a>6.深度欺骗攻击（DeepFool attack ）</h3><h3 id="7-C-W攻击（CW-Carlini-Wagner-attack-）"><a href="#7-C-W攻击（CW-Carlini-Wagner-attack-）" class="headerlink" title="7.C&amp;W攻击（CW, Carlini-Wagner attack ）"></a>7.C&amp;W攻击（CW, Carlini-Wagner attack ）</h3><h2 id="对抗防御技术"><a href="#对抗防御技术" class="headerlink" title="对抗防御技术"></a>对抗防御技术</h2><h2 id="语音对抗攻击及防御技术"><a href="#语音对抗攻击及防御技术" class="headerlink" title="语音对抗攻击及防御技术"></a>语音对抗攻击及防御技术</h2><h3 id="语音对抗样本技术"><a href="#语音对抗样本技术" class="headerlink" title="语音对抗样本技术"></a>语音对抗样本技术</h3><h3 id="语音对抗防御技术"><a href="#语音对抗防御技术" class="headerlink" title="语音对抗防御技术"></a>语音对抗防御技术</h3>]]></content>
       <categories>
         <category>内容安全</category>
       </categories>

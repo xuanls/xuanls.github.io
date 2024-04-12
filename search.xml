@@ -9,6 +9,58 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux提权</title>
+    <url>/Linux%E6%8F%90%E6%9D%83/</url>
+    <content><![CDATA[<h1 id="Part1-sudo介绍"><a href="#Part1-sudo介绍" class="headerlink" title="Part1 sudo介绍"></a>Part1 sudo介绍</h1><h2 id="什么是sudo"><a href="#什么是sudo" class="headerlink" title="什么是sudo"></a>什么是sudo</h2><p>简单的说，sudo 是一种&#x3D;&#x3D;权限管理机制&#x3D;&#x3D;，管理员可以授权于一些普通用户去执行一些 root 执行的操作，提示输入密码时该密码为当前用户的密码，而不需要知道 root 的密码。不过有时间限制，Ubuntu默认为一次时长15分钟</p>
+<span id="more"></span>
+
+<p>严谨些说，sudo 允许一个已授权用户以超级用户或者其它用户的角色运行一个命令。当然，能做什么不能做什么都是通过安全策略来指定的。sudo 支持插件架构的安全策略，并能把输入输出写入日志。第三方可以开发并发布自己的安全策略和输入输出日志插件，并让它们无缝的和 sudo 一起工作。默认的安全策略记录在 &#x3D;&#x3D;&#x2F;etc&#x2F;sudoers&#x3D;&#x3D; 文件中。而安全策略可能需要用户通过密码来验证他们自己。也就是在用户执行 sudo 命令时要求用户输入&#x3D;&#x3D;自己账号的密码。&#x3D;&#x3D;如果验证失败，sudo 命令将会退出。</p>
+<p>默认的etc&#x2F;sudoers配置文件：</p>
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C1.png" alt="图片"></p>
+<br/>
+
+<h1 id="Part2-CVE-2021-3156漏洞"><a href="#Part2-CVE-2021-3156漏洞" class="headerlink" title="Part2 CVE-2021-3156漏洞"></a>Part2 CVE-2021-3156漏洞</h1><h2 id="1-漏洞简介"><a href="#1-漏洞简介" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>2021年1月26日，Linux安全工具&#x3D;&#x3D;sudo&#x3D;&#x3D;被发现严重的基于&#x3D;&#x3D;堆缓冲区溢出&#x3D;&#x3D;漏洞。利用这一漏洞，攻击者无需知道用户密码，一样可以获得root权限，并且是在默认配置下。此漏洞已分配为CVE-2021-3156，危险等级评分为7分。</p>
+<h2 id="2-原理介绍"><a href="#2-原理介绍" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><p>漏洞发生的原因在于sudo错误地转义了参数中的反斜杠。</p>
+<p>sudo命令允许用户以超级用户或&#x2F;etc&#x2F;sudoers文件中指定的其他用户的身份运行指定命令cmd。设置真实和有效用户ID与用户组ID，以匹配&#x2F;etc&#x2F;passwd文件中指定的目标用户和&#x2F;etc&#x2F;group文件中指定的用户组（除非指定了“-P”选项）。如果调用者是超级用户，或目标用户与调用者是同一用户，则无须提供密码。否则，sudo通常要求用户提供密码进行认证。注意，按照默认的配置，这里所谓的密码认证指的是用户的密码，不是超级用户的密码。</p>
+<p>一旦获得认证，立即更新&#x2F;var&#x2F;run&#x2F;sudo目录中的用户时间记录。在之后的短时间内（5分钟，除非sudoers文件中另有设定），用户可以随时运行sudo命令而不必提供密码。</p>
+<p>sudo与sudoedit是一个程序两个名字。运行sudoedit命令，相当于运行“sudo -e”命令。sudoedit命令主要用于编辑&#x2F;etc&#x2F;sudoers文件，参见“-e”选项的说明。</p>
+<p>当sudo通过-s或-i命令行选项在shell模式下运行命令时，它将在命令参数中使用反斜杠转义特殊字符。但使用-s或-i标志运行sudoedit时，实际上并未进行转义，从而可能导致缓冲区溢出。因此只要存在sudoers文件（通常是&#x2F;etc&#x2F;sudoers），攻击者就可以使用本地普通用户利用sudo获得系统root权限。</p>
+<h2 id="3-影响版本"><a href="#3-影响版本" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>受影响版本<br>Sudo 1.8.2 – 1.8.31p2<br>Sudo 1.9.0 – 1.9.5p1</p>
+<p>不受影响版本<br>sudo &#x3D;&gt;1.9.5p2</p>
+<h2 id="4-漏洞复现"><a href="#4-漏洞复现" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><br/>
+
+<h1 id="Part3-CVE-2023-22809漏洞"><a href="#Part3-CVE-2023-22809漏洞" class="headerlink" title="Part3 CVE-2023-22809漏洞"></a>Part3 CVE-2023-22809漏洞</h1><h2 id="1-漏洞简介-1"><a href="#1-漏洞简介-1" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>在Sudo 版本 1.9.12p1中使用sudoedit时，sudoers的保护机制可能被绕过，从而导致通过编辑未经授权的文件实现权限升级，Sudo中的sudoedit对处理用户提供的环境变量（如SUDO_EDITOR、VISUAL和EDITOR）中传递的额外参数存在缺陷。当用户指定的编辑器包含绕过sudoers策略的“–”参数时，拥有sudoedit访问权限的本地攻击者可通过将任意条目附加到要处理的文件列表中，最终在目标系统上实现权限提升（由普通用户到超级用户，即”root”）</p>
+<h2 id="2-原理介绍-1"><a href="#2-原理介绍-1" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><br/>
+
+<h2 id="3-影响版本-1"><a href="#3-影响版本-1" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>sudo 1.8.0-sudo 1.9.12p1</p>
+<h2 id="4-漏洞复现-1"><a href="#4-漏洞复现-1" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><ol>
+<li>查看当前sudo版本</li>
+</ol>
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C2.png"></p>
+<p>如上，为受影响版本，若不是，则在<a href="https://">https://www.sudo.ws/dist/</a>下载相应版本后解压、配置、编译并安装</p>
+<br/>
+
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C3.png" alt="图片"></p>
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C4.png" alt="图片"></p>
+<br/>
+
+<h2 id="5-缓解措施"><a href="#5-缓解措施" class="headerlink" title="5. 缓解措施"></a>5. 缓解措施</h2><p>1、为防止 sudoedit 使用用户指定的编辑器，可向 sudoers 文件中添加以下内容： Defaults!sudoedit env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR”<br>2、使用“Cmnd_Alias”限制编辑器编辑指定文件时，如： Cmnd_Alias EDIT_MOTD &#x3D; sudoedit &#x2F;etc&#x2F;motd Defaults!EDIT_MOTD env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR” user ALL &#x3D; EDIT_MOTD</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><p><a href="https://">https://www.cnblogs.com/20181309lzy/p/14710439.html</a></p>
+</li>
+<li><p><a href="https://">https://wker.com/linux-command/sudo-sudoedit.html</a></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>漏洞</category>
+      </categories>
+      <tags>
+        <tag>漏洞</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Markdown基础语法</title>
     <url>/Markdown%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<blockquote>
@@ -63,7 +115,7 @@
 这里写"More"会在网页中隐藏后面内容,跳转到详情页才能看 -->
 
 <p>超链接用法:<br>[超链接显示名] (超链接地址 “超链接title”)<br><a href="%E8%B6%85%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80" title="超链接title">超链接显示名</a></p>
-<p><a href="mailto:&#49;&#50;&#51;&#x40;&#113;&#113;&#x2e;&#x63;&#x6f;&#109;">&#49;&#50;&#51;&#x40;&#113;&#113;&#x2e;&#x63;&#x6f;&#109;</a> &lt;邮箱&gt;</p>
+<p><a href="mailto:&#49;&#50;&#51;&#x40;&#113;&#x71;&#x2e;&#99;&#111;&#109;">&#49;&#50;&#51;&#x40;&#113;&#x71;&#x2e;&#99;&#111;&#109;</a> &lt;邮箱&gt;</p>
 <p><a href="https://123.com/">https://123.com</a> &lt;网址&gt;</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph TB</span><br><span class="line">  A(把大象放进去) --&gt; B&#123;&quot;冰箱小不小？&quot;&#125;</span><br><span class="line">  B --&gt; |不小| C[把冰箱门关上]</span><br><span class="line">  B --&gt;   |小| D[换个大点的冰箱]</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
@@ -74,56 +126,9 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux提权</title>
-    <url>/Linux%E6%8F%90%E6%9D%83/</url>
-    <content><![CDATA[<h1 id="Part1-sudo介绍"><a href="#Part1-sudo介绍" class="headerlink" title="Part1 sudo介绍"></a>Part1 sudo介绍</h1><h2 id="什么是sudo"><a href="#什么是sudo" class="headerlink" title="什么是sudo"></a>什么是sudo</h2><p>简单的说，sudo 是一种&#x3D;&#x3D;权限管理机制&#x3D;&#x3D;，管理员可以授权于一些普通用户去执行一些 root 执行的操作，提示输入密码时该密码为当前用户的密码，而不需要知道 root 的密码。不过有时间限制，Ubuntu默认为一次时长15分钟</p>
-<span id="more"></span>
-
-<p>严谨些说，sudo 允许一个已授权用户以超级用户或者其它用户的角色运行一个命令。当然，能做什么不能做什么都是通过安全策略来指定的。sudo 支持插件架构的安全策略，并能把输入输出写入日志。第三方可以开发并发布自己的安全策略和输入输出日志插件，并让它们无缝的和 sudo 一起工作。默认的安全策略记录在 &#x3D;&#x3D;&#x2F;etc&#x2F;sudoers&#x3D;&#x3D; 文件中。而安全策略可能需要用户通过密码来验证他们自己。也就是在用户执行 sudo 命令时要求用户输入&#x3D;&#x3D;自己账号的密码。&#x3D;&#x3D;如果验证失败，sudo 命令将会退出。</p>
-<p>默认的etc&#x2F;sudoers配置文件：</p>
-<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C1.png" alt="图片"></p>
-<br/>
-
-<h1 id="Part2-CVE-2021-3156漏洞"><a href="#Part2-CVE-2021-3156漏洞" class="headerlink" title="Part2 CVE-2021-3156漏洞"></a>Part2 CVE-2021-3156漏洞</h1><h2 id="1-漏洞简介"><a href="#1-漏洞简介" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>2021年1月26日，Linux安全工具&#x3D;&#x3D;sudo&#x3D;&#x3D;被发现严重的基于&#x3D;&#x3D;堆缓冲区溢出&#x3D;&#x3D;漏洞。利用这一漏洞，攻击者无需知道用户密码，一样可以获得root权限，并且是在默认配置下。此漏洞已分配为CVE-2021-3156，危险等级评分为7分。</p>
-<h2 id="2-原理介绍"><a href="#2-原理介绍" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><p>漏洞发生的原因在于sudo错误地转义了参数中的反斜杠。</p>
-<p>sudo命令允许用户以超级用户或&#x2F;etc&#x2F;sudoers文件中指定的其他用户的身份运行指定命令cmd。设置真实和有效用户ID与用户组ID，以匹配&#x2F;etc&#x2F;passwd文件中指定的目标用户和&#x2F;etc&#x2F;group文件中指定的用户组（除非指定了“-P”选项）。如果调用者是超级用户，或目标用户与调用者是同一用户，则无须提供密码。否则，sudo通常要求用户提供密码进行认证。注意，按照默认的配置，这里所谓的密码认证指的是用户的密码，不是超级用户的密码。</p>
-<p>一旦获得认证，立即更新&#x2F;var&#x2F;run&#x2F;sudo目录中的用户时间记录。在之后的短时间内（5分钟，除非sudoers文件中另有设定），用户可以随时运行sudo命令而不必提供密码。</p>
-<p>sudo与sudoedit是一个程序两个名字。运行sudoedit命令，相当于运行“sudo -e”命令。sudoedit命令主要用于编辑&#x2F;etc&#x2F;sudoers文件，参见“-e”选项的说明。</p>
-<p>当sudo通过-s或-i命令行选项在shell模式下运行命令时，它将在命令参数中使用反斜杠转义特殊字符。但使用-s或-i标志运行sudoedit时，实际上并未进行转义，从而可能导致缓冲区溢出。因此只要存在sudoers文件（通常是&#x2F;etc&#x2F;sudoers），攻击者就可以使用本地普通用户利用sudo获得系统root权限。</p>
-<h2 id="3-影响版本"><a href="#3-影响版本" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>受影响版本<br>Sudo 1.8.2 – 1.8.31p2<br>Sudo 1.9.0 – 1.9.5p1</p>
-<p>不受影响版本<br>sudo &#x3D;&gt;1.9.5p2</p>
-<h2 id="4-漏洞复现"><a href="#4-漏洞复现" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><br/>
-
-<h1 id="Part3-CVE-2023-22809漏洞"><a href="#Part3-CVE-2023-22809漏洞" class="headerlink" title="Part3 CVE-2023-22809漏洞"></a>Part3 CVE-2023-22809漏洞</h1><h2 id="1-漏洞简介-1"><a href="#1-漏洞简介-1" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>在Sudo 版本 1.9.12p1中使用sudoedit时，sudoers的保护机制可能被绕过，从而导致通过编辑未经授权的文件实现权限升级，Sudo中的sudoedit对处理用户提供的环境变量（如SUDO_EDITOR、VISUAL和EDITOR）中传递的额外参数存在缺陷。当用户指定的编辑器包含绕过sudoers策略的“–”参数时，拥有sudoedit访问权限的本地攻击者可通过将任意条目附加到要处理的文件列表中，最终在目标系统上实现权限提升（由普通用户到超级用户，即”root”）</p>
-<h2 id="2-原理介绍-1"><a href="#2-原理介绍-1" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><br/>
-
-<h2 id="3-影响版本-1"><a href="#3-影响版本-1" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>sudo 1.8.0-sudo 1.9.12p1</p>
-<h2 id="4-漏洞复现-1"><a href="#4-漏洞复现-1" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><ol>
-<li>查看当前sudo版本</li>
-</ol>
-<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C2.png"></p>
-<p>如上，为受影响版本，若不是，则在<a href="https://">https://www.sudo.ws/dist/</a>下载相应版本后解压、配置、编译并安装</p>
-<br/>
-
-<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C3.png" alt="图片"></p>
-<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C4.png" alt="图片"></p>
-<br/>
-
-<h2 id="5-缓解措施"><a href="#5-缓解措施" class="headerlink" title="5. 缓解措施"></a>5. 缓解措施</h2><p>1、为防止 sudoedit 使用用户指定的编辑器，可向 sudoers 文件中添加以下内容： Defaults!sudoedit env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR”<br>2、使用“Cmnd_Alias”限制编辑器编辑指定文件时，如： Cmnd_Alias EDIT_MOTD &#x3D; sudoedit &#x2F;etc&#x2F;motd Defaults!EDIT_MOTD env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR” user ALL &#x3D; EDIT_MOTD</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><p><a href="https://">https://www.cnblogs.com/20181309lzy/p/14710439.html</a></p>
-</li>
-<li><p><a href="https://">https://wker.com/linux-command/sudo-sudoedit.html</a></p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>漏洞</category>
-      </categories>
-      <tags>
-        <tag>漏洞</tag>
-        <tag>Linux</tag>
-      </tags>
+    <title>start</title>
+    <url>/start/</url>
+    <content><![CDATA[<h2 id="第一篇博客"><a href="#第一篇博客" class="headerlink" title="第一篇博客"></a>第一篇博客</h2><h3 id="不知道写什么"><a href="#不知道写什么" class="headerlink" title="不知道写什么"></a>不知道写什么</h3>]]></content>
   </entry>
   <entry>
     <title>《战争史》初读</title>
@@ -143,9 +148,69 @@
       </tags>
   </entry>
   <entry>
-    <title>start</title>
-    <url>/start/</url>
-    <content><![CDATA[<h2 id="第一篇博客"><a href="#第一篇博客" class="headerlink" title="第一篇博客"></a>第一篇博客</h2><h3 id="不知道写什么"><a href="#不知道写什么" class="headerlink" title="不知道写什么"></a>不知道写什么</h3>]]></content>
+    <title>计网实验</title>
+    <url>/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/</url>
+    <content><![CDATA[<blockquote>
+<p>此贴为WHU_网安院计网实验备忘（每次都忘记基本指令和参数之类的(&#x2F;(ㄒoㄒ)&#x2F;~~)），写一些基本命令，以及注意事项之类的，不涉及详细实验步骤（我也想写，但是实验报告太多惹🆘）</p>
+</blockquote>
+<span id="more"></span>
+
+<blockquote>
+<p>实验平台：<a href="http://10.201.133.200:8080/szy">http://10.201.133.200:8080/szy</a></p>
+<p>账号密码：********（看不到吧，老师会给你自己的）</p>
+</blockquote>
+<hr>
+<h2 id="实验内容（补充中）"><a href="#实验内容（补充中）" class="headerlink" title="实验内容（补充中）"></a>实验内容（补充中）</h2><ol>
+<li>静态路由实验</li>
+<li>动态路由实验<ol>
+<li>RIP路由协议（包含dhcp协议、md5加密）</li>
+<li>OSFP路由协议</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><p><strong>注意</strong>：</p>
+<ul>
+<li>需要连线！需要连线！路由配置好了不连线是行不通滴🤡</li>
+<li>关以太网！关以太网！机架中当PC用的电脑要关掉以太网，不然你会ping不通的</li>
+</ul>
+<h3 id="1-静态路由实验"><a href="#1-静态路由实验" class="headerlink" title="1.静态路由实验"></a>1.静态路由实验</h3><p>先规划好各个接口的IP地址，给设备连线。端口别接错了，只有中间几个口能用（i dont’t know why），防止迷糊，放个图：</p>
+<img src="/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/1.%E8%B7%AF%E7%94%B1%E5%99%A8.png" class="" title="图片">
+
+<hr>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 命令有缺省，为了方便（好吧，是因为记不住）</span></span><br><span class="line"><span class="comment">// 先进控制台</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置设备要进config模式</span></span><br><span class="line">&gt;&gt; enable</span><br><span class="line">&gt;&gt; config</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改个名</span></span><br><span class="line">&gt;&gt; hostname 名字    <span class="comment">// RA、RB、RC之类的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查看配置信息</span></span><br><span class="line">&gt;&gt; show ip route    <span class="comment">// 查看路由表，我个人用的最多</span></span><br><span class="line">&gt;&gt; show running     <span class="comment">// 查看当前配置</span></span><br><span class="line">&gt;&gt; show interface   <span class="comment">// 查看接口</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置路由器各个端口的IP</span></span><br><span class="line"><span class="comment">// 组内协商好，不要用本地网段全0的，不要互相冲突</span></span><br><span class="line"><span class="comment">// 先进入端口</span></span><br><span class="line"><span class="comment">// 命令全称：interface gigabitEthernet 0/1（这么长，记个毛线）</span></span><br><span class="line">&gt;&gt; <span class="type">int</span> g0/<span class="number">0</span>     <span class="comment">// 表示0端口，g0/1表示1端口</span></span><br><span class="line">&gt;&gt; ip add IP地址 子网掩码</span><br><span class="line">&gt;&gt; no shutdown  <span class="comment">// 打开端口，我也不知道不写有没有影响</span></span><br><span class="line">&gt;&gt; <span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置静态路由</span></span><br><span class="line"><span class="comment">// 目标网络不要填具体的主机Ip，哪怕该网络只有一台主机</span></span><br><span class="line"><span class="comment">// 下一跳地址为相连的下一个路由器的端口IP，不是本路由器的转发端口</span></span><br><span class="line">&gt;&gt; ip route 目标网络 子网掩码 下一跳地址</span><br><span class="line">&gt;&gt; ip route <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>     <span class="comment">// 默认地址设置，没用过</span></span><br><span class="line">&gt;&gt; no ip route ……   <span class="comment">// 配错路由的时候反悔用的</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<p>配好各个路由器之后，记得检查有无漏的错的</p>
+<p><strong>！！！</strong> PC的IP要自己手配哦（应该都会吧？先不细说了，有空再）</p>
+<p>都搞好后就可以开始在控制台和各个PC的CMD中尽情地ping了</p>
+<blockquote>
+<p>推荐另一个命令<code>tracert 目标IP</code>可以显示通信的路径，方便调试</p>
+</blockquote>
+<p><strong>补充</strong>：三层交换机配置方法<br>一直是我队友配的这个，所以非常不熟呃呃呃，仅供参考!</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不做配置，可以直接当二层交换机使用</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="动态路由实验"><a href="#动态路由实验" class="headerlink" title="动态路由实验"></a>动态路由实验</h3><blockquote>
+<p>记得进config再配路由器哦🌹</p>
+</blockquote>
+<h4 id="RIP路由协议"><a href="#RIP路由协议" class="headerlink" title="RIP路由协议"></a>RIP路由协议</h4><p>先连线</p>
+<p>再配各个路由器的IP（跟上边一样）</p>
+<p>然后配DHCP，给各个主机自动分配IP</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">&gt; ip dhcp pool student  <span class="comment">// student应该可以随便改</span></span><br><span class="line">&gt; network <span class="number">192.168</span><span class="number">.1</span><span class="number">.0</span> <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span> <span class="comment">// 只给相连的子网配</span></span><br><span class="line">&gt; <span class="keyword">default</span>-router <span class="number">192.168</span><span class="number">.1</span><span class="number">.254</span>   <span class="comment">// 默认网关</span></span><br><span class="line">&gt; service dhcp <span class="comment">// 开启dhcp服务</span></span><br></pre></td></tr></table></figure>
+<p>配完记得在PC上查看下有没有成功</p>
+<p>接着配RIP，让其动态学习路由</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">&gt; route rip <span class="comment">// 开启rip协议</span></span><br><span class="line">&gt; version <span class="number">2</span> <span class="comment">// 声明版本，1和2差别挺大好像，学过的忘完了已经（去世）</span></span><br><span class="line">&gt; no <span class="keyword">auto</span>-summary <span class="comment">// 关闭自动汇总，所配即所得</span></span><br><span class="line">&gt; network <span class="number">192.168</span><span class="number">.1</span><span class="number">.0</span>   <span class="comment">// 申明本设备的直连网段</span></span><br><span class="line">&gt; network <span class="number">192.169</span><span class="number">.1</span><span class="number">.0</span>   <span class="comment">// 直连的有几个写几个，不用写子网掩码</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<p>RIP验证，用md5来做，可是我们没弄这个，就不谈了，私密吗喽🙇</p>
+<p>接下来查看各个路由器的路由表，应该多了几个’r’开头的路由，即为路由器自己学习到的路由，然后就直接开ping!!!</p>
+<h4 id="OSFP路由协议"><a href="#OSFP路由协议" class="headerlink" title="OSFP路由协议"></a>OSFP路由协议</h4><p>照例，先连线，配主机IP（可以用DHCP配，不过主机少的话，手配更省事点），路由器的IP（什么时候这个也能自动化）</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 我也没太搞懂这个</span></span><br><span class="line">&gt; osfp <span class="number">1</span>    <span class="comment">// 应该是版本？</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">个人理解：area是提前规划好的，有单区域、多区域（配起来好像没啥区别），所有和路由器端口直连的网段的IP都写上，子网掩码格式变了（没试过别的行不行）</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">&gt; network <span class="number">192.168</span><span class="number">.2</span><span class="number">.0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.255</span> area <span class="number">2</span> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>配好之后，路由器之间会开始泛洪，互相交换链路信息，可以查看路由表，其中’o’开头的即为学习到的路由，带有时间信息，可以查看彼此之间学习的先后顺序（没啥用），至此，应该就可以测试连通性了</p>
+]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
+      <tags>
+        <tag>备忘</tag>
+      </tags>
   </entry>
   <entry>
     <title>对抗机器学习(AML)</title>
@@ -270,70 +335,5 @@
       <categories>
         <category>内容安全</category>
       </categories>
-  </entry>
-  <entry>
-    <title>计网实验</title>
-    <url>/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/</url>
-    <content><![CDATA[<blockquote>
-<p>此贴为WHU_网安院计网实验备忘（每次都忘记基本指令和参数之类的(&#x2F;(ㄒoㄒ)&#x2F;~~)），写一些基本命令，以及注意事项之类的，不涉及详细实验步骤（我也想写，但是实验报告太多惹🆘）</p>
-</blockquote>
-<span id="more"></span>
-
-<blockquote>
-<p>实验平台：<a href="http://10.201.133.200:8080/szy">http://10.201.133.200:8080/szy</a></p>
-<p>账号密码：********（看不到吧，老师会给你自己的）</p>
-</blockquote>
-<hr>
-<h2 id="实验内容（补充中）"><a href="#实验内容（补充中）" class="headerlink" title="实验内容（补充中）"></a>实验内容（补充中）</h2><ol>
-<li>静态路由实验</li>
-<li>动态路由实验<ol>
-<li>RIP路由协议（包含dhcp协议、md5加密）</li>
-<li>OSFP路由协议</li>
-</ol>
-</li>
-</ol>
-<hr>
-<h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><p><strong>注意</strong>：</p>
-<ul>
-<li>需要连线！需要连线！路由配置好了不连线是行不通滴🤡</li>
-<li>关以太网！关以太网！机架中当PC用的电脑要关掉以太网，不然你会ping不通的</li>
-</ul>
-<h3 id="1-静态路由实验"><a href="#1-静态路由实验" class="headerlink" title="1.静态路由实验"></a>1.静态路由实验</h3><p>先规划好各个接口的IP地址，给设备连线。端口别接错了，只有中间几个口能用（i dont’t know why），防止迷糊，放个图：</p>
-<img src="/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/1.%E8%B7%AF%E7%94%B1%E5%99%A8.png" class="" title="图片">
-
-<hr>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 命令有缺省，为了方便（好吧，是因为记不住）</span></span><br><span class="line"><span class="comment">// 先进控制台</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置设备要进config模式</span></span><br><span class="line">&gt;&gt; enable</span><br><span class="line">&gt;&gt; config</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改个名</span></span><br><span class="line">&gt;&gt; hostname 名字    <span class="comment">// RA、RB、RC之类的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查看配置信息</span></span><br><span class="line">&gt;&gt; show ip route    <span class="comment">// 查看路由表，我个人用的最多</span></span><br><span class="line">&gt;&gt; show running     <span class="comment">// 查看当前配置</span></span><br><span class="line">&gt;&gt; show interface   <span class="comment">// 查看接口</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置路由器各个端口的IP</span></span><br><span class="line"><span class="comment">// 组内协商好，不要用本地网段全0的，不要互相冲突</span></span><br><span class="line"><span class="comment">// 先进入端口</span></span><br><span class="line"><span class="comment">// 命令全称：interface gigabitEthernet 0/1（这么长，记个毛线）</span></span><br><span class="line">&gt;&gt; <span class="type">int</span> g0/<span class="number">0</span>     <span class="comment">// 表示0端口，g0/1表示1端口</span></span><br><span class="line">&gt;&gt; ip add IP地址 子网掩码</span><br><span class="line">&gt;&gt; no shutdown  <span class="comment">// 打开端口，我也不知道不写有没有影响</span></span><br><span class="line">&gt;&gt; <span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置静态路由</span></span><br><span class="line"><span class="comment">// 目标网络不要填具体的主机Ip，哪怕该网络只有一台主机</span></span><br><span class="line"><span class="comment">// 下一跳地址为相连的下一个路由器的端口IP，不是本路由器的转发端口</span></span><br><span class="line">&gt;&gt; ip route 目标网络 子网掩码 下一跳地址</span><br><span class="line">&gt;&gt; ip route <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>     <span class="comment">// 默认地址设置，没用过</span></span><br><span class="line">&gt;&gt; no ip route ……   <span class="comment">// 配错路由的时候反悔用的</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<hr>
-<p>配好各个路由器之后，记得检查有无漏的错的</p>
-<p><strong>！！！</strong> PC的IP要自己手配哦（应该都会吧？先不细说了，有空再）</p>
-<p>都搞好后就可以开始在控制台和各个PC的CMD中尽情地ping了</p>
-<blockquote>
-<p>推荐另一个命令<code>tracert 目标IP</code>可以显示通信的路径，方便调试</p>
-</blockquote>
-<p><strong>补充</strong>：三层交换机配置方法<br>一直是我队友配的这个，所以非常不熟呃呃呃，仅供参考!</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不做配置，可以直接当二层交换机使用</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="动态路由实验"><a href="#动态路由实验" class="headerlink" title="动态路由实验"></a>动态路由实验</h3><blockquote>
-<p>记得进config再配路由器哦🌹</p>
-</blockquote>
-<h4 id="RIP路由协议"><a href="#RIP路由协议" class="headerlink" title="RIP路由协议"></a>RIP路由协议</h4><p>先连线</p>
-<p>再配各个路由器的IP（跟上边一样）</p>
-<p>然后配DHCP，给各个主机自动分配IP</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">&gt; ip dhcp pool student  <span class="comment">// student应该可以随便改</span></span><br><span class="line">&gt; network <span class="number">192.168</span><span class="number">.1</span><span class="number">.0</span> <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span> <span class="comment">// 只给相连的子网配</span></span><br><span class="line">&gt; <span class="keyword">default</span>-router <span class="number">192.168</span><span class="number">.1</span><span class="number">.254</span>   <span class="comment">// 默认网关</span></span><br><span class="line">&gt; service dhcp <span class="comment">// 开启dhcp服务</span></span><br></pre></td></tr></table></figure>
-<p>配完记得在PC上查看下有没有成功</p>
-<p>接着配RIP，让其动态学习路由</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">&gt; route rip <span class="comment">// 开启rip协议</span></span><br><span class="line">&gt; version <span class="number">2</span> <span class="comment">// 声明版本，1和2差别挺大好像，学过的忘完了已经（去世）</span></span><br><span class="line">&gt; no <span class="keyword">auto</span>-summary <span class="comment">// 关闭自动汇总，所配即所得</span></span><br><span class="line">&gt; network <span class="number">192.168</span><span class="number">.1</span><span class="number">.0</span>   <span class="comment">// 申明本设备的直连网段</span></span><br><span class="line">&gt; network <span class="number">192.169</span><span class="number">.1</span><span class="number">.0</span>   <span class="comment">// 直连的有几个写几个，不用写子网掩码</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-<p>RIP验证，用md5来做，可是我们没弄这个，就不谈了，私密吗喽🙇</p>
-<p>接下来查看各个路由器的路由表，应该多了几个’r’开头的路由，即为路由器自己学习到的路由，然后就直接开ping!!!</p>
-<h4 id="OSFP路由协议"><a href="#OSFP路由协议" class="headerlink" title="OSFP路由协议"></a>OSFP路由协议</h4><p>照例，先连线，配主机IP（可以用DHCP配，不过主机少的话，手配更省事点），路由器的IP（什么时候这个也能自动化）</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 我也没太搞懂这个</span></span><br><span class="line">&gt; osfp <span class="number">1</span>    <span class="comment">// 应该是版本？</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">个人理解：area是提前规划好的，有单区域、多区域（配起来好像没啥区别），所有和路由器端口直连的网段的IP都写上，子网掩码格式变了（没试过别的行不行）</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">&gt; network <span class="number">192.168</span><span class="number">.2</span><span class="number">.0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.255</span> area <span class="number">2</span> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>配好之后，路由器之间会开始泛洪，互相交换链路信息，可以查看路由表，其中’o’开头的即为学习到的路由，带有时间信息，可以查看彼此之间学习的先后顺序（没啥用），至此，应该就可以测试连通性了</p>
-]]></content>
-      <categories>
-        <category>计算机网络</category>
-      </categories>
-      <tags>
-        <tag>备忘</tag>
-      </tags>
   </entry>
 </search>

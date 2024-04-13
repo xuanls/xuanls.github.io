@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuanls.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"always","padding":18,"offset":20,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideDownBigOut"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="WHU_NCC计算机病毒慕课第九章网络木马知识整理，转载自他人，仅作学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络木马">
+<meta property="og:url" content="http://xuanls.github.io/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/index.html">
+<meta property="og:site_name" content="Xuan&#39;Blog">
+<meta property="og:description" content="WHU_NCC计算机病毒慕课第九章网络木马知识整理，转载自他人，仅作学习">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xuanls.github.io/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/1_%E5%8D%A1%E5%B7%B4%E6%96%AF%E5%9F%BA%E5%88%86%E7%B1%BB.png">
+<meta property="og:image" content="http://xuanls.github.io/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/2_%E5%8D%A1%E5%B7%B4%E6%96%AF%E5%9F%BA%E6%9C%A8%E9%A9%AC.png">
+<meta property="og:image" content="http://xuanls.github.io/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/3_%E7%81%B0%E9%B8%BD%E5%AD%90.png">
+<meta property="og:image" content="http://xuanls.github.io/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/4_BPK.png">
+<meta property="og:image" content="http://xuanls.github.io/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/5_%E9%B1%BC%E5%8F%89%E6%94%BB%E5%87%BB.png">
+<meta property="og:image" content="http://xuanls.github.io/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/6_%E6%AD%A3%E5%90%91%E8%BF%9E%E6%8E%A5.png">
+<meta property="og:image" content="http://xuanls.github.io/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/7_%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A5.png">
+<meta property="og:image" content="http://xuanls.github.io/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/8_%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A52.png">
+<meta property="article:published_time" content="2024-04-13T04:34:37.000Z">
+<meta property="article:modified_time" content="2024-04-13T12:05:59.113Z">
+<meta property="article:author" content="萱萱子">
+<meta property="article:tag" content="木马">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://xuanls.github.io/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/1_%E5%8D%A1%E5%B7%B4%E6%96%AF%E5%9F%BA%E5%88%86%E7%B1%BB.png">
+
+<link rel="canonical" href="http://xuanls.github.io/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>网络木马 | Xuan'Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Xuan'Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">学无止境</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fas fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://xuanls.github.io/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="萱萱子">
+      <meta itemprop="description" content="春风得意马蹄疾 一梦黄粱二十年">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xuan'Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          网络木马
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-04-13 12:34:37 / 修改时间：20:05:59" itemprop="dateCreated datePublished" datetime="2024-04-13T12:34:37+08:00">2024-04-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">软件安全</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>5.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>WHU_NCC计算机病毒慕课第九章网络木马知识整理，转载自他人，仅作学习</p>
+</blockquote>
+<span id="more"></span>
+
+<blockquote>
+<p>版权声明：本文为博主<a target="_blank" rel="noopener" href="https://blog.csdn.net/daibaohui?type=blog">daibaohui</a>原创文章，遵循 CC 4.0 BY-SA 版权协议，此处为转载，因为和慕课视频讲的一毛一样，就直接用现成的了，仅作知识归档</p>
+<p>本文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/daibaohui/article/details/113889229">https://blog.csdn.net/daibaohui/article/details/113889229</a></p>
+</blockquote>
+<h3 id="木马的特点"><a href="#木马的特点" class="headerlink" title="木马的特点"></a>木马的特点</h3><p>木马全称为特洛伊木马，来源于古希腊神话。木马是通过<strong>欺骗或诱骗</strong>的方式安装，并在用户的计算机中<strong>隐藏</strong>以实现控制用户计算机的目的，具有<strong>远程控制、信息窃取、破坏</strong>等功能。</p>
+<p>木马具有如下特点：</p>
+<ul>
+<li><p>欺骗性：木马都有很强的欺骗性，执行通常都由被攻击者自己执行起来的</p>
+</li>
+<li><p>隐藏性</p>
+</li>
+<li><p>非授权性：执行恶意操作是没有经过用户授权的</p>
+</li>
+<li><p>交互性：主机之外的攻击者可以通过某种方式对主机进行交互</p>
+</li>
+</ul>
+<h3 id="木马的分类"><a href="#木马的分类" class="headerlink" title="木马的分类"></a>木马的分类</h3><p>不同视角有不同的分类</p>
+<h4 id="1-行为视角"><a href="#1-行为视角" class="headerlink" title="1.行为视角"></a>1.行为视角</h4><p>粒度细，如卡巴斯基SafeStream病毒库的分类标准。由下图所示，它是卡巴斯基整个对恶意代码分类体系，最上面的是蠕虫（Worm）和病毒（Virus），接着是后门（Backdoor）和Trojan，接着将Trojan按行为分成了很多类，最后是Rootkit和Exploit。从下往上是按照危害程度进行排序，最上面的危害程度最大、最下面的危害程度最小。</p>
+<img src="/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/1_%E5%8D%A1%E5%B7%B4%E6%96%AF%E5%9F%BA%E5%88%86%E7%B1%BB.png" class="" title="卡巴斯基病毒分类">
+
+<p>下面这张图是卡巴斯基木马的具体分类，木马分为Backdoor(后门)、Trojan（木马）、Rootkit（提权）、Exploit（漏洞利用）。 按道理说，将Exploit放到木马范畴是不合适的，接着Trojan又分为Trojan-Downloader（下载）、Trojan-Dropper（释放）、Trojan-Spy（间谍软件）Trojan-DDoS（拒绝服务）、Trojan-Ransom（磁盘数据加密勒索用户）等。同时，它在命名的时候会根据其行为进行分类。对于卡巴斯基来说，Backdoor包括远程控制型程序，就是这篇文章的远控型木马。</p>
+<img src="/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/2_%E5%8D%A1%E5%B7%B4%E6%96%AF%E5%9F%BA%E6%9C%A8%E9%A9%AC.png" class="" title="卡巴斯基木马分类">
+
+
+<h4 id="2-功能视角"><a href="#2-功能视角" class="headerlink" title="2.功能视角"></a>2.功能视角</h4><p>包括远程控制型、信息获取型、破坏型等。</p>
+<h5 id="远程控制型木马"><a href="#远程控制型木马" class="headerlink" title="远程控制型木马"></a>远程控制型木马</h5><p>远程控制可以对目标计算机进行交互性访问（实时或非实时），可以下发相应的指令触发恶意软件的功能，也能获取目标的各种数据。其交互性是双向的（攻击者-被控制端）。<br>典型案例包括卡巴斯基分类标准下的木马之类Backdoor，还有一些实际案例，包括冰河、网络神TOU、广外女神、网络公牛、黑洞、上兴、彩虹桥、PCShare、灰鸽子等。下图展示了灰鸽子代码。</p>
+<img src="/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/3_%E7%81%B0%E9%B8%BD%E5%AD%90.png" class="" title="灰鸽子">
+
+<h5 id="信息获取型木马"><a href="#信息获取型木马" class="headerlink" title="信息获取型木马"></a>信息获取型木马</h5><p>信息型获取木马的功能是信息获取，可以从键盘输入、内存、文件、数据库、浏览器Cookies等中获取有价值的信息。其交互性是单向交互，是被控制端发送数据给攻击者，比如发送至攻击者的第三方空间、文件服务器、指定邮箱等，或者直接开启FTP服务程序，攻击者直接访问从而下载数据。</p>
+<p>下图展示了BPK软件界面，包括屏幕截屏、信息记录等功能，并发送数据给攻击者。典型案例包括卡巴斯基分类标准下的Trojan-Bank、Trojan-GameThief、Trojan-IM、Trojan-Spy、Trojan-PSW、Trojan-Mailfinder等。</p>
+<img src="/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/4_BPK.png" class="" title="BPK">
+
+<h5 id="破坏性木马"><a href="#破坏性木马" class="headerlink" title="破坏性木马"></a>破坏性木马</h5><p>它的功能是对本地或远程主机系统进行数据破坏、资源消耗等。其交互性也是单向的，攻击者可以向被控制端发送指令，有的情况也没有任何交互。<br>典型案例包括卡巴斯基分类标准下的Trojan-DDoS、Trojan-Ransom、Trojan-ArcBomb、Trojan-Downloader、Trojan-Dropper等。</p>
+<h3 id="木马的植入方式"><a href="#木马的植入方式" class="headerlink" title="木马的植入方式"></a>木马的植入方式</h3><p>木马的欺骗性很强，那么它究竟是通过什么方式去欺骗用户安装这个程序呢？常见方式如下：</p>
+<h4 id="1-网页挂马植入"><a href="#1-网页挂马植入" class="headerlink" title="1. 网页挂马植入"></a>1. 网页挂马植入</h4><p>通过网页挂马实现比较典型，通常需要利用浏览器或相关漏洞，再结合实时新闻、热点话题制作相关网页，将漏洞和网页结合，最后生成恶意网页，当用户打开网页时，远程的木马程序会自动下载和安装。常见的漏洞比如：MS06014、MS10003。</p>
+<h4 id="2-电子邮件植入（鱼叉攻击）"><a href="#2-电子邮件植入（鱼叉攻击）" class="headerlink" title="2. 电子邮件植入（鱼叉攻击）"></a>2. 电子邮件植入（鱼叉攻击）</h4><p>电子邮件植入最常见的是通过附件的形式，当用户打开附件时被注入木马；另一种是电子邮件与恶意网页相结合，由于电子邮件是支持HTML正文的，如果将相关漏洞植入到网页中，也是能够达到相关的效果。即使不打开附件，选中就会被植入（以HTML格式发送，如求职者）</p>
+<img src="/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/5_%E9%B1%BC%E5%8F%89%E6%94%BB%E5%87%BB.png" class="" title="鱼叉攻击">
+
+<h4 id="3-文档捆绑植入（鱼叉攻击偏多）"><a href="#3-文档捆绑植入（鱼叉攻击偏多）" class="headerlink" title="3. 文档捆绑植入（鱼叉攻击偏多）"></a>3. 文档捆绑植入（鱼叉攻击偏多）</h4><p>这也是一种有效的方式，通过office文档、pdf文档漏洞等将文档进行捆绑，当用户打开文档时会触发漏洞，从而释放木马或执行shellcode执行远程攻击。这种文档同时也常用于邮件附件的形式发送。</p>
+<h4 id="4-伪装欺骗植入"><a href="#4-伪装欺骗植入" class="headerlink" title="4. 伪装欺骗植入"></a>4. 伪装欺骗植入</h4><p>比如可以对exe的文件后缀名进行修改，在原本一个“exe”文件前增加“doc”，然后输入很多空格让其exe不显示出来，再修改成文档类图标，从而进行伪装；另一种是更改后缀名（Unicode翻转字符），将“cod”进行翻转，再就是图标伪装等。</p>
+<h4 id="5-捆绑植入"><a href="#5-捆绑植入" class="headerlink" title="5. 捆绑植入"></a>5. 捆绑植入</h4><p>EXE捆绑、文档嵌入、多媒体文件、电子书植入。（CVE-2018-20250）WinRAR捆绑文件的方法。</p>
+<h4 id="6-其他"><a href="#6-其他" class="headerlink" title="6. 其他"></a>6. 其他</h4><p>比如特定U盘植入（故意丢弃、或者工作U盘、数据拷贝等）、社会工程等。</p>
+<h3 id="木马的通信方式"><a href="#木马的通信方式" class="headerlink" title="木马的通信方式"></a>木马的通信方式</h3><p>木马的控制端和被控端要通信，首先要建立传输的通道，常见的传输通道构建需要通过IP地址、端口等信息、第三方网站地址实现。建立通信的方式包括两类：正向连接;   反向连接</p>
+<h4 id="1-正向连接"><a href="#1-正向连接" class="headerlink" title="1.正向连接"></a>1.正向连接</h4><p>正向连接是指控制端主动去连接被控制端，需要被控制端开放相关端口来供控制端连接。首先，控制端会去连接被控端，然后发送相关的控制指令，被控端会将主机上的相关信息反馈给控制端，通常包括IP地址、MAC地址、计算机名称、内存大小等。</p>
+<img src="/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/6_%E6%AD%A3%E5%90%91%E8%BF%9E%E6%8E%A5.png" class="" title="正向连接">
+
+<p>这种连接会存在一个问题，如果对方系统存在防火墙的话，通常会进行拦截。正向连接的优缺点如下：</p>
+<p>优点:</p>
+<ul>
+<li>攻击者无需外部IP地址，只要能够上网，就能够去连接远程主机</li>
+<li>木马样本不会泄露攻击者IP地址，木马不会主动去对外连接，不会泄露IP</li>
+</ul>
+<p>缺点:</p>
+<ul>
+<li>可能被防火墙阻挡</li>
+<li>被攻击者必须具备外部IP地址</li>
+<li>定位被攻击者相对困难，比如被攻击者IP是否变化？目标主机何时上线？当然有些木马，在目标主机主机能够上网时，会给指定邮箱发送IP地址信息，攻击者收到IP地址后会去主动连接主机。</li>
+</ul>
+<h4 id="2-反向连接"><a href="#2-反向连接" class="headerlink" title="2.反向连接"></a>2.反向连接</h4><p>第一种方式是右边的被控端（服务端）主动连接控制端主机，这种情况下防火墙一般会允许通过，尤其是目前很多木马程序采用80端口作为远程连接的端口，防火墙会非常信任。</p>
+<img src="/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/7_%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A5.png" class="" title="反向连接">
+
+<p>第一种方式的优缺点如下：</p>
+<p>优点：</p>
+<ul>
+<li>通过防火墙相对容易</li>
+<li>可以控制局域网内的目标</li>
+<li>攻击目标随时上线，攻击者可以进行随时控制，因为攻击者控制服务器一直在线，只要被控端上线就会连接过来，甚至可以通过短信等方式告知。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>样本会暴露控制服务器信息（域名或IP）</li>
+<li>攻击者通常应当具有外部IP</li>
+</ul>
+<p>关于反向连接，还有另外一种方式，被控端和控制端之间有个第三方的肉机，它们都和第三方通信，比如肉机、Web服务器。</p>
+<img src="/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/8_%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A52.png" class="" title="反向连接2">
+
+<p>优点：</p>
+<ul>
+<li>可绕过防火墙，自动连接上线，不易被发现（代理）</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>肉鸡的稳定性需要保障</li>
+</ul>
+<p>3.通信协议<br>TCP协议<br>稳定、易被发现<br>HTTP协议伪装</p>
+<p>UDP协议<br>和TCP一样也有正向、反向两种方式<br>负载比TCP少，但是可靠性低</p>
+<p>ICMP＋TCP／UDP<br>该方式平时不开启端口，但会监听ICMP报文，以感知木马数据。当攻击者想对这台主机控制时，可以发送ICMP报文，发过来之后控制端监听到特定报文时，就知道到想要进行监听并开启相关端口。ICMP报文是由系统内核或进程直接处理而不是通过端口，其方式比较一笔，一般不会被防火墙过滤。</p>
+<p>下图展示了冰河写的后门程序，叫BITS（Background Intelligent Transfer Service），是一种难以觉察的后门，采用ICMP＋TCP／UDP方式实现。进程管理器首先看不到，另外平时没有端口，只是在系统中充当卧D的角色，并且提供正向连接和反向连接两种功能，适用于不同的操作系统（Windows2000&#x2F;XP&#x2F;2003），通过其提供的Shell，你能做很多事情。</p>
+<p>远控木马的常见功能及意图<br>首先看下木马的结构，一般由三部分组成，包括木马配置程序、控制端程序（客户端）和被控制端程序（服务端程序）。其中配置程序用于配置被控端的特征和功能，包括是否创建服务、是否隐藏等。</p>
+<p>下图展示了PcShare的主控界面，其中“生成客户”点击后就是木马的配置过程。</p>
+<p>下图展示了木马上线后的控制界面，包括目录浏览、屏幕控制、进程列表、窗口列表、服务管理、注册表编辑、键盘记录等。</p>
+<p>下面是灰鸽子的主界面。</p>
+<p>木马的典型功能包括：</p>
+<p>文件管理</p>
+<p>进程管理</p>
+<p>服务管理</p>
+<p>注册表管理</p>
+<p>屏幕监控、屏幕截取</p>
+<p>语音视频截获</p>
+<p>键盘记录</p>
+<p>窗口管理</p>
+<p>远程Shell</p>
+<p>…</p>
+<p>1.文件管理<br>文件管理主要目的是获取目标的文件系统信息，通常包括如下功能：</p>
+<p>浏览各磁盘文件</p>
+<p>上传、下载文件（包括上传恶意文件）</p>
+<p>执行文件</p>
+<p>删除文件</p>
+<p>修改文件信息（如文件属性、时间）</p>
+<p>可能涉及的部分关键函数: GetLogicalDriveString、 GetDiskFreeSpace(Ex)、GetVolumeInformation、GetDriveType、 FindFirstFile、 FindNextFile、 FindClose、DeleteFile、SHFileOperation 、SHEmptyRecycledBin、 MoveFile、 CreateFile( Ex) 、WriteFile 等</p>
+<p>2.进程管理<br>查看、结束、暂停目标系统进程。具体目的包括：</p>
+<p>查看目标系统的环境信</p>
+<p>通过进程查看功能可以实现查看安装了哪些软件？目前对方正在做什么？</p>
+<p>停止或暂停目标系统的相关程序，从而形成干扰</p>
+<p>如反病毒程序</p>
+<p>涉 及 的 关 键 函 数 包 括:CreateToolhelp32SnapShot、 Process32First、Process32Next、 EnumProcesses、 GetCurrentProcess、 OpenProcessToken、LookupPrivilegeValue、 AdjustTokenPrivilege、 OpenProcess、 GetModuleBaseName、EnumProcessModules、 GetModuleFileNameEx、 TerminateProcess 等。</p>
+<p>3.服务管理<br>主要功能是查看并管理目标系统的服务，包括：</p>
+<p>创建服务</p>
+<p>启动&#x2F;停止服务</p>
+<p>删除服务</p>
+<p>具体作用如下：</p>
+<p>查看目标系统的环境信息</p>
+<p>安装了哪些软件？启动了哪些服务？</p>
+<p>停止或暂停目标系统的相关程序</p>
+<p>如反病毒程序</p>
+<p>可能涉及的关键函数: OpenSCManager、EnumServiceStatus、OpenService、 QueryServiceConfig、 StartService、StopService、 DeleteService 等。</p>
+<p>下图是PcShare提供的服务管理示例。</p>
+<p>4.注册表管理<br>注册表管理可以浏览注册表的信息及键值，也能创建、删除一些键值。</p>
+<p>可能涉及的关键函数包括: RegQueryInfoKey、RegEnumKeyEx、 RegEnumValue、 RegCreateKeyEx、RegDeleteKey、 RegSetValueEx、 RegDeleteValue 等。</p>
+<p>5.屏幕控制<br>利用 keybd_event 或者SendInput 模拟按键PrintScreen</p>
+<p>利用 CreateDC 获取当前屏幕设备的句柄，然后获取屏幕图像</p>
+<p>6.键鼠操作<br>下图是PcShare远程控制的键盘控制，主要涉及函数：</p>
+<p>SetCursorPos</p>
+<p>mouse_event</p>
+<p>SendInput</p>
+<p>7.屏幕截取<br>对于有些木马来说，会认为屏幕控制功能流量消耗很大，不希望引起被控制着注意，有时候进行屏幕抓取即可。</p>
+<p>抓取屏幕（单张、多张连续）</p>
+<p>了解目标主机的当前操作情况</p>
+<p>常见函数包括：</p>
+<p>CreateDC</p>
+<p>CreateCompatibleBitmap</p>
+<p>BitBlt</p>
+<p>8.语音视频截获<br>录音包括窃取对方谈话信息、窃取对方对外语音通话（如QQ、SKYPE、MSN等），甚至即使是在断网的环境也可能会被录音，当连接网络后再传输对应的数据。另一个是摄像头，主要包括打开摄像头（了解对方现场环境）、摄像录制（敲Z）等。下图展示了语音视频截获的过程。</p>
+<p>9.键盘记录<br>获取目标电脑中的键盘击键信息，包括：</p>
+<p>用户名、密码信息</p>
+<p>QQ、邮箱、网银、网上证券、网络游戏、支付宝等</p>
+<p>聊天信息</p>
+<p>部分木马支持中文汉字记录</p>
+<p>其他功能还有窗口管理，比如查看目标主机目前开启了哪些窗口，了解目标用户正在做什么；再就是远程Shell，包括交互式或非交互式Shell（远程交互的Cmd.exe）、直接执行命令或第三方程序等。部分木马功能如下图所示，其中很多功能所有木马都具有，比如文件管理、注册表管理、屏幕监控，也有一些功能是特有的。</p>
+<p>最后简单总结下编写木马的关键性<br>功能适当［精简灵活］</p>
+<p>适用性强［功能、权限］</p>
+<p>高效、稳定、隐蔽［传输］</p>
+<p>可穿透性</p>
+<p>自更新、自销毁</p>
+<p>反调试、反分析、防追踪、反制对抗</p>
+<p>持续免杀性能等</p>
+<p>特征值、通用主机行为、异常的通信流量</p>
+<p>…</p>
+<p>既然远控木马也是恶意软件，那么怎么检测木马呢？下面简单提供了一些思路。</p>
+<p>静态文件特征（木马程序是独立的文件，就存在静态文件特征）</p>
+<p>网络流量特征（交互性木马检测流量）</p>
+<p>系统行为特征（木马执行时创建线程、进程、驱动、网络等行为）</p>
+<p>功能行为特征（录音、截屏、键盘、shell行为检测）</p>
+<p>攻击意图（自动化检测功能是正常或恶意，当然难度也大）</p>
+<p>…</p>
+<p>显示推荐内容</p>
+<p>daibaohui</p>
+<p>8</p>
+<p>101<br>打赏</p>
+<p>0</p>
+<p>专栏目录<br>举报<br>显示</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>萱萱子
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xuanls.github.io/%E7%BD%91%E7%BB%9C%E6%9C%A8%E9%A9%AC/" title="网络木马">http://xuanls.github.io/网络木马/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%A8%E9%A9%AC/" rel="tag"># 木马</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/" rel="prev" title="对抗机器学习(AML)">
+      <i class="fa fa-chevron-left"></i> 对抗机器学习(AML)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%A8%E9%A9%AC%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">木马的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%A8%E9%A9%AC%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">木马的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%A1%8C%E4%B8%BA%E8%A7%86%E8%A7%92"><span class="nav-number">2.1.</span> <span class="nav-text">1.行为视角</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%8A%9F%E8%83%BD%E8%A7%86%E8%A7%92"><span class="nav-number">2.2.</span> <span class="nav-text">2.功能视角</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%9E%8B%E6%9C%A8%E9%A9%AC"><span class="nav-number">2.2.1.</span> <span class="nav-text">远程控制型木马</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E5%9E%8B%E6%9C%A8%E9%A9%AC"><span class="nav-number">2.2.2.</span> <span class="nav-text">信息获取型木马</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A0%B4%E5%9D%8F%E6%80%A7%E6%9C%A8%E9%A9%AC"><span class="nav-number">2.2.3.</span> <span class="nav-text">破坏性木马</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%A8%E9%A9%AC%E7%9A%84%E6%A4%8D%E5%85%A5%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">木马的植入方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%BD%91%E9%A1%B5%E6%8C%82%E9%A9%AC%E6%A4%8D%E5%85%A5"><span class="nav-number">3.1.</span> <span class="nav-text">1. 网页挂马植入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E6%A4%8D%E5%85%A5%EF%BC%88%E9%B1%BC%E5%8F%89%E6%94%BB%E5%87%BB%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">2. 电子邮件植入（鱼叉攻击）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%96%87%E6%A1%A3%E6%8D%86%E7%BB%91%E6%A4%8D%E5%85%A5%EF%BC%88%E9%B1%BC%E5%8F%89%E6%94%BB%E5%87%BB%E5%81%8F%E5%A4%9A%EF%BC%89"><span class="nav-number">3.3.</span> <span class="nav-text">3. 文档捆绑植入（鱼叉攻击偏多）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E4%BC%AA%E8%A3%85%E6%AC%BA%E9%AA%97%E6%A4%8D%E5%85%A5"><span class="nav-number">3.4.</span> <span class="nav-text">4. 伪装欺骗植入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E6%8D%86%E7%BB%91%E6%A4%8D%E5%85%A5"><span class="nav-number">3.5.</span> <span class="nav-text">5. 捆绑植入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%85%B6%E4%BB%96"><span class="nav-number">3.6.</span> <span class="nav-text">6. 其他</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%A8%E9%A9%AC%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">木马的通信方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%AD%A3%E5%90%91%E8%BF%9E%E6%8E%A5"><span class="nav-number">4.1.</span> <span class="nav-text">1.正向连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A5"><span class="nav-number">4.2.</span> <span class="nav-text">2.反向连接</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="萱萱子"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">萱萱子</p>
+  <div class="site-description" itemprop="description">春风得意马蹄疾 一梦黄粱二十年</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuanls" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuanls" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://xinglugu.huijiwiki.com/wiki/%E9%A6%96%E9%A1%B5" title="https:&#x2F;&#x2F;xinglugu.huijiwiki.com&#x2F;wiki&#x2F;%E9%A6%96%E9%A1%B5" rel="noopener" target="_blank">星露谷物语</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2024-04 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">萱萱子</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">13k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">22 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '1a79672749cf96009f69',
+      clientSecret: '604d6074313c1b5bf4005961ac836a4e87482dc7',
+      repo        : 'issues',
+      owner       : 'xuanls',
+      admin       : ['xuanls'],
+      id          : '37194615f20663fa4f08d0f792b56add',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":30,"height":60},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

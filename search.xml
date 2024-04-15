@@ -1,11 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>01-docker-初识</title>
-    <url>/01-docker-%E5%88%9D%E8%AF%86/</url>
-    <content><![CDATA[]]></content>
+    <title>HTTP协议</title>
+    <url>/HTTP%E5%8D%8F%E8%AE%AE/</url>
+    <content><![CDATA[<h2 id="HTTP基本概念"><a href="#HTTP基本概念" class="headerlink" title="HTTP基本概念"></a>HTTP基本概念</h2><p>RFC文档中的定义：</p>
+<img src="/HTTP%E5%8D%8F%E8%AE%AE/2.png" class="" title="HTTP定义">
+<ol>
+<li>首先是a stateless，一个无状态的协议。即连续的两个请求中，后一个请求不能依赖前一个请求中相应的字段或者head、头部等。</li>
+<li>第二是一个request&#x2F;response方式，基于一个连接，首先由客户端来发起请求，然后服务器在这个连接上发起一个response响应</li>
+<li>第三个关键词是extensible semantics，语义可扩展。比如说有些服务器还在使用很老的ICP1.0的版本，不支持HP1.1协议。但是浏览器是支持ICP1.1协议的，那么浏览器和服务器仍然可以正常的通讯。</li>
+<li>第四个关键词就是self-descriptive。即传递的消息是一个自描述的消息。从一个请求中就知道这段消息到底是一段视频一张图片还是一段音频，而不需要依赖于其他的请求。</li>
+<li>第五个关键词就是hypertext information，这是一个超文本系统，所传输的不只有文档，还有图片、音频视频等内容。</li>
+</ol>
+<h2 id="HTTP请求过程"><a href="#HTTP请求过程" class="headerlink" title="HTTP请求过程"></a>HTTP请求过程</h2><img src="/HTTP%E5%8D%8F%E8%AE%AE/1_HTTP%E8%AF%B7%E6%B1%82.png" class="" title="HTTP请求">
+<p>首先有一个服务器，监听打开了80或者443的web端口。浏览器从UIL中首先解析出来域名，然后根据域名去查询DNS，获取到域名对应的IP地址。接着浏览器用这个IP地址与服务器建立起了TCP连接。如果使用的是HTPS，那么还要完成TLS和SSL的握手。在建立好连接以后，需要构造HTTP请求。在构造请求过程中，需要填充相应的HTTP头部，包括上下文所需要的信息。最后通过这个链接发起HTTP请求。</p>
+<p>当服务器收到这个HTTP请求以后，完成资源的表述，把HTML页面或者javascript页面等作为包体返回给浏览器。浏览器在渲染引擎中就会解析这个响应。根据这个响应中具备的其他超链接、图片等资源，在再次发起新的HTTP请求，这就是最基本的浏览器发起HTTP请求的流程。</p>
+<h2 id="基于ABNF的HTTP协议消息"><a href="#基于ABNF的HTTP协议消息" class="headerlink" title="基于ABNF的HTTP协议消息"></a>基于ABNF的HTTP协议消息</h2><p>一个标准定义语法，用到了再学</p>
+]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
       <tags>
-        <tag>docker容器</tag>
+        <tag>HTTP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux提权</title>
+    <url>/Linux%E6%8F%90%E6%9D%83/</url>
+    <content><![CDATA[<h1 id="Part1-sudo介绍"><a href="#Part1-sudo介绍" class="headerlink" title="Part1 sudo介绍"></a>Part1 sudo介绍</h1><h2 id="什么是sudo"><a href="#什么是sudo" class="headerlink" title="什么是sudo"></a>什么是sudo</h2><p>简单的说，sudo 是一种&#x3D;&#x3D;权限管理机制&#x3D;&#x3D;，管理员可以授权于一些普通用户去执行一些 root 执行的操作，提示输入密码时该密码为当前用户的密码，而不需要知道 root 的密码。不过有时间限制，Ubuntu默认为一次时长15分钟</p>
+<span id="more"></span>
+
+<p>严谨些说，sudo 允许一个已授权用户以超级用户或者其它用户的角色运行一个命令。当然，能做什么不能做什么都是通过安全策略来指定的。sudo 支持插件架构的安全策略，并能把输入输出写入日志。第三方可以开发并发布自己的安全策略和输入输出日志插件，并让它们无缝的和 sudo 一起工作。默认的安全策略记录在 &#x3D;&#x3D;&#x2F;etc&#x2F;sudoers&#x3D;&#x3D; 文件中。而安全策略可能需要用户通过密码来验证他们自己。也就是在用户执行 sudo 命令时要求用户输入&#x3D;&#x3D;自己账号的密码。&#x3D;&#x3D;如果验证失败，sudo 命令将会退出。</p>
+<p>默认的etc&#x2F;sudoers配置文件：</p>
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C1.png" alt="图片"></p>
+<br/>
+
+<h1 id="Part2-CVE-2021-3156漏洞"><a href="#Part2-CVE-2021-3156漏洞" class="headerlink" title="Part2 CVE-2021-3156漏洞"></a>Part2 CVE-2021-3156漏洞</h1><h2 id="1-漏洞简介"><a href="#1-漏洞简介" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>2021年1月26日，Linux安全工具&#x3D;&#x3D;sudo&#x3D;&#x3D;被发现严重的基于&#x3D;&#x3D;堆缓冲区溢出&#x3D;&#x3D;漏洞。利用这一漏洞，攻击者无需知道用户密码，一样可以获得root权限，并且是在默认配置下。此漏洞已分配为CVE-2021-3156，危险等级评分为7分。</p>
+<h2 id="2-原理介绍"><a href="#2-原理介绍" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><p>漏洞发生的原因在于sudo错误地转义了参数中的反斜杠。</p>
+<p>sudo命令允许用户以超级用户或&#x2F;etc&#x2F;sudoers文件中指定的其他用户的身份运行指定命令cmd。设置真实和有效用户ID与用户组ID，以匹配&#x2F;etc&#x2F;passwd文件中指定的目标用户和&#x2F;etc&#x2F;group文件中指定的用户组（除非指定了“-P”选项）。如果调用者是超级用户，或目标用户与调用者是同一用户，则无须提供密码。否则，sudo通常要求用户提供密码进行认证。注意，按照默认的配置，这里所谓的密码认证指的是用户的密码，不是超级用户的密码。</p>
+<p>一旦获得认证，立即更新&#x2F;var&#x2F;run&#x2F;sudo目录中的用户时间记录。在之后的短时间内（5分钟，除非sudoers文件中另有设定），用户可以随时运行sudo命令而不必提供密码。</p>
+<p>sudo与sudoedit是一个程序两个名字。运行sudoedit命令，相当于运行“sudo -e”命令。sudoedit命令主要用于编辑&#x2F;etc&#x2F;sudoers文件，参见“-e”选项的说明。</p>
+<p>当sudo通过-s或-i命令行选项在shell模式下运行命令时，它将在命令参数中使用反斜杠转义特殊字符。但使用-s或-i标志运行sudoedit时，实际上并未进行转义，从而可能导致缓冲区溢出。因此只要存在sudoers文件（通常是&#x2F;etc&#x2F;sudoers），攻击者就可以使用本地普通用户利用sudo获得系统root权限。</p>
+<h2 id="3-影响版本"><a href="#3-影响版本" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>受影响版本<br>Sudo 1.8.2 – 1.8.31p2<br>Sudo 1.9.0 – 1.9.5p1</p>
+<p>不受影响版本<br>sudo &#x3D;&gt;1.9.5p2</p>
+<h2 id="4-漏洞复现"><a href="#4-漏洞复现" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><br/>
+
+<h1 id="Part3-CVE-2023-22809漏洞"><a href="#Part3-CVE-2023-22809漏洞" class="headerlink" title="Part3 CVE-2023-22809漏洞"></a>Part3 CVE-2023-22809漏洞</h1><h2 id="1-漏洞简介-1"><a href="#1-漏洞简介-1" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>在Sudo 版本 1.9.12p1中使用sudoedit时，sudoers的保护机制可能被绕过，从而导致通过编辑未经授权的文件实现权限升级，Sudo中的sudoedit对处理用户提供的环境变量（如SUDO_EDITOR、VISUAL和EDITOR）中传递的额外参数存在缺陷。当用户指定的编辑器包含绕过sudoers策略的“–”参数时，拥有sudoedit访问权限的本地攻击者可通过将任意条目附加到要处理的文件列表中，最终在目标系统上实现权限提升（由普通用户到超级用户，即”root”）</p>
+<h2 id="2-原理介绍-1"><a href="#2-原理介绍-1" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><br/>
+
+<h2 id="3-影响版本-1"><a href="#3-影响版本-1" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>sudo 1.8.0-sudo 1.9.12p1</p>
+<h2 id="4-漏洞复现-1"><a href="#4-漏洞复现-1" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><ol>
+<li>查看当前sudo版本</li>
+</ol>
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C2.png"></p>
+<p>如上，为受影响版本，若不是，则在<a href="https://">https://www.sudo.ws/dist/</a>下载相应版本后解压、配置、编译并安装</p>
+<br/>
+
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C3.png" alt="图片"></p>
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C4.png" alt="图片"></p>
+<br/>
+
+<h2 id="5-缓解措施"><a href="#5-缓解措施" class="headerlink" title="5. 缓解措施"></a>5. 缓解措施</h2><p>1、为防止 sudoedit 使用用户指定的编辑器，可向 sudoers 文件中添加以下内容： Defaults!sudoedit env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR”<br>2、使用“Cmnd_Alias”限制编辑器编辑指定文件时，如： Cmnd_Alias EDIT_MOTD &#x3D; sudoedit &#x2F;etc&#x2F;motd Defaults!EDIT_MOTD env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR” user ALL &#x3D; EDIT_MOTD</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><p><a href="https://">https://www.cnblogs.com/20181309lzy/p/14710439.html</a></p>
+</li>
+<li><p><a href="https://">https://wker.com/linux-command/sudo-sudoedit.html</a></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>漏洞</category>
+      </categories>
+      <tags>
+        <tag>漏洞</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -63,7 +131,7 @@
 这里写"More"会在网页中隐藏后面内容,跳转到详情页才能看 -->
 
 <p>超链接用法:<br>[超链接显示名] (超链接地址 “超链接title”)<br><a href="%E8%B6%85%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80" title="超链接title">超链接显示名</a></p>
-<p><a href="mailto:&#49;&#x32;&#51;&#64;&#113;&#113;&#x2e;&#x63;&#x6f;&#109;">&#49;&#x32;&#51;&#64;&#113;&#113;&#x2e;&#x63;&#x6f;&#109;</a> &lt;邮箱&gt;</p>
+<p><a href="mailto:&#x31;&#50;&#51;&#x40;&#113;&#113;&#x2e;&#99;&#x6f;&#109;">&#x31;&#50;&#51;&#x40;&#113;&#113;&#x2e;&#99;&#x6f;&#109;</a> &lt;邮箱&gt;</p>
 <p><a href="https://123.com/">https://123.com</a> &lt;网址&gt;</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph TB</span><br><span class="line">  A(把大象放进去) --&gt; B&#123;&quot;冰箱小不小？&quot;&#125;</span><br><span class="line">  B --&gt; |不小| C[把冰箱门关上]</span><br><span class="line">  B --&gt;   |小| D[换个大点的冰箱]</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
@@ -71,63 +139,6 @@
       </categories>
       <tags>
         <tag>备忘</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>start</title>
-    <url>/start/</url>
-    <content><![CDATA[<h2 id="第一篇博客"><a href="#第一篇博客" class="headerlink" title="第一篇博客"></a>第一篇博客</h2><h3 id="不知道写什么"><a href="#不知道写什么" class="headerlink" title="不知道写什么"></a>不知道写什么</h3>]]></content>
-  </entry>
-  <entry>
-    <title>Linux提权</title>
-    <url>/Linux%E6%8F%90%E6%9D%83/</url>
-    <content><![CDATA[<h1 id="Part1-sudo介绍"><a href="#Part1-sudo介绍" class="headerlink" title="Part1 sudo介绍"></a>Part1 sudo介绍</h1><h2 id="什么是sudo"><a href="#什么是sudo" class="headerlink" title="什么是sudo"></a>什么是sudo</h2><p>简单的说，sudo 是一种&#x3D;&#x3D;权限管理机制&#x3D;&#x3D;，管理员可以授权于一些普通用户去执行一些 root 执行的操作，提示输入密码时该密码为当前用户的密码，而不需要知道 root 的密码。不过有时间限制，Ubuntu默认为一次时长15分钟</p>
-<span id="more"></span>
-
-<p>严谨些说，sudo 允许一个已授权用户以超级用户或者其它用户的角色运行一个命令。当然，能做什么不能做什么都是通过安全策略来指定的。sudo 支持插件架构的安全策略，并能把输入输出写入日志。第三方可以开发并发布自己的安全策略和输入输出日志插件，并让它们无缝的和 sudo 一起工作。默认的安全策略记录在 &#x3D;&#x3D;&#x2F;etc&#x2F;sudoers&#x3D;&#x3D; 文件中。而安全策略可能需要用户通过密码来验证他们自己。也就是在用户执行 sudo 命令时要求用户输入&#x3D;&#x3D;自己账号的密码。&#x3D;&#x3D;如果验证失败，sudo 命令将会退出。</p>
-<p>默认的etc&#x2F;sudoers配置文件：</p>
-<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C1.png" alt="图片"></p>
-<br/>
-
-<h1 id="Part2-CVE-2021-3156漏洞"><a href="#Part2-CVE-2021-3156漏洞" class="headerlink" title="Part2 CVE-2021-3156漏洞"></a>Part2 CVE-2021-3156漏洞</h1><h2 id="1-漏洞简介"><a href="#1-漏洞简介" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>2021年1月26日，Linux安全工具&#x3D;&#x3D;sudo&#x3D;&#x3D;被发现严重的基于&#x3D;&#x3D;堆缓冲区溢出&#x3D;&#x3D;漏洞。利用这一漏洞，攻击者无需知道用户密码，一样可以获得root权限，并且是在默认配置下。此漏洞已分配为CVE-2021-3156，危险等级评分为7分。</p>
-<h2 id="2-原理介绍"><a href="#2-原理介绍" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><p>漏洞发生的原因在于sudo错误地转义了参数中的反斜杠。</p>
-<p>sudo命令允许用户以超级用户或&#x2F;etc&#x2F;sudoers文件中指定的其他用户的身份运行指定命令cmd。设置真实和有效用户ID与用户组ID，以匹配&#x2F;etc&#x2F;passwd文件中指定的目标用户和&#x2F;etc&#x2F;group文件中指定的用户组（除非指定了“-P”选项）。如果调用者是超级用户，或目标用户与调用者是同一用户，则无须提供密码。否则，sudo通常要求用户提供密码进行认证。注意，按照默认的配置，这里所谓的密码认证指的是用户的密码，不是超级用户的密码。</p>
-<p>一旦获得认证，立即更新&#x2F;var&#x2F;run&#x2F;sudo目录中的用户时间记录。在之后的短时间内（5分钟，除非sudoers文件中另有设定），用户可以随时运行sudo命令而不必提供密码。</p>
-<p>sudo与sudoedit是一个程序两个名字。运行sudoedit命令，相当于运行“sudo -e”命令。sudoedit命令主要用于编辑&#x2F;etc&#x2F;sudoers文件，参见“-e”选项的说明。</p>
-<p>当sudo通过-s或-i命令行选项在shell模式下运行命令时，它将在命令参数中使用反斜杠转义特殊字符。但使用-s或-i标志运行sudoedit时，实际上并未进行转义，从而可能导致缓冲区溢出。因此只要存在sudoers文件（通常是&#x2F;etc&#x2F;sudoers），攻击者就可以使用本地普通用户利用sudo获得系统root权限。</p>
-<h2 id="3-影响版本"><a href="#3-影响版本" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>受影响版本<br>Sudo 1.8.2 – 1.8.31p2<br>Sudo 1.9.0 – 1.9.5p1</p>
-<p>不受影响版本<br>sudo &#x3D;&gt;1.9.5p2</p>
-<h2 id="4-漏洞复现"><a href="#4-漏洞复现" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><br/>
-
-<h1 id="Part3-CVE-2023-22809漏洞"><a href="#Part3-CVE-2023-22809漏洞" class="headerlink" title="Part3 CVE-2023-22809漏洞"></a>Part3 CVE-2023-22809漏洞</h1><h2 id="1-漏洞简介-1"><a href="#1-漏洞简介-1" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>在Sudo 版本 1.9.12p1中使用sudoedit时，sudoers的保护机制可能被绕过，从而导致通过编辑未经授权的文件实现权限升级，Sudo中的sudoedit对处理用户提供的环境变量（如SUDO_EDITOR、VISUAL和EDITOR）中传递的额外参数存在缺陷。当用户指定的编辑器包含绕过sudoers策略的“–”参数时，拥有sudoedit访问权限的本地攻击者可通过将任意条目附加到要处理的文件列表中，最终在目标系统上实现权限提升（由普通用户到超级用户，即”root”）</p>
-<h2 id="2-原理介绍-1"><a href="#2-原理介绍-1" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><br/>
-
-<h2 id="3-影响版本-1"><a href="#3-影响版本-1" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>sudo 1.8.0-sudo 1.9.12p1</p>
-<h2 id="4-漏洞复现-1"><a href="#4-漏洞复现-1" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><ol>
-<li>查看当前sudo版本</li>
-</ol>
-<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C2.png"></p>
-<p>如上，为受影响版本，若不是，则在<a href="https://">https://www.sudo.ws/dist/</a>下载相应版本后解压、配置、编译并安装</p>
-<br/>
-
-<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C3.png" alt="图片"></p>
-<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C4.png" alt="图片"></p>
-<br/>
-
-<h2 id="5-缓解措施"><a href="#5-缓解措施" class="headerlink" title="5. 缓解措施"></a>5. 缓解措施</h2><p>1、为防止 sudoedit 使用用户指定的编辑器，可向 sudoers 文件中添加以下内容： Defaults!sudoedit env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR”<br>2、使用“Cmnd_Alias”限制编辑器编辑指定文件时，如： Cmnd_Alias EDIT_MOTD &#x3D; sudoedit &#x2F;etc&#x2F;motd Defaults!EDIT_MOTD env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR” user ALL &#x3D; EDIT_MOTD</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><p><a href="https://">https://www.cnblogs.com/20181309lzy/p/14710439.html</a></p>
-</li>
-<li><p><a href="https://">https://wker.com/linux-command/sudo-sudoedit.html</a></p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>漏洞</category>
-      </categories>
-      <tags>
-        <tag>漏洞</tag>
-        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -518,6 +529,17 @@
       </tags>
   </entry>
   <entry>
+    <title>网络蠕虫</title>
+    <url>/%E7%BD%91%E7%BB%9C%E8%A0%95%E8%99%AB/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>软件安全</category>
+      </categories>
+      <tags>
+        <tag>蠕虫</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>计网实验</title>
     <url>/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/</url>
     <content><![CDATA[<blockquote>
@@ -537,6 +559,7 @@
 <li>OSFP路由协议</li>
 </ol>
 </li>
+<li>VLAN配置实验</li>
 </ol>
 <hr>
 <h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><p><strong>注意</strong>：</p>
@@ -574,6 +597,22 @@
 <h4 id="OSFP路由协议"><a href="#OSFP路由协议" class="headerlink" title="OSFP路由协议"></a>OSFP路由协议</h4><p>照例，先连线，配主机IP（可以用DHCP配，不过主机少的话，手配更省事点），路由器的IP（什么时候这个也能自动化）</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 我也没太搞懂这个</span></span><br><span class="line">&gt; osfp <span class="number">1</span>    <span class="comment">// 应该是版本？</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">个人理解：area是提前规划好的，有单区域、多区域（配起来好像没啥区别），所有和路由器端口直连的网段的IP都写上，子网掩码格式变了（没试过别的行不行）</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">&gt; network <span class="number">192.168</span><span class="number">.2</span><span class="number">.0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.255</span> area <span class="number">2</span> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>配好之后，路由器之间会开始泛洪，互相交换链路信息，可以查看路由表，其中’o’开头的即为学习到的路由，带有时间信息，可以查看彼此之间学习的先后顺序（没啥用），至此，应该就可以测试连通性了</p>
+<h3 id="VLAN配置实验"><a href="#VLAN配置实验" class="headerlink" title="VLAN配置实验"></a>VLAN配置实验</h3><p>VLAN网络为在交换机中配置，不涉及主机，主机只需配置相关网段的IP和默认网关（需要的话）</p>
+<h4 id="实验一"><a href="#实验一" class="headerlink" title="实验一"></a>实验一</h4><img src="/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/2-vlan%E5%AE%9E%E9%AA%8C1.png" class="" title="vlan实验1">
+<p>实验1实现跨交换机的同一vlan内的通信，不同vlan无法通信</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 先进config</span></span><br><span class="line">&gt; vlan <span class="number">10</span> <span class="comment">// 声明一个虚拟局域网vlan 10</span></span><br><span class="line">&gt; <span class="type">int</span> g0/<span class="number">1</span> <span class="comment">// 进入该vlan下的某个端口</span></span><br><span class="line">&gt; switchport access vlan <span class="number">10</span> <span class="comment">// 将端口设为access，并划入该vlan中</span></span><br><span class="line"><span class="comment">// 如果该vlan有多个端口，重复上面两步</span></span><br><span class="line">&gt; <span class="built_in">exit</span></span><br><span class="line"><span class="comment">// 该交换机涉及几个vlan，就重复几次</span></span><br><span class="line"><span class="comment">//此外，有些端口需要允许不同vlan通过，此时要设置为trunk模式</span></span><br><span class="line">&gt; <span class="type">int</span> g3/<span class="number">0</span> <span class="comment">// 进入相关端口</span></span><br><span class="line">&gt; switchport mode trunk <span class="comment">// 设置为trunk模式</span></span><br><span class="line">&gt; show vlan <span class="comment">// 查看该交换机的vlan配置情况</span></span><br></pre></td></tr></table></figure>
+<img src="/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/4-trunk.png" class="" title="trunk">
+
+<p>以下是一个配置好的交换机2：</p>
+<img src="/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/5-%E4%BA%A4%E6%8D%A2%E6%9C%BA.png" class="" title="交换机">
+<p>三个交换机配完，配置主机IP(同一子网，不需要网关)，就可以进行验证了</p>
+<h4 id="实验二"><a href="#实验二" class="headerlink" title="实验二"></a>实验二</h4><p>此实验平台中没有，为PPT中要求，且lh老师亲自验收，所有人都拷打，建议没做的也要会做，懂点原理</p>
+<img src="/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/3-vlan%E5%AE%9E%E9%AA%8C2.png" class="" title="vlan实验2">
+<p>在上一实验中，不同的vlan之间由于逻辑上的隔离，无法进行通信，此实验中在三层网络设备上实现不同vlan之间的通信</p>
+<p>原理：在三层交换机设置虚拟VLAN接口，实现VLAN之间的数据转换</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 在三层交换机上建立不同的vlan，并为其分配不同网段的IP地址,当作对应vlan的网关</span></span><br><span class="line">&gt; vlan <span class="number">2</span></span><br><span class="line">&gt; ip add <span class="number">192.168</span><span class="number">.1</span><span class="number">.254</span> <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span></span><br><span class="line">&gt; ip routing <span class="comment">// 貌似没用</span></span><br><span class="line">&gt; <span class="built_in">exit</span></span><br><span class="line"><span class="comment">// 有几个vlan就重复几次</span></span><br><span class="line"><span class="comment">// 让实际的端口封装vlan，并设置为trunk模式</span></span><br><span class="line">&gt; <span class="type">int</span> g0/<span class="number">1</span>  <span class="comment">// 实际的物理端口</span></span><br><span class="line">&gt; switchport trunk encapsulation dot1q <span class="comment">// 封装协议的参数无法识别，不用此命令也无影响</span></span><br><span class="line">&gt; switchport mode trunk</span><br><span class="line">&gt; <span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<p>所有交换机配好后，分配主机的IP和网关（记得看清是哪个vlan下的，别搞混了），进行验证测试</p>
 ]]></content>
       <categories>
         <category>计算机网络</category>

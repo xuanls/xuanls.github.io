@@ -34,8 +34,10 @@
 <meta property="og:image" content="http://xuanls.github.io/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/4-trunk.png">
 <meta property="og:image" content="http://xuanls.github.io/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/5-%E4%BA%A4%E6%8D%A2%E6%9C%BA.png">
 <meta property="og:image" content="http://xuanls.github.io/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/3-vlan%E5%AE%9E%E9%AA%8C2.png">
+<meta property="og:image" content="http://xuanls.github.io/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/6-vlan%E5%AE%9E%E9%AA%8C3.png">
+<meta property="og:image" content="http://xuanls.github.io/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/7-ip%E9%85%8D%E7%BD%AE.png">
 <meta property="article:published_time" content="2024-04-08T05:28:02.000Z">
-<meta property="article:modified_time" content="2024-04-15T06:32:25.980Z">
+<meta property="article:modified_time" content="2024-04-22T07:17:08.248Z">
 <meta property="article:author" content="萱萱子">
 <meta property="article:tag" content="备忘">
 <meta name="twitter:card" content="summary">
@@ -229,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-15 14:32:25" itemprop="dateModified" datetime="2024-04-15T14:32:25+08:00">2024-04-15</time>
+                <time title="修改时间：2024-04-22 15:17:08" itemprop="dateModified" datetime="2024-04-22T15:17:08+08:00">2024-04-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -253,13 +255,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>2.9k</span>
+              <span>4.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>5 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -301,6 +303,7 @@
 
 <hr>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 命令有缺省，为了方便（好吧，是因为记不住）</span></span><br><span class="line"><span class="comment">// 先进控制台</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置设备要进config模式</span></span><br><span class="line">&gt;&gt; enable</span><br><span class="line">&gt;&gt; config</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改个名</span></span><br><span class="line">&gt;&gt; hostname 名字    <span class="comment">// RA、RB、RC之类的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查看配置信息</span></span><br><span class="line">&gt;&gt; show ip route    <span class="comment">// 查看路由表，我个人用的最多</span></span><br><span class="line">&gt;&gt; show running     <span class="comment">// 查看当前配置</span></span><br><span class="line">&gt;&gt; show interface   <span class="comment">// 查看接口</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置路由器各个端口的IP</span></span><br><span class="line"><span class="comment">// 组内协商好，不要用本地网段全0的，不要互相冲突</span></span><br><span class="line"><span class="comment">// 先进入端口</span></span><br><span class="line"><span class="comment">// 命令全称：interface gigabitEthernet 0/1（这么长，记个毛线）</span></span><br><span class="line">&gt;&gt; <span class="type">int</span> g0/<span class="number">0</span>     <span class="comment">// 表示0端口，g0/1表示1端口</span></span><br><span class="line">&gt;&gt; ip add IP地址 子网掩码</span><br><span class="line">&gt;&gt; no shutdown  <span class="comment">// 打开端口，我也不知道不写有没有影响</span></span><br><span class="line">&gt;&gt; <span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置静态路由</span></span><br><span class="line"><span class="comment">// 目标网络不要填具体的主机Ip，哪怕该网络只有一台主机</span></span><br><span class="line"><span class="comment">// 下一跳地址为相连的下一个路由器的端口IP，不是本路由器的转发端口</span></span><br><span class="line">&gt;&gt; ip route 目标网络 子网掩码 下一跳地址</span><br><span class="line">&gt;&gt; ip route <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>     <span class="comment">// 默认地址设置，没用过</span></span><br><span class="line">&gt;&gt; no ip route ……   <span class="comment">// 配错路由的时候反悔用的</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <hr>
 <p>配好各个路由器之后，记得检查有无漏的错的</p>
 <p><strong>！！！</strong> PC的IP要自己手配哦（应该都会吧？先不细说了，有空再）</p>
@@ -318,18 +321,22 @@
 <p>再配各个路由器的IP（跟上边一样）</p>
 <p>然后配DHCP，给各个主机自动分配IP</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; ip dhcp pool student  <span class="comment">// student应该可以随便改</span></span><br><span class="line">&gt; network <span class="number">192.168</span><span class="number">.1</span><span class="number">.0</span> <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span> <span class="comment">// 只给相连的子网配</span></span><br><span class="line">&gt; <span class="keyword">default</span>-router <span class="number">192.168</span><span class="number">.1</span><span class="number">.254</span>   <span class="comment">// 默认网关</span></span><br><span class="line">&gt; service dhcp <span class="comment">// 开启dhcp服务</span></span><br></pre></td></tr></table></figure>
+
 <p>配完记得在PC上查看下有没有成功</p>
 <p>接着配RIP，让其动态学习路由</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; route rip <span class="comment">// 开启rip协议</span></span><br><span class="line">&gt; version <span class="number">2</span> <span class="comment">// 声明版本，1和2差别挺大好像，学过的忘完了已经（去世）</span></span><br><span class="line">&gt; no <span class="keyword">auto</span>-summary <span class="comment">// 关闭自动汇总，所配即所得</span></span><br><span class="line">&gt; network <span class="number">192.168</span><span class="number">.1</span><span class="number">.0</span>   <span class="comment">// 申明本设备的直连网段</span></span><br><span class="line">&gt; network <span class="number">192.169</span><span class="number">.1</span><span class="number">.0</span>   <span class="comment">// 直连的有几个写几个，不用写子网掩码</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
 <p>RIP验证，用md5来做，可是我们没弄这个，就不谈了，私密吗喽🙇</p>
 <p>接下来查看各个路由器的路由表，应该多了几个’r’开头的路由，即为路由器自己学习到的路由，然后就直接开ping!!!</p>
 <h4 id="OSFP路由协议"><a href="#OSFP路由协议" class="headerlink" title="OSFP路由协议"></a>OSFP路由协议</h4><p>照例，先连线，配主机IP（可以用DHCP配，不过主机少的话，手配更省事点），路由器的IP（什么时候这个也能自动化）</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 我也没太搞懂这个</span></span><br><span class="line">&gt; osfp <span class="number">1</span>    <span class="comment">// 应该是版本？</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">个人理解：area是提前规划好的，有单区域、多区域（配起来好像没啥区别），所有和路由器端口直连的网段的IP都写上，子网掩码格式变了（没试过别的行不行）</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">&gt; network <span class="number">192.168</span><span class="number">.2</span><span class="number">.0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.255</span> area <span class="number">2</span> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>配好之后，路由器之间会开始泛洪，互相交换链路信息，可以查看路由表，其中’o’开头的即为学习到的路由，带有时间信息，可以查看彼此之间学习的先后顺序（没啥用），至此，应该就可以测试连通性了</p>
 <h3 id="VLAN配置实验"><a href="#VLAN配置实验" class="headerlink" title="VLAN配置实验"></a>VLAN配置实验</h3><p>VLAN网络为在交换机中配置，不涉及主机，主机只需配置相关网段的IP和默认网关（需要的话）</p>
 <h4 id="实验一"><a href="#实验一" class="headerlink" title="实验一"></a>实验一</h4><img src="/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/2-vlan%E5%AE%9E%E9%AA%8C1.png" class="" title="vlan实验1">
 <p>实验1实现跨交换机的同一vlan内的通信，不同vlan无法通信</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 先进config</span></span><br><span class="line">&gt; vlan <span class="number">10</span> <span class="comment">// 声明一个虚拟局域网vlan 10</span></span><br><span class="line">&gt; <span class="type">int</span> g0/<span class="number">1</span> <span class="comment">// 进入该vlan下的某个端口</span></span><br><span class="line">&gt; switchport access vlan <span class="number">10</span> <span class="comment">// 将端口设为access，并划入该vlan中</span></span><br><span class="line"><span class="comment">// 如果该vlan有多个端口，重复上面两步</span></span><br><span class="line">&gt; <span class="built_in">exit</span></span><br><span class="line"><span class="comment">// 该交换机涉及几个vlan，就重复几次</span></span><br><span class="line"><span class="comment">//此外，有些端口需要允许不同vlan通过，此时要设置为trunk模式</span></span><br><span class="line">&gt; <span class="type">int</span> g3/<span class="number">0</span> <span class="comment">// 进入相关端口</span></span><br><span class="line">&gt; switchport mode trunk <span class="comment">// 设置为trunk模式</span></span><br><span class="line">&gt; show vlan <span class="comment">// 查看该交换机的vlan配置情况</span></span><br></pre></td></tr></table></figure>
+
 <img src="/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/4-trunk.png" class="" title="trunk">
 
 <p>以下是一个配置好的交换机2：</p>
@@ -342,6 +349,36 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在三层交换机上建立不同的vlan，并为其分配不同网段的IP地址,当作对应vlan的网关</span></span><br><span class="line">&gt; vlan <span class="number">2</span></span><br><span class="line">&gt; ip add <span class="number">192.168</span><span class="number">.1</span><span class="number">.254</span> <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span></span><br><span class="line">&gt; ip routing <span class="comment">// 貌似没用</span></span><br><span class="line">&gt; <span class="built_in">exit</span></span><br><span class="line"><span class="comment">// 有几个vlan就重复几次</span></span><br><span class="line"><span class="comment">// 让实际的端口封装vlan，并设置为trunk模式</span></span><br><span class="line">&gt; <span class="type">int</span> g0/<span class="number">1</span>  <span class="comment">// 实际的物理端口</span></span><br><span class="line">&gt; switchport trunk encapsulation dot1q <span class="comment">// 封装协议的参数无法识别，不用此命令也无影响</span></span><br><span class="line">&gt; switchport mode trunk</span><br><span class="line">&gt; <span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
 
 <p>所有交换机配好后，分配主机的IP和网关（记得看清是哪个vlan下的，别搞混了），进行验证测试</p>
+<h4 id="实验三"><a href="#实验三" class="headerlink" title="实验三"></a>实验三</h4><p>此实验为平台上的实验，考察另一种通过三层交换机实现不同VLAN通信的方法、单臂路由以及RIP协议配置，较为综合，容易出错</p>
+<p>实验详情：<img src="/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/6-vlan%E5%AE%9E%E9%AA%8C3.png" class="" title="vlan实验3"><br>各个设备的IP配置如下：<img src="/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/7-ip%E9%85%8D%E7%BD%AE.png" class="" title="ip配置"></p>
+<p>只有6台主机，所以上面服务器就不管了（也没用到）</p>
+<p>总的来说，右下为三层交换机实现不同vlan通信，左下为单臂路由实现不同vlan通信，上半部分为RIP路由实现</p>
+<blockquote>
+<p>记得连线，路由器用中间四个接口，别连错了（来自别的组的血泪教训）</p>
+</blockquote>
+<p>先看右下，与实验二相比，在此，我们摒弃交换机的二层交换功能，将其看作一个路由器，，左右两个端口分别作为两个不同vlan的网关，对不同的vlan的数据进行转发，并在下面的二层交换机之间配置trunk模式，使数据可以流通（详细的vlan原理目前还是一知半解，后面再开专题单独讲吧）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 首先是两个二层交换机</span></span><br><span class="line">&gt; vlan <span class="number">10</span>   <span class="comment">// 声明一个vlan </span></span><br><span class="line">&gt; <span class="type">int</span> g0/<span class="number">1</span>  <span class="comment">// 进入某端口</span></span><br><span class="line">&gt; switchport access vlan <span class="number">10</span>   <span class="comment">// 配置vlan</span></span><br><span class="line">&gt; <span class="built_in">exit</span></span><br><span class="line"><span class="comment">// 与实验一几乎一模一样，不赘述</span></span><br><span class="line"><span class="comment">// 三层交换机</span></span><br><span class="line">&gt; no switchport   <span class="comment">// 关掉交换功能</span></span><br><span class="line">&gt; <span class="type">int</span> g0/<span class="number">1</span>  <span class="comment">// 进入某个端口</span></span><br><span class="line">&gt; ip add <span class="number">202.114</span><span class="number">.68</span><span class="number">.1</span> <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span>    <span class="comment">// 配置默认网关</span></span><br><span class="line"><span class="comment">// 重复，配置好各个端口的IP</span></span><br><span class="line">&gt; ip routing   <span class="comment">// 开启路由功能</span></span><br></pre></td></tr></table></figure>
+<p>至此，此小部分的实验配置完成（记得配主机IP和网关），然后可以在pc3、4、5、6之间互ping，通了后进行下一步</p>
+<p>再看左下角的单臂路由，原理就是路由器的子接口支持虚拟局域网</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 交换机4正常配置，上面1号端口设置为trunk模式</span></span><br><span class="line"><span class="comment">// 路由器</span></span><br><span class="line">&gt; <span class="type">int</span> g0/<span class="number">2.1</span>   <span class="comment">// 设置子接口</span></span><br><span class="line">&gt; description vlan <span class="number">10</span>   <span class="comment">// 支持vlan10</span></span><br><span class="line">&gt; encapsulation dot1Q <span class="number">2</span> <span class="comment">// 用802.1Q协议封装vlan10</span></span><br><span class="line">&gt; ip address <span class="number">192.168</span><span class="number">.1</span><span class="number">.254</span> <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span>  <span class="comment">// 设置IP地址</span></span><br><span class="line"><span class="comment">//几个子接口重复几次</span></span><br></pre></td></tr></table></figure>
+
+<p>左下部分配置完后，配置主机IP和网关，测试两台主机的连通性</p>
+<p>最后是RIP动态路由部分，与之前实验相同，不做赘述，需要注意的是此处交换机1是当作一个路由器使用，也需进行配置</p>
+<p>所有的都配完后查看各个路由设备的路由表是否学习到相关路由，测试左右部分的连通性</p>
+<h4 id="常见错误总结"><a href="#常见错误总结" class="headerlink" title="常见错误总结"></a>常见错误总结</h4><p>写了五次实验了，自己组或者朋友的组总有几次莫名出错，整理一个检错流程，或许有用</p>
+<ul>
+<li>检查连线，最高端的黑客往往采用最朴素的攻击方式，看下线有没有被别的组拔了，或者端口接对了没<ul>
+<li>注意路由器只有中间四个端口能用，朋友的组接到前面然后vlan死活配不上去</li>
+</ul>
+</li>
+<li>检查主机，很多时候ping不同可能是因为主机IP配错了，或者没配网关，又或者以太网没禁用，还有可能你用错主机了（doge）</li>
+<li>查路由表，是不是配对了，动态路由学到没<ul>
+<li>可以用<code>show running</code>命令，可以看到各个端口都配了啥，debug很好用</li>
+</ul>
+</li>
+<li><code>tracert</code>命令，追查具体在哪儿出的错，然后再深入分析</li>
+<li>互换设备检查下，有时候自己看不出来的问题，队友一眼就找到了，或者请教助教大人（我们助教人很好，曾将第一个实验帮我们de了一个小时的bug，成功成为最后一个下班的）</li>
+</ul>
 
     </div>
 
@@ -443,7 +480,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9%EF%BC%88%E8%A1%A5%E5%85%85%E4%B8%AD%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">实验内容（补充中）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text">实验步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E9%AA%8C"><span class="nav-number">2.1.</span> <span class="nav-text">1.静态路由实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E9%AA%8C"><span class="nav-number">2.2.</span> <span class="nav-text">动态路由实验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RIP%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.2.1.</span> <span class="nav-text">RIP路由协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OSFP%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.2.2.</span> <span class="nav-text">OSFP路由协议</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VLAN%E9%85%8D%E7%BD%AE%E5%AE%9E%E9%AA%8C"><span class="nav-number">2.3.</span> <span class="nav-text">VLAN配置实验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E4%B8%80"><span class="nav-number">2.3.1.</span> <span class="nav-text">实验一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E4%BA%8C"><span class="nav-number">2.3.2.</span> <span class="nav-text">实验二</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9%EF%BC%88%E8%A1%A5%E5%85%85%E4%B8%AD%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">实验内容（补充中）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text">实验步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E9%AA%8C"><span class="nav-number">2.1.</span> <span class="nav-text">1.静态路由实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E9%AA%8C"><span class="nav-number">2.2.</span> <span class="nav-text">动态路由实验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RIP%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.2.1.</span> <span class="nav-text">RIP路由协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OSFP%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.2.2.</span> <span class="nav-text">OSFP路由协议</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VLAN%E9%85%8D%E7%BD%AE%E5%AE%9E%E9%AA%8C"><span class="nav-number">2.3.</span> <span class="nav-text">VLAN配置实验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E4%B8%80"><span class="nav-number">2.3.1.</span> <span class="nav-text">实验一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E4%BA%8C"><span class="nav-number">2.3.2.</span> <span class="nav-text">实验二</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E4%B8%89"><span class="nav-number">2.3.3.</span> <span class="nav-text">实验三</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF%E6%80%BB%E7%BB%93"><span class="nav-number">2.3.4.</span> <span class="nav-text">常见错误总结</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -459,20 +496,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -527,12 +564,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">15k</span>
+    <span title="站点总字数">19k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">24 分钟</span>
+    <span title="站点阅读时长">32 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>

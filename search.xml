@@ -25,58 +25,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux提权</title>
-    <url>/Linux%E6%8F%90%E6%9D%83/</url>
-    <content><![CDATA[<h1 id="Part1-sudo介绍"><a href="#Part1-sudo介绍" class="headerlink" title="Part1 sudo介绍"></a>Part1 sudo介绍</h1><h2 id="什么是sudo"><a href="#什么是sudo" class="headerlink" title="什么是sudo"></a>什么是sudo</h2><p>简单的说，sudo 是一种&#x3D;&#x3D;权限管理机制&#x3D;&#x3D;，管理员可以授权于一些普通用户去执行一些 root 执行的操作，提示输入密码时该密码为当前用户的密码，而不需要知道 root 的密码。不过有时间限制，Ubuntu默认为一次时长15分钟</p>
-<span id="more"></span>
-
-<p>严谨些说，sudo 允许一个已授权用户以超级用户或者其它用户的角色运行一个命令。当然，能做什么不能做什么都是通过安全策略来指定的。sudo 支持插件架构的安全策略，并能把输入输出写入日志。第三方可以开发并发布自己的安全策略和输入输出日志插件，并让它们无缝的和 sudo 一起工作。默认的安全策略记录在 &#x3D;&#x3D;&#x2F;etc&#x2F;sudoers&#x3D;&#x3D; 文件中。而安全策略可能需要用户通过密码来验证他们自己。也就是在用户执行 sudo 命令时要求用户输入&#x3D;&#x3D;自己账号的密码。&#x3D;&#x3D;如果验证失败，sudo 命令将会退出。</p>
-<p>默认的etc&#x2F;sudoers配置文件：</p>
-<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C1.png" alt="图片"></p>
-<br/>
-
-<h1 id="Part2-CVE-2021-3156漏洞"><a href="#Part2-CVE-2021-3156漏洞" class="headerlink" title="Part2 CVE-2021-3156漏洞"></a>Part2 CVE-2021-3156漏洞</h1><h2 id="1-漏洞简介"><a href="#1-漏洞简介" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>2021年1月26日，Linux安全工具&#x3D;&#x3D;sudo&#x3D;&#x3D;被发现严重的基于&#x3D;&#x3D;堆缓冲区溢出&#x3D;&#x3D;漏洞。利用这一漏洞，攻击者无需知道用户密码，一样可以获得root权限，并且是在默认配置下。此漏洞已分配为CVE-2021-3156，危险等级评分为7分。</p>
-<h2 id="2-原理介绍"><a href="#2-原理介绍" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><p>漏洞发生的原因在于sudo错误地转义了参数中的反斜杠。</p>
-<p>sudo命令允许用户以超级用户或&#x2F;etc&#x2F;sudoers文件中指定的其他用户的身份运行指定命令cmd。设置真实和有效用户ID与用户组ID，以匹配&#x2F;etc&#x2F;passwd文件中指定的目标用户和&#x2F;etc&#x2F;group文件中指定的用户组（除非指定了“-P”选项）。如果调用者是超级用户，或目标用户与调用者是同一用户，则无须提供密码。否则，sudo通常要求用户提供密码进行认证。注意，按照默认的配置，这里所谓的密码认证指的是用户的密码，不是超级用户的密码。</p>
-<p>一旦获得认证，立即更新&#x2F;var&#x2F;run&#x2F;sudo目录中的用户时间记录。在之后的短时间内（5分钟，除非sudoers文件中另有设定），用户可以随时运行sudo命令而不必提供密码。</p>
-<p>sudo与sudoedit是一个程序两个名字。运行sudoedit命令，相当于运行“sudo -e”命令。sudoedit命令主要用于编辑&#x2F;etc&#x2F;sudoers文件，参见“-e”选项的说明。</p>
-<p>当sudo通过-s或-i命令行选项在shell模式下运行命令时，它将在命令参数中使用反斜杠转义特殊字符。但使用-s或-i标志运行sudoedit时，实际上并未进行转义，从而可能导致缓冲区溢出。因此只要存在sudoers文件（通常是&#x2F;etc&#x2F;sudoers），攻击者就可以使用本地普通用户利用sudo获得系统root权限。</p>
-<h2 id="3-影响版本"><a href="#3-影响版本" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>受影响版本<br>Sudo 1.8.2 – 1.8.31p2<br>Sudo 1.9.0 – 1.9.5p1</p>
-<p>不受影响版本<br>sudo &#x3D;&gt;1.9.5p2</p>
-<h2 id="4-漏洞复现"><a href="#4-漏洞复现" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><br/>
-
-<h1 id="Part3-CVE-2023-22809漏洞"><a href="#Part3-CVE-2023-22809漏洞" class="headerlink" title="Part3 CVE-2023-22809漏洞"></a>Part3 CVE-2023-22809漏洞</h1><h2 id="1-漏洞简介-1"><a href="#1-漏洞简介-1" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>在Sudo 版本 1.9.12p1中使用sudoedit时，sudoers的保护机制可能被绕过，从而导致通过编辑未经授权的文件实现权限升级，Sudo中的sudoedit对处理用户提供的环境变量（如SUDO_EDITOR、VISUAL和EDITOR）中传递的额外参数存在缺陷。当用户指定的编辑器包含绕过sudoers策略的“–”参数时，拥有sudoedit访问权限的本地攻击者可通过将任意条目附加到要处理的文件列表中，最终在目标系统上实现权限提升（由普通用户到超级用户，即”root”）</p>
-<h2 id="2-原理介绍-1"><a href="#2-原理介绍-1" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><br/>
-
-<h2 id="3-影响版本-1"><a href="#3-影响版本-1" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>sudo 1.8.0-sudo 1.9.12p1</p>
-<h2 id="4-漏洞复现-1"><a href="#4-漏洞复现-1" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><ol>
-<li>查看当前sudo版本</li>
-</ol>
-<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C2.png"></p>
-<p>如上，为受影响版本，若不是，则在<a href="https://">https://www.sudo.ws/dist/</a>下载相应版本后解压、配置、编译并安装</p>
-<br/>
-
-<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C3.png" alt="图片"></p>
-<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C4.png" alt="图片"></p>
-<br/>
-
-<h2 id="5-缓解措施"><a href="#5-缓解措施" class="headerlink" title="5. 缓解措施"></a>5. 缓解措施</h2><p>1、为防止 sudoedit 使用用户指定的编辑器，可向 sudoers 文件中添加以下内容： Defaults!sudoedit env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR”<br>2、使用“Cmnd_Alias”限制编辑器编辑指定文件时，如： Cmnd_Alias EDIT_MOTD &#x3D; sudoedit &#x2F;etc&#x2F;motd Defaults!EDIT_MOTD env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR” user ALL &#x3D; EDIT_MOTD</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><p><a href="https://">https://www.cnblogs.com/20181309lzy/p/14710439.html</a></p>
-</li>
-<li><p><a href="https://">https://wker.com/linux-command/sudo-sudoedit.html</a></p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>漏洞</category>
-      </categories>
-      <tags>
-        <tag>漏洞</tag>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Markdown基础语法</title>
     <url>/Markdown%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<blockquote>
@@ -131,7 +79,7 @@
 这里写"More"会在网页中隐藏后面内容,跳转到详情页才能看 -->
 
 <p>超链接用法:<br>[超链接显示名] (超链接地址 “超链接title”)<br><a href="%E8%B6%85%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80" title="超链接title">超链接显示名</a></p>
-<p><a href="mailto:&#x31;&#50;&#51;&#x40;&#113;&#113;&#x2e;&#99;&#x6f;&#109;">&#x31;&#50;&#51;&#x40;&#113;&#113;&#x2e;&#99;&#x6f;&#109;</a> &lt;邮箱&gt;</p>
+<p><a href="mailto:&#x31;&#50;&#51;&#64;&#x71;&#x71;&#46;&#99;&#111;&#109;">&#x31;&#50;&#51;&#64;&#x71;&#x71;&#46;&#99;&#111;&#109;</a> &lt;邮箱&gt;</p>
 <p><a href="https://123.com/">https://123.com</a> &lt;网址&gt;</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph TB</span><br><span class="line">  A(把大象放进去) --&gt; B&#123;&quot;冰箱小不小？&quot;&#125;</span><br><span class="line">  B --&gt; |不小| C[把冰箱门关上]</span><br><span class="line">  B --&gt;   |小| D[换个大点的冰箱]</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
@@ -139,6 +87,58 @@
       </categories>
       <tags>
         <tag>备忘</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux提权</title>
+    <url>/Linux%E6%8F%90%E6%9D%83/</url>
+    <content><![CDATA[<h1 id="Part1-sudo介绍"><a href="#Part1-sudo介绍" class="headerlink" title="Part1 sudo介绍"></a>Part1 sudo介绍</h1><h2 id="什么是sudo"><a href="#什么是sudo" class="headerlink" title="什么是sudo"></a>什么是sudo</h2><p>简单的说，sudo 是一种&#x3D;&#x3D;权限管理机制&#x3D;&#x3D;，管理员可以授权于一些普通用户去执行一些 root 执行的操作，提示输入密码时该密码为当前用户的密码，而不需要知道 root 的密码。不过有时间限制，Ubuntu默认为一次时长15分钟</p>
+<span id="more"></span>
+
+<p>严谨些说，sudo 允许一个已授权用户以超级用户或者其它用户的角色运行一个命令。当然，能做什么不能做什么都是通过安全策略来指定的。sudo 支持插件架构的安全策略，并能把输入输出写入日志。第三方可以开发并发布自己的安全策略和输入输出日志插件，并让它们无缝的和 sudo 一起工作。默认的安全策略记录在 &#x3D;&#x3D;&#x2F;etc&#x2F;sudoers&#x3D;&#x3D; 文件中。而安全策略可能需要用户通过密码来验证他们自己。也就是在用户执行 sudo 命令时要求用户输入&#x3D;&#x3D;自己账号的密码。&#x3D;&#x3D;如果验证失败，sudo 命令将会退出。</p>
+<p>默认的etc&#x2F;sudoers配置文件：</p>
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C1.png" alt="图片"></p>
+<br/>
+
+<h1 id="Part2-CVE-2021-3156漏洞"><a href="#Part2-CVE-2021-3156漏洞" class="headerlink" title="Part2 CVE-2021-3156漏洞"></a>Part2 CVE-2021-3156漏洞</h1><h2 id="1-漏洞简介"><a href="#1-漏洞简介" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>2021年1月26日，Linux安全工具&#x3D;&#x3D;sudo&#x3D;&#x3D;被发现严重的基于&#x3D;&#x3D;堆缓冲区溢出&#x3D;&#x3D;漏洞。利用这一漏洞，攻击者无需知道用户密码，一样可以获得root权限，并且是在默认配置下。此漏洞已分配为CVE-2021-3156，危险等级评分为7分。</p>
+<h2 id="2-原理介绍"><a href="#2-原理介绍" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><p>漏洞发生的原因在于sudo错误地转义了参数中的反斜杠。</p>
+<p>sudo命令允许用户以超级用户或&#x2F;etc&#x2F;sudoers文件中指定的其他用户的身份运行指定命令cmd。设置真实和有效用户ID与用户组ID，以匹配&#x2F;etc&#x2F;passwd文件中指定的目标用户和&#x2F;etc&#x2F;group文件中指定的用户组（除非指定了“-P”选项）。如果调用者是超级用户，或目标用户与调用者是同一用户，则无须提供密码。否则，sudo通常要求用户提供密码进行认证。注意，按照默认的配置，这里所谓的密码认证指的是用户的密码，不是超级用户的密码。</p>
+<p>一旦获得认证，立即更新&#x2F;var&#x2F;run&#x2F;sudo目录中的用户时间记录。在之后的短时间内（5分钟，除非sudoers文件中另有设定），用户可以随时运行sudo命令而不必提供密码。</p>
+<p>sudo与sudoedit是一个程序两个名字。运行sudoedit命令，相当于运行“sudo -e”命令。sudoedit命令主要用于编辑&#x2F;etc&#x2F;sudoers文件，参见“-e”选项的说明。</p>
+<p>当sudo通过-s或-i命令行选项在shell模式下运行命令时，它将在命令参数中使用反斜杠转义特殊字符。但使用-s或-i标志运行sudoedit时，实际上并未进行转义，从而可能导致缓冲区溢出。因此只要存在sudoers文件（通常是&#x2F;etc&#x2F;sudoers），攻击者就可以使用本地普通用户利用sudo获得系统root权限。</p>
+<h2 id="3-影响版本"><a href="#3-影响版本" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>受影响版本<br>Sudo 1.8.2 – 1.8.31p2<br>Sudo 1.9.0 – 1.9.5p1</p>
+<p>不受影响版本<br>sudo &#x3D;&gt;1.9.5p2</p>
+<h2 id="4-漏洞复现"><a href="#4-漏洞复现" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><br/>
+
+<h1 id="Part3-CVE-2023-22809漏洞"><a href="#Part3-CVE-2023-22809漏洞" class="headerlink" title="Part3 CVE-2023-22809漏洞"></a>Part3 CVE-2023-22809漏洞</h1><h2 id="1-漏洞简介-1"><a href="#1-漏洞简介-1" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>在Sudo 版本 1.9.12p1中使用sudoedit时，sudoers的保护机制可能被绕过，从而导致通过编辑未经授权的文件实现权限升级，Sudo中的sudoedit对处理用户提供的环境变量（如SUDO_EDITOR、VISUAL和EDITOR）中传递的额外参数存在缺陷。当用户指定的编辑器包含绕过sudoers策略的“–”参数时，拥有sudoedit访问权限的本地攻击者可通过将任意条目附加到要处理的文件列表中，最终在目标系统上实现权限提升（由普通用户到超级用户，即”root”）</p>
+<h2 id="2-原理介绍-1"><a href="#2-原理介绍-1" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><br/>
+
+<h2 id="3-影响版本-1"><a href="#3-影响版本-1" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>sudo 1.8.0-sudo 1.9.12p1</p>
+<h2 id="4-漏洞复现-1"><a href="#4-漏洞复现-1" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><ol>
+<li>查看当前sudo版本</li>
+</ol>
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C2.png"></p>
+<p>如上，为受影响版本，若不是，则在<a href="https://">https://www.sudo.ws/dist/</a>下载相应版本后解压、配置、编译并安装</p>
+<br/>
+
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C3.png" alt="图片"></p>
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C4.png" alt="图片"></p>
+<br/>
+
+<h2 id="5-缓解措施"><a href="#5-缓解措施" class="headerlink" title="5. 缓解措施"></a>5. 缓解措施</h2><p>1、为防止 sudoedit 使用用户指定的编辑器，可向 sudoers 文件中添加以下内容： Defaults!sudoedit env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR”<br>2、使用“Cmnd_Alias”限制编辑器编辑指定文件时，如： Cmnd_Alias EDIT_MOTD &#x3D; sudoedit &#x2F;etc&#x2F;motd Defaults!EDIT_MOTD env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR” user ALL &#x3D; EDIT_MOTD</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><p><a href="https://">https://www.cnblogs.com/20181309lzy/p/14710439.html</a></p>
+</li>
+<li><p><a href="https://">https://wker.com/linux-command/sudo-sudoedit.html</a></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>漏洞</category>
+      </categories>
+      <tags>
+        <tag>漏洞</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -156,6 +156,60 @@
       </categories>
       <tags>
         <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>cs155-project3</title>
+    <url>/cs155-project3/</url>
+    <content><![CDATA[<blockquote>
+<p>斯坦福大学cs155课程project3，详情见<a href="https://cs155.stanford.edu/hw_and_proj/proj3/proj3.pdf">官网文档</a></p>
+</blockquote>
+<h2 id="Part-1-Nmap-Port-Scanning"><a href="#Part-1-Nmap-Port-Scanning" class="headerlink" title="Part 1 Nmap Port Scanning"></a>Part 1 Nmap Port Scanning</h2><h3 id="实验要求："><a href="#实验要求：" class="headerlink" title="实验要求："></a>实验要求：</h3><ol>
+<li>Only scan scanme.nmap.org. Do not scan any other servers. You should only scan a server if you have explicit permission from the server operator to do so.</li>
+<li>Record the traffic with Wireshark (see part 2)</li>
+<li>Use a TCP SYN scan. (Hint: Read the nmap man pages to find the appropriate flag to use.)</li>
+<li>Enable OS detection, version detection, script scanning, and traceroute. (Hint: This is a single flag.)</li>
+<li>Do a quick scan (-T4).</li>
+<li>Scan all ports.</li>
+</ol>
+<p>概括来说，要求如下：</p>
+<ul>
+<li>只扫描<code>scanme.nmap.org</code></li>
+<li>用Wireshark记录流量（Part2内容）</li>
+<li>使用TCP SYN扫描</li>
+<li>启动操作系统检测、版本检测、脚本扫描和路由跟踪</li>
+<li>快速扫描所有端口</li>
+</ul>
+<p>综上，扫描命令如下：<br><code>sudo nmap -sS -A -T4 -p- scanme.nmap.org </code></p>
+<ul>
+<li>-sS: 表示进行TCP SYN扫描，这是一种半开放扫描，不会完成TCP三次握手，因此速度较快且不易被记录。</li>
+<li>-A: 启动操作系统检测（OS detection）、版本检测（version detection）、脚本扫描（script scanning）和路由跟踪（traceroute）。</li>
+<li>-T4: 设置扫描速度为“快速”（但不是最快）。Nmap支持从T0到T5的速度模板，T4是较快的选项，适合快速扫描，而不至于像T5那样可能因为太快而丢失一些结果。</li>
+<li>-p-: 表示扫描所有端口（1-65535）。</li>
+</ul>
+<img src="/cs155-project3/1-nmap.png" class="" title="nmap">
+
+<h3 id="提交内容："><a href="#提交内容：" class="headerlink" title="提交内容："></a>提交内容：</h3><ol>
+<li>What is the full command you used to run the port scan (including arguments)?</li>
+<li>What is the IP address of scanme.nmap.org?</li>
+<li>What ports are open on the target server? What applications are running on those ports?<br>(For this part, you only need to report the service name printed by nmap.)</li>
+<li>The target machine is also running a webserver. What webserver software and version is<br>being used? What ports does it run on?</li>
+</ol>
+<h2 id="Part-2-Wireshark-Packet-Sniffing"><a href="#Part-2-Wireshark-Packet-Sniffing" class="headerlink" title="Part 2 Wireshark Packet Sniffing"></a>Part 2 Wireshark Packet Sniffing</h2><h3 id="提交内容"><a href="#提交内容" class="headerlink" title="提交内容"></a>提交内容</h3><ol>
+<li>What does it mean for a port on scanme.nmap.org to be “closed?” More specifically, what is<br>the TCP packet type, if any, the server gives in response to a SYN packet sent to port that<br>is “closed?”</li>
+<li>What does it mean for a port on scanme.nmap.org to be “filtered?” More specifically, what<br>is the TCP packet type, if any, the server gives in response to a SYN packet sent to port that<br>is “filtered?”</li>
+<li>In addition to performing an HTTP GET request to the webserver, what other http request<br>types does nmap send?</li>
+<li>What TCP parameters does nmap alter to fingerprint the host’s operating system?</li>
+</ol>
+<p>Once again, please answer all questions briefly; no response should take more than two or three<br>sentences.</p>
+<h2 id="Part-3-Programmatic-Packet-Processing"><a href="#Part-3-Programmatic-Packet-Processing" class="headerlink" title="Part 3  Programmatic Packet Processing"></a>Part 3  Programmatic Packet Processing</h2><h3 id="实验要求：-1"><a href="#实验要求：-1" class="headerlink" title="实验要求："></a>实验要求：</h3><p>Your task is to develop a Go program that analyzes a PCAP file in order to detect possible SYN scans and ARP spoofing attacks. To do this, you will use gopacket, a library for packet<br>manipulation and dissection, which you should have installed during setup earlier. You can find more information about gopacket at <a href="https://godoc.org/github.com/google/gopacket">https://godoc.org/github.com/google/gopacket</a>. In<br>particular, you should examine the “layers” Go package to parse different networking layers: <a href="https://github.com/google/gopacket/tree/v1.1.19/layers">https://github.com/google/gopacket/tree/v1.1.19/layers</a>.<br>Your program will take the path of the PCAP file to be analyzed as a command-line argument:<br><code>$ go run detector.go sample.pcap</code><br>The printed output should begin with the line Unauthorized SYN scanners:, followed by the set of IP addresses (one per line) that sent more than 3 times as many SYN packets as the number of SYN+ACK packets they received and also sent more than 5 SYN packets in total. In calculating this, your program should silently ignore packets that are malformed or that are not using Ethernet, IP, and TCP. The line immediately following these IP addresses should print the line Unauthorized ARP spoofers:, followed by the set of MAC addresses (one per line) that send more than 5 unso-licited ARP replies. Unsolicited ARP replies are those which contain a source IP and destination MAC address combination that does not correspond to a previous request (in other words, each request should correspond to at most one reply, and any extra replies are unsolicited).</p>
+<h2 id="Part-4-Monster-in-the-Middle-Attack"><a href="#Part-4-Monster-in-the-Middle-Attack" class="headerlink" title="Part 4  Monster-in-the-Middle Attack"></a>Part 4  Monster-in-the-Middle Attack</h2>]]></content>
+      <categories>
+        <category>网络安全</category>
+      </categories>
+      <tags>
+        <tag>cs155</tag>
+        <tag>计算机安全</tag>
       </tags>
   </entry>
   <entry>
@@ -572,6 +626,7 @@
 
 <hr>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 命令有缺省，为了方便（好吧，是因为记不住）</span></span><br><span class="line"><span class="comment">// 先进控制台</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置设备要进config模式</span></span><br><span class="line">&gt;&gt; enable</span><br><span class="line">&gt;&gt; config</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改个名</span></span><br><span class="line">&gt;&gt; hostname 名字    <span class="comment">// RA、RB、RC之类的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查看配置信息</span></span><br><span class="line">&gt;&gt; show ip route    <span class="comment">// 查看路由表，我个人用的最多</span></span><br><span class="line">&gt;&gt; show running     <span class="comment">// 查看当前配置</span></span><br><span class="line">&gt;&gt; show interface   <span class="comment">// 查看接口</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置路由器各个端口的IP</span></span><br><span class="line"><span class="comment">// 组内协商好，不要用本地网段全0的，不要互相冲突</span></span><br><span class="line"><span class="comment">// 先进入端口</span></span><br><span class="line"><span class="comment">// 命令全称：interface gigabitEthernet 0/1（这么长，记个毛线）</span></span><br><span class="line">&gt;&gt; <span class="type">int</span> g0/<span class="number">0</span>     <span class="comment">// 表示0端口，g0/1表示1端口</span></span><br><span class="line">&gt;&gt; ip add IP地址 子网掩码</span><br><span class="line">&gt;&gt; no shutdown  <span class="comment">// 打开端口，我也不知道不写有没有影响</span></span><br><span class="line">&gt;&gt; <span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置静态路由</span></span><br><span class="line"><span class="comment">// 目标网络不要填具体的主机Ip，哪怕该网络只有一台主机</span></span><br><span class="line"><span class="comment">// 下一跳地址为相连的下一个路由器的端口IP，不是本路由器的转发端口</span></span><br><span class="line">&gt;&gt; ip route 目标网络 子网掩码 下一跳地址</span><br><span class="line">&gt;&gt; ip route <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>     <span class="comment">// 默认地址设置，没用过</span></span><br><span class="line">&gt;&gt; no ip route ……   <span class="comment">// 配错路由的时候反悔用的</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <hr>
 <p>配好各个路由器之后，记得检查有无漏的错的</p>
 <p><strong>！！！</strong> PC的IP要自己手配哦（应该都会吧？先不细说了，有空再）</p>
@@ -589,18 +644,22 @@
 <p>再配各个路由器的IP（跟上边一样）</p>
 <p>然后配DHCP，给各个主机自动分配IP</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">&gt; ip dhcp pool student  <span class="comment">// student应该可以随便改</span></span><br><span class="line">&gt; network <span class="number">192.168</span><span class="number">.1</span><span class="number">.0</span> <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span> <span class="comment">// 只给相连的子网配</span></span><br><span class="line">&gt; <span class="keyword">default</span>-router <span class="number">192.168</span><span class="number">.1</span><span class="number">.254</span>   <span class="comment">// 默认网关</span></span><br><span class="line">&gt; service dhcp <span class="comment">// 开启dhcp服务</span></span><br></pre></td></tr></table></figure>
+
 <p>配完记得在PC上查看下有没有成功</p>
 <p>接着配RIP，让其动态学习路由</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">&gt; route rip <span class="comment">// 开启rip协议</span></span><br><span class="line">&gt; version <span class="number">2</span> <span class="comment">// 声明版本，1和2差别挺大好像，学过的忘完了已经（去世）</span></span><br><span class="line">&gt; no <span class="keyword">auto</span>-summary <span class="comment">// 关闭自动汇总，所配即所得</span></span><br><span class="line">&gt; network <span class="number">192.168</span><span class="number">.1</span><span class="number">.0</span>   <span class="comment">// 申明本设备的直连网段</span></span><br><span class="line">&gt; network <span class="number">192.169</span><span class="number">.1</span><span class="number">.0</span>   <span class="comment">// 直连的有几个写几个，不用写子网掩码</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
 <p>RIP验证，用md5来做，可是我们没弄这个，就不谈了，私密吗喽🙇</p>
 <p>接下来查看各个路由器的路由表，应该多了几个’r’开头的路由，即为路由器自己学习到的路由，然后就直接开ping!!!</p>
 <h4 id="OSFP路由协议"><a href="#OSFP路由协议" class="headerlink" title="OSFP路由协议"></a>OSFP路由协议</h4><p>照例，先连线，配主机IP（可以用DHCP配，不过主机少的话，手配更省事点），路由器的IP（什么时候这个也能自动化）</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 我也没太搞懂这个</span></span><br><span class="line">&gt; osfp <span class="number">1</span>    <span class="comment">// 应该是版本？</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">个人理解：area是提前规划好的，有单区域、多区域（配起来好像没啥区别），所有和路由器端口直连的网段的IP都写上，子网掩码格式变了（没试过别的行不行）</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">&gt; network <span class="number">192.168</span><span class="number">.2</span><span class="number">.0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.255</span> area <span class="number">2</span> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>配好之后，路由器之间会开始泛洪，互相交换链路信息，可以查看路由表，其中’o’开头的即为学习到的路由，带有时间信息，可以查看彼此之间学习的先后顺序（没啥用），至此，应该就可以测试连通性了</p>
 <h3 id="VLAN配置实验"><a href="#VLAN配置实验" class="headerlink" title="VLAN配置实验"></a>VLAN配置实验</h3><p>VLAN网络为在交换机中配置，不涉及主机，主机只需配置相关网段的IP和默认网关（需要的话）</p>
 <h4 id="实验一"><a href="#实验一" class="headerlink" title="实验一"></a>实验一</h4><img src="/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/2-vlan%E5%AE%9E%E9%AA%8C1.png" class="" title="vlan实验1">
 <p>实验1实现跨交换机的同一vlan内的通信，不同vlan无法通信</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 先进config</span></span><br><span class="line">&gt; vlan <span class="number">10</span> <span class="comment">// 声明一个虚拟局域网vlan 10</span></span><br><span class="line">&gt; <span class="type">int</span> g0/<span class="number">1</span> <span class="comment">// 进入该vlan下的某个端口</span></span><br><span class="line">&gt; switchport access vlan <span class="number">10</span> <span class="comment">// 将端口设为access，并划入该vlan中</span></span><br><span class="line"><span class="comment">// 如果该vlan有多个端口，重复上面两步</span></span><br><span class="line">&gt; <span class="built_in">exit</span></span><br><span class="line"><span class="comment">// 该交换机涉及几个vlan，就重复几次</span></span><br><span class="line"><span class="comment">//此外，有些端口需要允许不同vlan通过，此时要设置为trunk模式</span></span><br><span class="line">&gt; <span class="type">int</span> g3/<span class="number">0</span> <span class="comment">// 进入相关端口</span></span><br><span class="line">&gt; switchport mode trunk <span class="comment">// 设置为trunk模式</span></span><br><span class="line">&gt; show vlan <span class="comment">// 查看该交换机的vlan配置情况</span></span><br></pre></td></tr></table></figure>
+
 <img src="/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/4-trunk.png" class="" title="trunk">
 
 <p>以下是一个配置好的交换机2：</p>
@@ -613,6 +672,36 @@
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 在三层交换机上建立不同的vlan，并为其分配不同网段的IP地址,当作对应vlan的网关</span></span><br><span class="line">&gt; vlan <span class="number">2</span></span><br><span class="line">&gt; ip add <span class="number">192.168</span><span class="number">.1</span><span class="number">.254</span> <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span></span><br><span class="line">&gt; ip routing <span class="comment">// 貌似没用</span></span><br><span class="line">&gt; <span class="built_in">exit</span></span><br><span class="line"><span class="comment">// 有几个vlan就重复几次</span></span><br><span class="line"><span class="comment">// 让实际的端口封装vlan，并设置为trunk模式</span></span><br><span class="line">&gt; <span class="type">int</span> g0/<span class="number">1</span>  <span class="comment">// 实际的物理端口</span></span><br><span class="line">&gt; switchport trunk encapsulation dot1q <span class="comment">// 封装协议的参数无法识别，不用此命令也无影响</span></span><br><span class="line">&gt; switchport mode trunk</span><br><span class="line">&gt; <span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
 
 <p>所有交换机配好后，分配主机的IP和网关（记得看清是哪个vlan下的，别搞混了），进行验证测试</p>
+<h4 id="实验三"><a href="#实验三" class="headerlink" title="实验三"></a>实验三</h4><p>此实验为平台上的实验，考察另一种通过三层交换机实现不同VLAN通信的方法、单臂路由以及RIP协议配置，较为综合，容易出错</p>
+<p>实验详情：<img src="/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/6-vlan%E5%AE%9E%E9%AA%8C3.png" class="" title="vlan实验3"><br>各个设备的IP配置如下：<img src="/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/7-ip%E9%85%8D%E7%BD%AE.png" class="" title="ip配置"></p>
+<p>只有6台主机，所以上面服务器就不管了（也没用到）</p>
+<p>总的来说，右下为三层交换机实现不同vlan通信，左下为单臂路由实现不同vlan通信，上半部分为RIP路由实现</p>
+<blockquote>
+<p>记得连线，路由器用中间四个接口，别连错了（来自别的组的血泪教训）</p>
+</blockquote>
+<p>先看右下，与实验二相比，在此，我们摒弃交换机的二层交换功能，将其看作一个路由器，，左右两个端口分别作为两个不同vlan的网关，对不同的vlan的数据进行转发，并在下面的二层交换机之间配置trunk模式，使数据可以流通（详细的vlan原理目前还是一知半解，后面再开专题单独讲吧）</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 首先是两个二层交换机</span></span><br><span class="line">&gt; vlan <span class="number">10</span>   <span class="comment">// 声明一个vlan </span></span><br><span class="line">&gt; <span class="type">int</span> g0/<span class="number">1</span>  <span class="comment">// 进入某端口</span></span><br><span class="line">&gt; switchport access vlan <span class="number">10</span>   <span class="comment">// 配置vlan</span></span><br><span class="line">&gt; <span class="built_in">exit</span></span><br><span class="line"><span class="comment">// 与实验一几乎一模一样，不赘述</span></span><br><span class="line"><span class="comment">// 三层交换机</span></span><br><span class="line">&gt; no switchport   <span class="comment">// 关掉交换功能</span></span><br><span class="line">&gt; <span class="type">int</span> g0/<span class="number">1</span>  <span class="comment">// 进入某个端口</span></span><br><span class="line">&gt; ip add <span class="number">202.114</span><span class="number">.68</span><span class="number">.1</span> <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span>    <span class="comment">// 配置默认网关</span></span><br><span class="line"><span class="comment">// 重复，配置好各个端口的IP</span></span><br><span class="line">&gt; ip routing   <span class="comment">// 开启路由功能</span></span><br></pre></td></tr></table></figure>
+<p>至此，此小部分的实验配置完成（记得配主机IP和网关），然后可以在pc3、4、5、6之间互ping，通了后进行下一步</p>
+<p>再看左下角的单臂路由，原理就是路由器的子接口支持虚拟局域网</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 交换机4正常配置，上面1号端口设置为trunk模式</span></span><br><span class="line"><span class="comment">// 路由器</span></span><br><span class="line">&gt; <span class="type">int</span> g0/<span class="number">2.1</span>   <span class="comment">// 设置子接口</span></span><br><span class="line">&gt; description vlan <span class="number">10</span>   <span class="comment">// 支持vlan10</span></span><br><span class="line">&gt; encapsulation dot1Q <span class="number">2</span> <span class="comment">// 用802.1Q协议封装vlan10</span></span><br><span class="line">&gt; ip address <span class="number">192.168</span><span class="number">.1</span><span class="number">.254</span> <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span>  <span class="comment">// 设置IP地址</span></span><br><span class="line"><span class="comment">//几个子接口重复几次</span></span><br></pre></td></tr></table></figure>
+
+<p>左下部分配置完后，配置主机IP和网关，测试两台主机的连通性</p>
+<p>最后是RIP动态路由部分，与之前实验相同，不做赘述，需要注意的是此处交换机1是当作一个路由器使用，也需进行配置</p>
+<p>所有的都配完后查看各个路由设备的路由表是否学习到相关路由，测试左右部分的连通性</p>
+<h4 id="常见错误总结"><a href="#常见错误总结" class="headerlink" title="常见错误总结"></a>常见错误总结</h4><p>写了五次实验了，自己组或者朋友的组总有几次莫名出错，整理一个检错流程，或许有用</p>
+<ul>
+<li>检查连线，最高端的黑客往往采用最朴素的攻击方式，看下线有没有被别的组拔了，或者端口接对了没<ul>
+<li>注意路由器只有中间四个端口能用，朋友的组接到前面然后vlan死活配不上去</li>
+</ul>
+</li>
+<li>检查主机，很多时候ping不同可能是因为主机IP配错了，或者没配网关，又或者以太网没禁用，还有可能你用错主机了（doge）</li>
+<li>查路由表，是不是配对了，动态路由学到没<ul>
+<li>可以用<code>show running</code>命令，可以看到各个端口都配了啥，debug很好用</li>
+</ul>
+</li>
+<li><code>tracert</code>命令，追查具体在哪儿出的错，然后再深入分析</li>
+<li>互换设备检查下，有时候自己看不出来的问题，队友一眼就找到了，或者请教助教大人（我们助教人很好，曾将第一个实验帮我们de了一个小时的bug，成功成为最后一个下班的）</li>
+</ul>
 ]]></content>
       <categories>
         <category>计算机网络</category>

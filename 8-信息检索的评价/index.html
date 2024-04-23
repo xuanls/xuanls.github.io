@@ -22,17 +22,20 @@
     var CONFIG = {"hostname":"xuanls.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"always","padding":18,"offset":20,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideDownBigOut"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="春风得意马蹄疾 一梦黄粱二十年">
+  <meta name="description" content="如何对一个信息检索系统进行评价">
 <meta property="og:type" content="article">
 <meta property="og:title" content="8-信息检索的评价">
 <meta property="og:url" content="http://xuanls.github.io/8-%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/index.html">
 <meta property="og:site_name" content="Xuan&#39;Blog">
-<meta property="og:description" content="春风得意马蹄疾 一梦黄粱二十年">
+<meta property="og:description" content="如何对一个信息检索系统进行评价">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xuanls.github.io/8-%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/1-%E5%85%B3%E8%81%94%E8%A1%A8.png">
+<meta property="og:image" content="http://xuanls.github.io/8-%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/2-F%E5%80%BC.png">
 <meta property="article:published_time" content="2024-04-23T03:15:38.000Z">
-<meta property="article:modified_time" content="2024-04-23T03:15:38.118Z">
+<meta property="article:modified_time" content="2024-04-23T03:21:32.876Z">
 <meta property="article:author" content="萱萱子">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://xuanls.github.io/8-%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/1-%E5%85%B3%E8%81%94%E8%A1%A8.png">
 
 <link rel="canonical" href="http://xuanls.github.io/8-%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/">
 
@@ -214,8 +217,18 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2024-04-23 11:15:38" itemprop="dateCreated datePublished" datetime="2024-04-23T11:15:38+08:00">2024-04-23</time>
+              <time title="创建时间：2024-04-23 11:15:38 / 修改时间：11:21:32" itemprop="dateCreated datePublished" datetime="2024-04-23T11:15:38+08:00">2024-04-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2/" itemprop="url" rel="index"><span itemprop="name">信息检索</span></a>
+                </span>
             </span>
 
           
@@ -230,13 +243,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>0</span>
+              <span>3.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>1 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -248,7 +261,47 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <blockquote>
+<p>如何对一个信息检索系统进行评价</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="信息检索系统的评价"><a href="#信息检索系统的评价" class="headerlink" title="信息检索系统的评价"></a>信息检索系统的评价</h2><p>采用常规的方式来度量 ad hoc IR 系统的效果，需要一个测试集（test collection），由以下 3 个部分构成：</p>
+<ol>
+<li>一个文档集；</li>
+<li>一组用于测试的信息需求集合，信息需求可以表示成查询；</li>
+<li>一组相关性判定结果，对每个查询—文档对而言，通常会赋予一个二值判断结果——要么相关，要么不相关。</li>
+</ol>
+<p>由于在不同的文档集和信息需求上的结果差异较大，所以需要在相对较大的测试集合上对不同信息需求的结果求平均。经验上发现 <strong>50</strong> 条信息需求基本足够（同时 50 也是满足需要的最小值）。</p>
+<p>需要注意的是，相关性判定是基于信息需求而不是基于查询来进行的，比如，有这样一个信息需求：在降低心脏病发作的风险方面，饮用红葡萄酒是否比饮用白葡萄酒更有效（原文是 whether drinking red wine is more effective at reducing your risk of heart attacks than drinking white wine）。该需求可能会表达成查询 wine AND red AND white AND heart AND attack AND effective。</p>
+<p>要评价一个系统，需要对信息需求进行显式的表达，以便利用它对返回文档进行相关性判定。</p>
+<p>为了避免过拟合，应给定一个或者多个开发测试集（development test collection），在这个开发测试集上调节参数直至最佳性能，然后测试者再将这些参数应用到最后的测试集上，最后在该测试集上得到的结果性能才是真实性能的无偏估计结果。</p>
+<h2 id="标准测试集"><a href="#标准测试集" class="headerlink" title="标准测试集"></a>标准测试集</h2><p>下面列出了一些常用的标准测试集及相关的评测会议，这里我们主要关注用于 ad hoc 信息检索系统评价的测试集，但是也提到了一些用于文本分类任务的测试集。</p>
+<ul>
+<li><strong>CRANFIELD Cranfield 测试集</strong>，它是对信息检索系统的效果进行精确定量评价的首个测试集，但是对现在来说它的规模上已经非常小，只能用于最基本的试验性工作。该测试集于 20世纪 50 年代末期在英国收集而得，总共包含 1 398 篇空气动力学期刊的文章摘要、225 个查询以及所有的（查询,文档）对的相关性判定结果。</li>
+<li><strong>TREC</strong> TREC（Text Retrieval Conference，文本检索会议），是从 1992 年开始由 NIST（National Institute of Standards and Technology，美国国家标准技术研究所）组织的大型 IR 系统的年度评测会议。这个框架下定义了很多任务，每个任务都有自己的测试集。但是，其中最著名的测试集还是用于 1992 到 1999 年间的最早 8 次 TREC Ad Hoc 任务的测试集。这些测试集总共由 6 张 CD 组成，包括 189 万篇文档（主要是新闻类文章，也包括其他类型的文章）、450 个信息需求及相关性判定，在 TREC 中每个信息需求也称为主题（topic），并用详细的文字进行描述。多个不同的测试集定义在上述数据集的子集上。由于这个子测试集的规模最大，主题也比较一致，该子测试集可能是未来可用的最佳子集。由于 TREC 中的文档集都相当大，所以评测中并没有完整的相关性判定。实际上，给定信息需求，NIST 评估者仅仅针对 TREC 所提交的每个系统的前 k 篇返回文档做相关性判定。</li>
+<li><strong>GOV2</strong> 近年来，NIST 在较大规模的文档集上进行了评价测试，这其中包括 2 500 万网页组成的 GOV2 文档。从 TREC 一开始，NIST 就提供了比已有供研究者使用的数据大几个数量级的测试集，GOV2 是目前易获得的、用于研究目的的最大规模的 Web 文档集。然而，GOV2 在规模上仍然比现有的大型搜索引擎厂商索引的网页至少要小 2 个数量级。</li>
+<li><strong>NTCIR</strong> 日本国立情报研究所的信息检索测试集（NII Test Collections for IR Systems）的简称。NTCIR 项目构造了多个和 TREC 文档集规模相当的文档集，其中大部分文档都集中关注东亚语言和跨语言检索任务。这里提到的跨语言检索指的是这样的一种检索任务：查询是一种语言，而待检索文档由另外一种或者多种语言所构成。详细内容请参考 [<a target="_blank" rel="noopener" href="http://research.nii.ac.jp/ntcir/data/data-en.html]%E3%80%82">http://research.nii.ac.jp/ntcir/data/data-en.html]。</a></li>
+<li><strong>CLEF</strong> 跨语言评价论坛（Cross Language Evaluation Forum）的简称。该评价会议系列主要关注欧洲语言及它们之间的跨语言检索任务。详情请参考 [<a target="_blank" rel="noopener" href="http://www.clef-campaign.org/]%E3%80%82">www.clef-campaign.org/]。</a></li>
+<li><strong>Reuters语料</strong> 包括 Reuters-21578 和 Reuters-RCV1 语料。对于文本分类任务，最常用的测试集一直是 Reuters-21578 语料，它由 21 578 篇新闻报道组成（参见第 13 章）。近年来，Reuters发布了一个更大规模的语料库 RCV1（Reuters Corpus Volume1），它包括 806 791 篇文档（参见第 4 章）。RCV1 的规模和丰富的标注信息为未来的研究提供了更好的基础。</li>
+<li><strong>20 Newsgroups</strong> 这是另一个广泛使用的文本分类语料，来自 Ken Lang 所收集的新闻组语料。 它从 20 个 Usenet 新闻组（新闻组的名字即类别的名称）的每个组中取 1 000 篇文章构成。去掉重复文章以后，通常所用的语料中包含 18 941 篇文章。</li>
+</ul>
+<h2 id="无序检索结果集合的评价"><a href="#无序检索结果集合的评价" class="headerlink" title="无序检索结果集合的评价"></a>无序检索结果集合的评价</h2><p>信息检索中最常用的两个基本指标是正确率和召回率。它们最早定义于一种非常简单的情况下：对于给定的查询，IR 系统返回一系列文档集合，其中的文档之间并不考虑先后顺序。后面将介绍如何将这些概念扩展到有序的检索中去。</p>
+<p>正确率（Precision，简记为 P）是返回的结果中相关文档所占的比例，定义为：<br>Precision &#x3D; 返回结果中相关文档的数目&#x2F;返回结果的数目 &#x3D; P(relevant | retrieved)</p>
+<p>召回率（Recall，简记为 R）是返回的相关文档占所有相关文档的比例，定义为：<br>Recall &#x3D; 返回结果中相关文档的数目&#x2F;所有相关文档的数目 &#x3D; P(retrieved | relevant)</p>
+<p>为了更好地理解上述概念，可以对照如下列联表（contingency table）：</p>
+<img src="/8-%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/1-%E5%85%B3%E8%81%94%E8%A1%A8.png" class="" title="关联表">
+<p>于是有：</p>
+<ul>
+<li>P &#x3D; tp&#x2F;(tp + fp)</li>
+<li>R &#x3D; tp&#x2F;(tp + fn)</li>
+</ul>
+<p>一个很容易想到的指标是精确率（accuracy），即文档集中所有判断正确的文档所占的比例。计算公式为：(tp + tn)&#x2F;(tp + fp + fn + tn)。精确率指标在很多机器学习问题中的使用非常普遍，是一个非常适合这类问题的效果度量指标。但是在信息检索中，超过 99.9%的文档都是不相关文档。只需要简单地将所有的文档都判成不相关文档，就会获得非常高的精确率值，这显然是不合适的。</p>
+<p>普通用户非常关注高正确率，希望第一页的所有的结果都是相关的；相反地，一些专业的搜索人士（如律师助手、情报分析师等）却往往重视高召回率，有时甚至宁愿忍受极低的正确率也要获得高的召回率。对本机硬盘进行搜索的个人用户也常常关注召回率。<br>一个极端的情况是，对于某查询如果返回所有文档，显然此时的召回率为 1，但是此时的正确率往往却很低。一方面，相对于返回文档的数目而言，召回率是一个单调非减函数；另一方面，在一个好的系统中，正确率往往会随着返回文档数目的增加而降低。通常来说，我们希望在容许较小的错误率（此时会达到较高的正确率）的同时达到一定的召回率。</p>
+<p>一个融合了正确率和召回率的指标是 F 值（F measure），它是正确率和召回率的调和平均值，定义如下：</p>
+<img src="/8-%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/2-F%E5%80%BC.png" class="" title="F值">
+<p>α ∈ [0, 1]，因此 β² ∈ [0, ∞]，默认情况下，平衡 F 值（balanced F measure）中正确率和召回率的权重相等，即 α &#x3D; 1&#x2F;2 或 β &#x3D; 1。尽管是从 α 的角度来体现出 F 是正确率和召回率的调和平均值，但上述等权重情况下我们可以用 β 的取值来记 F 值，此时记为 F1，它是Fβ&#x3D;1的省略形式。当 β &#x3D; 1 时，F 的计算公式可以简化为：Fβ&#x3D;1 &#x3D; 2PR&#x2F;(P+R)，β &lt; 1 表示强调正确率，而 β &gt; 1 表示强调召回率</p>
+<h2 id="有序检索结果集合的评价"><a href="#有序检索结果集合的评价" class="headerlink" title="有序检索结果集合的评价"></a>有序检索结果集合的评价</h2><p>8.5 节讨论了如何开发可靠的、内容充实的测试集。<br>随后，在 8.6 节我们回过头来介绍用户效用（User utility）的概念，并介绍如何通过文档的<br>相关性来对它进行近似估计。最关键的效用指标是用户满意度。响应速度和索引大小是用户满<br>意度的影响因子。“ 结果的相关性是最重要的因子” 这个假设看上去很合理，因为响应速度很快<br>但不相关的回答结果并不会令用户满意。然而，用户的满意度和系统设计者所理解的结果质量<br>概念之间并不完全一致。比如，用户的满意度通常都很大程度上依赖于用户界面的设计，包括<br>布局、架构清晰度及用户界面的响应等等因素，而这些因素与系统返回结果的质量无关。最后<br>我们会谈及其他质量检索结果度量的技术（见 8.7 节），特别是高质量的文档摘要片段的生成<br>方法，它对用户效用的影响很大，但是它并没有包括在基本的相关度排序模式中。</p>
+
     </div>
 
     
@@ -280,8 +333,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/8.%20%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/" rel="prev" title="8.信息检索的评价">
-      <i class="fa fa-chevron-left"></i> 8.信息检索的评价
+    <a href="/%E6%AC%BA%E9%AA%97%E6%94%BB%E5%87%BB/" rel="prev" title="欺骗攻击">
+      <i class="fa fa-chevron-left"></i> 欺骗攻击
     </a></div>
       <div class="post-nav-item"></div>
     </div>
@@ -343,6 +396,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%AF%84%E4%BB%B7"><span class="nav-number">1.</span> <span class="nav-text">信息检索系统的评价</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E6%B5%8B%E8%AF%95%E9%9B%86"><span class="nav-number">2.</span> <span class="nav-text">标准测试集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E5%BA%8F%E6%A3%80%E7%B4%A2%E7%BB%93%E6%9E%9C%E9%9B%86%E5%90%88%E7%9A%84%E8%AF%84%E4%BB%B7"><span class="nav-number">3.</span> <span class="nav-text">无序检索结果集合的评价</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E5%BA%8F%E6%A3%80%E7%B4%A2%E7%BB%93%E6%9E%9C%E9%9B%86%E5%90%88%E7%9A%84%E8%AF%84%E4%BB%B7"><span class="nav-number">4.</span> <span class="nav-text">有序检索结果集合的评价</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -358,7 +412,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

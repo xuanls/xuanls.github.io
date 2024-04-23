@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>8.信息检索的评价</title>
-    <url>/8.%20%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/</url>
+    <title>8-信息检索的评价</title>
+    <url>/8-%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/</url>
     <content><![CDATA[<blockquote>
 <p>如何对一个信息检索系统进行评价</p>
 </blockquote>
@@ -30,24 +30,23 @@
 <h2 id="无序检索结果集合的评价"><a href="#无序检索结果集合的评价" class="headerlink" title="无序检索结果集合的评价"></a>无序检索结果集合的评价</h2><p>信息检索中最常用的两个基本指标是正确率和召回率。它们最早定义于一种非常简单的情况下：对于给定的查询，IR 系统返回一系列文档集合，其中的文档之间并不考虑先后顺序。后面将介绍如何将这些概念扩展到有序的检索中去。</p>
 <p>正确率（Precision，简记为 P）是返回的结果中相关文档所占的比例，定义为：<br>Precision &#x3D; 返回结果中相关文档的数目&#x2F;返回结果的数目 &#x3D; P(relevant | retrieved)</p>
 <p>召回率（Recall，简记为 R）是返回的相关文档占所有相关文档的比例，定义为：<br>Recall &#x3D; 返回结果中相关文档的数目&#x2F;所有相关文档的数目 &#x3D; P(retrieved | relevant)</p>
-<p>为了更好地理解上述概念，可以对照如下列联表（contingency table）：<br><img src="/8.%20%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/1-%E5%85%B3%E8%81%94%E8%A1%A8.png" alt="关联表"><br>于是有：</p>
+<p>为了更好地理解上述概念，可以对照如下列联表（contingency table）：</p>
+<img src="/8-%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/1-%E5%85%B3%E8%81%94%E8%A1%A8.png" class="" title="关联表">
+<p>于是有：</p>
 <ul>
 <li>P &#x3D; tp&#x2F;(tp + fp)</li>
 <li>R &#x3D; tp&#x2F;(tp + fn)</li>
 </ul>
 <p>一个很容易想到的指标是精确率（accuracy），即文档集中所有判断正确的文档所占的比例。计算公式为：(tp + tn)&#x2F;(tp + fp + fn + tn)。精确率指标在很多机器学习问题中的使用非常普遍，是一个非常适合这类问题的效果度量指标。但是在信息检索中，超过 99.9%的文档都是不相关文档。只需要简单地将所有的文档都判成不相关文档，就会获得非常高的精确率值，这显然是不合适的。</p>
 <p>普通用户非常关注高正确率，希望第一页的所有的结果都是相关的；相反地，一些专业的搜索人士（如律师助手、情报分析师等）却往往重视高召回率，有时甚至宁愿忍受极低的正确率也要获得高的召回率。对本机硬盘进行搜索的个人用户也常常关注召回率。<br>一个极端的情况是，对于某查询如果返回所有文档，显然此时的召回率为 1，但是此时的正确率往往却很低。一方面，相对于返回文档的数目而言，召回率是一个单调非减函数；另一方面，在一个好的系统中，正确率往往会随着返回文档数目的增加而降低。通常来说，我们希望在容许较小的错误率（此时会达到较高的正确率）的同时达到一定的召回率。</p>
-<p>一个融合了正确率和召回率的指标是 F 值（F measure），它是正确率和召回率的调和平均值，定义如下：<br><img src="/8.%20%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/2-F%E5%80%BC.png" alt="F值"><br>α ∈ [0, 1]，因此 β² ∈ [0, ∞]，默认情况下，平衡 F 值（balanced F measure）中正确率和召回率的权重相等，即 α &#x3D; 1&#x2F;2 或 β &#x3D; 1。尽管是从 α 的角度来体现出 F 是正确率和召回率的调和平均值，但上述等权重情况下我们可以用 β 的取值来记 F 值，此时记为 F1，它是Fβ&#x3D;1的省略形式。当 β &#x3D; 1 时，F 的计算公式可以简化为：Fβ&#x3D;1 &#x3D; 2PR&#x2F;(P+R)，β &lt; 1 表示强调正确率，而 β &gt; 1 表示强调召回率</p>
+<p>一个融合了正确率和召回率的指标是 F 值（F measure），它是正确率和召回率的调和平均值，定义如下：</p>
+<img src="/8-%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/2-F%E5%80%BC.png" class="" title="F值">
+<p>α ∈ [0, 1]，因此 β² ∈ [0, ∞]，默认情况下，平衡 F 值（balanced F measure）中正确率和召回率的权重相等，即 α &#x3D; 1&#x2F;2 或 β &#x3D; 1。尽管是从 α 的角度来体现出 F 是正确率和召回率的调和平均值，但上述等权重情况下我们可以用 β 的取值来记 F 值，此时记为 F1，它是Fβ&#x3D;1的省略形式。当 β &#x3D; 1 时，F 的计算公式可以简化为：Fβ&#x3D;1 &#x3D; 2PR&#x2F;(P+R)，β &lt; 1 表示强调正确率，而 β &gt; 1 表示强调召回率</p>
 <h2 id="有序检索结果集合的评价"><a href="#有序检索结果集合的评价" class="headerlink" title="有序检索结果集合的评价"></a>有序检索结果集合的评价</h2><p>8.5 节讨论了如何开发可靠的、内容充实的测试集。<br>随后，在 8.6 节我们回过头来介绍用户效用（User utility）的概念，并介绍如何通过文档的<br>相关性来对它进行近似估计。最关键的效用指标是用户满意度。响应速度和索引大小是用户满<br>意度的影响因子。“ 结果的相关性是最重要的因子” 这个假设看上去很合理，因为响应速度很快<br>但不相关的回答结果并不会令用户满意。然而，用户的满意度和系统设计者所理解的结果质量<br>概念之间并不完全一致。比如，用户的满意度通常都很大程度上依赖于用户界面的设计，包括<br>布局、架构清晰度及用户界面的响应等等因素，而这些因素与系统返回结果的质量无关。最后<br>我们会谈及其他质量检索结果度量的技术（见 8.7 节），特别是高质量的文档摘要片段的生成<br>方法，它对用户效用的影响很大，但是它并没有包括在基本的相关度排序模式中。</p>
 ]]></content>
       <categories>
         <category>信息检索</category>
       </categories>
-  </entry>
-  <entry>
-    <title>8-信息检索的评价</title>
-    <url>/8-%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>HTTP协议</title>
@@ -76,6 +75,58 @@
       </categories>
       <tags>
         <tag>HTTP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux提权</title>
+    <url>/Linux%E6%8F%90%E6%9D%83/</url>
+    <content><![CDATA[<h1 id="Part1-sudo介绍"><a href="#Part1-sudo介绍" class="headerlink" title="Part1 sudo介绍"></a>Part1 sudo介绍</h1><h2 id="什么是sudo"><a href="#什么是sudo" class="headerlink" title="什么是sudo"></a>什么是sudo</h2><p>简单的说，sudo 是一种&#x3D;&#x3D;权限管理机制&#x3D;&#x3D;，管理员可以授权于一些普通用户去执行一些 root 执行的操作，提示输入密码时该密码为当前用户的密码，而不需要知道 root 的密码。不过有时间限制，Ubuntu默认为一次时长15分钟</p>
+<span id="more"></span>
+
+<p>严谨些说，sudo 允许一个已授权用户以超级用户或者其它用户的角色运行一个命令。当然，能做什么不能做什么都是通过安全策略来指定的。sudo 支持插件架构的安全策略，并能把输入输出写入日志。第三方可以开发并发布自己的安全策略和输入输出日志插件，并让它们无缝的和 sudo 一起工作。默认的安全策略记录在 &#x3D;&#x3D;&#x2F;etc&#x2F;sudoers&#x3D;&#x3D; 文件中。而安全策略可能需要用户通过密码来验证他们自己。也就是在用户执行 sudo 命令时要求用户输入&#x3D;&#x3D;自己账号的密码。&#x3D;&#x3D;如果验证失败，sudo 命令将会退出。</p>
+<p>默认的etc&#x2F;sudoers配置文件：</p>
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C1.png" alt="图片"></p>
+<br/>
+
+<h1 id="Part2-CVE-2021-3156漏洞"><a href="#Part2-CVE-2021-3156漏洞" class="headerlink" title="Part2 CVE-2021-3156漏洞"></a>Part2 CVE-2021-3156漏洞</h1><h2 id="1-漏洞简介"><a href="#1-漏洞简介" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>2021年1月26日，Linux安全工具&#x3D;&#x3D;sudo&#x3D;&#x3D;被发现严重的基于&#x3D;&#x3D;堆缓冲区溢出&#x3D;&#x3D;漏洞。利用这一漏洞，攻击者无需知道用户密码，一样可以获得root权限，并且是在默认配置下。此漏洞已分配为CVE-2021-3156，危险等级评分为7分。</p>
+<h2 id="2-原理介绍"><a href="#2-原理介绍" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><p>漏洞发生的原因在于sudo错误地转义了参数中的反斜杠。</p>
+<p>sudo命令允许用户以超级用户或&#x2F;etc&#x2F;sudoers文件中指定的其他用户的身份运行指定命令cmd。设置真实和有效用户ID与用户组ID，以匹配&#x2F;etc&#x2F;passwd文件中指定的目标用户和&#x2F;etc&#x2F;group文件中指定的用户组（除非指定了“-P”选项）。如果调用者是超级用户，或目标用户与调用者是同一用户，则无须提供密码。否则，sudo通常要求用户提供密码进行认证。注意，按照默认的配置，这里所谓的密码认证指的是用户的密码，不是超级用户的密码。</p>
+<p>一旦获得认证，立即更新&#x2F;var&#x2F;run&#x2F;sudo目录中的用户时间记录。在之后的短时间内（5分钟，除非sudoers文件中另有设定），用户可以随时运行sudo命令而不必提供密码。</p>
+<p>sudo与sudoedit是一个程序两个名字。运行sudoedit命令，相当于运行“sudo -e”命令。sudoedit命令主要用于编辑&#x2F;etc&#x2F;sudoers文件，参见“-e”选项的说明。</p>
+<p>当sudo通过-s或-i命令行选项在shell模式下运行命令时，它将在命令参数中使用反斜杠转义特殊字符。但使用-s或-i标志运行sudoedit时，实际上并未进行转义，从而可能导致缓冲区溢出。因此只要存在sudoers文件（通常是&#x2F;etc&#x2F;sudoers），攻击者就可以使用本地普通用户利用sudo获得系统root权限。</p>
+<h2 id="3-影响版本"><a href="#3-影响版本" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>受影响版本<br>Sudo 1.8.2 – 1.8.31p2<br>Sudo 1.9.0 – 1.9.5p1</p>
+<p>不受影响版本<br>sudo &#x3D;&gt;1.9.5p2</p>
+<h2 id="4-漏洞复现"><a href="#4-漏洞复现" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><br/>
+
+<h1 id="Part3-CVE-2023-22809漏洞"><a href="#Part3-CVE-2023-22809漏洞" class="headerlink" title="Part3 CVE-2023-22809漏洞"></a>Part3 CVE-2023-22809漏洞</h1><h2 id="1-漏洞简介-1"><a href="#1-漏洞简介-1" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>在Sudo 版本 1.9.12p1中使用sudoedit时，sudoers的保护机制可能被绕过，从而导致通过编辑未经授权的文件实现权限升级，Sudo中的sudoedit对处理用户提供的环境变量（如SUDO_EDITOR、VISUAL和EDITOR）中传递的额外参数存在缺陷。当用户指定的编辑器包含绕过sudoers策略的“–”参数时，拥有sudoedit访问权限的本地攻击者可通过将任意条目附加到要处理的文件列表中，最终在目标系统上实现权限提升（由普通用户到超级用户，即”root”）</p>
+<h2 id="2-原理介绍-1"><a href="#2-原理介绍-1" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><br/>
+
+<h2 id="3-影响版本-1"><a href="#3-影响版本-1" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>sudo 1.8.0-sudo 1.9.12p1</p>
+<h2 id="4-漏洞复现-1"><a href="#4-漏洞复现-1" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><ol>
+<li>查看当前sudo版本</li>
+</ol>
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C2.png"></p>
+<p>如上，为受影响版本，若不是，则在<a href="https://">https://www.sudo.ws/dist/</a>下载相应版本后解压、配置、编译并安装</p>
+<br/>
+
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C3.png" alt="图片"></p>
+<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C4.png" alt="图片"></p>
+<br/>
+
+<h2 id="5-缓解措施"><a href="#5-缓解措施" class="headerlink" title="5. 缓解措施"></a>5. 缓解措施</h2><p>1、为防止 sudoedit 使用用户指定的编辑器，可向 sudoers 文件中添加以下内容： Defaults!sudoedit env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR”<br>2、使用“Cmnd_Alias”限制编辑器编辑指定文件时，如： Cmnd_Alias EDIT_MOTD &#x3D; sudoedit &#x2F;etc&#x2F;motd Defaults!EDIT_MOTD env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR” user ALL &#x3D; EDIT_MOTD</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><p><a href="https://">https://www.cnblogs.com/20181309lzy/p/14710439.html</a></p>
+</li>
+<li><p><a href="https://">https://wker.com/linux-command/sudo-sudoedit.html</a></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>漏洞</category>
+      </categories>
+      <tags>
+        <tag>漏洞</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -133,7 +184,7 @@
 这里写"More"会在网页中隐藏后面内容,跳转到详情页才能看 -->
 
 <p>超链接用法:<br>[超链接显示名] (超链接地址 “超链接title”)<br><a href="%E8%B6%85%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80" title="超链接title">超链接显示名</a></p>
-<p><a href="mailto:&#49;&#x32;&#51;&#64;&#x71;&#x71;&#x2e;&#x63;&#111;&#109;">&#49;&#x32;&#51;&#64;&#x71;&#x71;&#x2e;&#x63;&#111;&#109;</a> &lt;邮箱&gt;</p>
+<p><a href="mailto:&#49;&#x32;&#51;&#64;&#x71;&#113;&#46;&#x63;&#111;&#109;">&#49;&#x32;&#51;&#64;&#x71;&#113;&#46;&#x63;&#111;&#109;</a> &lt;邮箱&gt;</p>
 <p><a href="https://123.com/">https://123.com</a> &lt;网址&gt;</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph TB</span><br><span class="line">  A(把大象放进去) --&gt; B&#123;&quot;冰箱小不小？&quot;&#125;</span><br><span class="line">  B --&gt; |不小| C[把冰箱门关上]</span><br><span class="line">  B --&gt;   |小| D[换个大点的冰箱]</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
@@ -200,58 +251,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux提权</title>
-    <url>/Linux%E6%8F%90%E6%9D%83/</url>
-    <content><![CDATA[<h1 id="Part1-sudo介绍"><a href="#Part1-sudo介绍" class="headerlink" title="Part1 sudo介绍"></a>Part1 sudo介绍</h1><h2 id="什么是sudo"><a href="#什么是sudo" class="headerlink" title="什么是sudo"></a>什么是sudo</h2><p>简单的说，sudo 是一种&#x3D;&#x3D;权限管理机制&#x3D;&#x3D;，管理员可以授权于一些普通用户去执行一些 root 执行的操作，提示输入密码时该密码为当前用户的密码，而不需要知道 root 的密码。不过有时间限制，Ubuntu默认为一次时长15分钟</p>
-<span id="more"></span>
-
-<p>严谨些说，sudo 允许一个已授权用户以超级用户或者其它用户的角色运行一个命令。当然，能做什么不能做什么都是通过安全策略来指定的。sudo 支持插件架构的安全策略，并能把输入输出写入日志。第三方可以开发并发布自己的安全策略和输入输出日志插件，并让它们无缝的和 sudo 一起工作。默认的安全策略记录在 &#x3D;&#x3D;&#x2F;etc&#x2F;sudoers&#x3D;&#x3D; 文件中。而安全策略可能需要用户通过密码来验证他们自己。也就是在用户执行 sudo 命令时要求用户输入&#x3D;&#x3D;自己账号的密码。&#x3D;&#x3D;如果验证失败，sudo 命令将会退出。</p>
-<p>默认的etc&#x2F;sudoers配置文件：</p>
-<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C1.png" alt="图片"></p>
-<br/>
-
-<h1 id="Part2-CVE-2021-3156漏洞"><a href="#Part2-CVE-2021-3156漏洞" class="headerlink" title="Part2 CVE-2021-3156漏洞"></a>Part2 CVE-2021-3156漏洞</h1><h2 id="1-漏洞简介"><a href="#1-漏洞简介" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>2021年1月26日，Linux安全工具&#x3D;&#x3D;sudo&#x3D;&#x3D;被发现严重的基于&#x3D;&#x3D;堆缓冲区溢出&#x3D;&#x3D;漏洞。利用这一漏洞，攻击者无需知道用户密码，一样可以获得root权限，并且是在默认配置下。此漏洞已分配为CVE-2021-3156，危险等级评分为7分。</p>
-<h2 id="2-原理介绍"><a href="#2-原理介绍" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><p>漏洞发生的原因在于sudo错误地转义了参数中的反斜杠。</p>
-<p>sudo命令允许用户以超级用户或&#x2F;etc&#x2F;sudoers文件中指定的其他用户的身份运行指定命令cmd。设置真实和有效用户ID与用户组ID，以匹配&#x2F;etc&#x2F;passwd文件中指定的目标用户和&#x2F;etc&#x2F;group文件中指定的用户组（除非指定了“-P”选项）。如果调用者是超级用户，或目标用户与调用者是同一用户，则无须提供密码。否则，sudo通常要求用户提供密码进行认证。注意，按照默认的配置，这里所谓的密码认证指的是用户的密码，不是超级用户的密码。</p>
-<p>一旦获得认证，立即更新&#x2F;var&#x2F;run&#x2F;sudo目录中的用户时间记录。在之后的短时间内（5分钟，除非sudoers文件中另有设定），用户可以随时运行sudo命令而不必提供密码。</p>
-<p>sudo与sudoedit是一个程序两个名字。运行sudoedit命令，相当于运行“sudo -e”命令。sudoedit命令主要用于编辑&#x2F;etc&#x2F;sudoers文件，参见“-e”选项的说明。</p>
-<p>当sudo通过-s或-i命令行选项在shell模式下运行命令时，它将在命令参数中使用反斜杠转义特殊字符。但使用-s或-i标志运行sudoedit时，实际上并未进行转义，从而可能导致缓冲区溢出。因此只要存在sudoers文件（通常是&#x2F;etc&#x2F;sudoers），攻击者就可以使用本地普通用户利用sudo获得系统root权限。</p>
-<h2 id="3-影响版本"><a href="#3-影响版本" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>受影响版本<br>Sudo 1.8.2 – 1.8.31p2<br>Sudo 1.9.0 – 1.9.5p1</p>
-<p>不受影响版本<br>sudo &#x3D;&gt;1.9.5p2</p>
-<h2 id="4-漏洞复现"><a href="#4-漏洞复现" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><br/>
-
-<h1 id="Part3-CVE-2023-22809漏洞"><a href="#Part3-CVE-2023-22809漏洞" class="headerlink" title="Part3 CVE-2023-22809漏洞"></a>Part3 CVE-2023-22809漏洞</h1><h2 id="1-漏洞简介-1"><a href="#1-漏洞简介-1" class="headerlink" title="1. 漏洞简介"></a>1. 漏洞简介</h2><p>在Sudo 版本 1.9.12p1中使用sudoedit时，sudoers的保护机制可能被绕过，从而导致通过编辑未经授权的文件实现权限升级，Sudo中的sudoedit对处理用户提供的环境变量（如SUDO_EDITOR、VISUAL和EDITOR）中传递的额外参数存在缺陷。当用户指定的编辑器包含绕过sudoers策略的“–”参数时，拥有sudoedit访问权限的本地攻击者可通过将任意条目附加到要处理的文件列表中，最终在目标系统上实现权限提升（由普通用户到超级用户，即”root”）</p>
-<h2 id="2-原理介绍-1"><a href="#2-原理介绍-1" class="headerlink" title="2. 原理介绍"></a>2. 原理介绍</h2><br/>
-
-<h2 id="3-影响版本-1"><a href="#3-影响版本-1" class="headerlink" title="3. 影响版本"></a>3. 影响版本</h2><p>sudo 1.8.0-sudo 1.9.12p1</p>
-<h2 id="4-漏洞复现-1"><a href="#4-漏洞复现-1" class="headerlink" title="4. 漏洞复现"></a>4. 漏洞复现</h2><ol>
-<li>查看当前sudo版本</li>
-</ol>
-<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C2.png"></p>
-<p>如上，为受影响版本，若不是，则在<a href="https://">https://www.sudo.ws/dist/</a>下载相应版本后解压、配置、编译并安装</p>
-<br/>
-
-<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C3.png" alt="图片"></p>
-<p><img src="/%5CLinux%E6%8F%90%E6%9D%83%5C4.png" alt="图片"></p>
-<br/>
-
-<h2 id="5-缓解措施"><a href="#5-缓解措施" class="headerlink" title="5. 缓解措施"></a>5. 缓解措施</h2><p>1、为防止 sudoedit 使用用户指定的编辑器，可向 sudoers 文件中添加以下内容： Defaults!sudoedit env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR”<br>2、使用“Cmnd_Alias”限制编辑器编辑指定文件时，如： Cmnd_Alias EDIT_MOTD &#x3D; sudoedit &#x2F;etc&#x2F;motd Defaults!EDIT_MOTD env_delete+&#x3D;”SUDO_EDITOR VISUAL EDITOR” user ALL &#x3D; EDIT_MOTD</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><p><a href="https://">https://www.cnblogs.com/20181309lzy/p/14710439.html</a></p>
-</li>
-<li><p><a href="https://">https://wker.com/linux-command/sudo-sudoedit.html</a></p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>漏洞</category>
-      </categories>
-      <tags>
-        <tag>漏洞</tag>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《战争史》初读</title>
     <url>/%E3%80%8A%E6%88%98%E4%BA%89%E5%8F%B2%E3%80%8B%E5%88%9D%E8%AF%BB/</url>
     <content><![CDATA[<hr>
@@ -267,6 +266,141 @@
       <tags>
         <tag>读书笔记</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>欺骗攻击</title>
+    <url>/%E6%AC%BA%E9%AA%97%E6%94%BB%E5%87%BB/</url>
+    <content><![CDATA[<blockquote>
+<p>欺骗攻击是网络攻击一种重要手段。常见的欺骗攻击方式有：DNS欺骗攻击、Email欺骗攻击、Web欺骗攻击和IP欺骗攻击等</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="DNS欺骗攻击"><a href="#DNS欺骗攻击" class="headerlink" title="DNS欺骗攻击"></a>DNS欺骗攻击</h2><h3 id="DNS工作原理"><a href="#DNS工作原理" class="headerlink" title="DNS工作原理"></a>DNS工作原理</h3><p>DNS(Domain Name System)<br>在传输层通常使用UDP协议，常用端口为53</p>
+<h3 id="DNS欺骗原理"><a href="#DNS欺骗原理" class="headerlink" title="DNS欺骗原理"></a>DNS欺骗原理</h3><h2 id="Email欺骗攻击"><a href="#Email欺骗攻击" class="headerlink" title="Email欺骗攻击"></a>Email欺骗攻击</h2><h2 id="Web欺骗攻击"><a href="#Web欺骗攻击" class="headerlink" title="Web欺骗攻击"></a>Web欺骗攻击</h2><h3 id="Web欺骗原理"><a href="#Web欺骗原理" class="headerlink" title="Web欺骗原理"></a>Web欺骗原理</h3><p>攻击者通过伪造某个WWW站点的影像拷贝，</p>
+<h2 id="IP欺骗攻击"><a href="#IP欺骗攻击" class="headerlink" title="IP欺骗攻击"></a>IP欺骗攻击</h2>]]></content>
+  </entry>
+  <entry>
+    <title>对抗机器学习(AML)</title>
+    <url>/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/</url>
+    <content><![CDATA[<p><strong>机器学习自身安全吗？</strong></p>
+<hr>
+<blockquote>
+<p>本文为WHU_NCC内容安全课堂笔记（记了学完就忘，不记根本不学😭）内容碎片化且片面，仅供娱乐，别学习了</p>
+<p>第七讲——对抗机器学习（这是第一篇，前面的大概率不会补了）</p>
+</blockquote>
+<span id="more"></span>
+<hr>
+<h2 id="引入：ML-AML"><a href="#引入：ML-AML" class="headerlink" title="引入：ML &amp; AML"></a>引入：ML &amp; AML</h2><p>什么是机器学习，放张图不细讲惹（因为自己也不会）</p>
+<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/1_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.png" class="" title="机器学习">
+
+<p>那什么是对抗机器学习呢？</p>
+<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/2_%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.png" class="" title="对抗机器学习">
+<p>如上图，输入的图片是经过处理后的攻击图片，人眼很难分辨出与原图的差距，模型却把它们识别成了完全不同的东西（分别是鹈鹕、快艇和牛仔裤），听起来并没有多可怕，但试想一下，哪天你坐车里吃着火锅唱着歌，你的车载AI把前面的STOP路牌看成了限速120，想想都刺激（bushi）</p>
+<p>总之，这是一个亟需重视的领域，如果说在GPT等大模型出来之前，AML只是垃圾邮件对抗之类的小打小闹，那现在随着人工智能的井喷式发展，它可能就是悬在人类头上的“达摩克里斯之剑”了（突然严肃）</p>
+<hr>
+<h2 id="AML基本介绍"><a href="#AML基本介绍" class="headerlink" title="AML基本介绍"></a>AML基本介绍</h2><p>全称: Adversarial Machine Learning</p>
+<p>是机器学习和计算机安全的一个交叉领域，分为攻（欺骗检测器）防（确保准确）</p>
+<h3 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h3><p>先放图：</p>
+<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/3_%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%97%B6%E9%97%B4%E7%BA%BF.png" class="" title="对抗机器学习时间线">
+<p>开创于2004年. Dalvi等针对垃圾邮件过滤问题提出对抗分类 (Adversarial classification)概念，其核心思想是分析机器学习算法在遭受特定攻击时的安全性。（比我想得要早）</p>
+<p>以下为一个简单演示：</p>
+<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/4_%E5%9E%83%E5%9C%BE%E9%82%AE%E4%BB%B6%E5%88%86%E7%B1%BB.png" class="" title="垃圾邮件分类">
+<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/5_%E5%9E%83%E5%9C%BE%E9%82%AE%E4%BB%B6%E6%94%BB%E5%87%BB.png" class="" title="垃圾邮件攻击">
+<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/6_%E5%9E%83%E5%9C%BE%E9%82%AE%E4%BB%B6%E9%98%B2%E5%BE%A1.png" class="" title="垃圾邮件防御">
+<ul>
+<li>2005 年, Lowd 等提出对抗学习 (Adversarial learning) 概念</li>
+<li>2006年，Barreno 等提出机器学习系统的攻击分类和敌手建模 (Adversary Model）</li>
+<li>2010 年，Dasgupta 等将对抗机器学习形式化为学习器 (Learner) 与敌手 (Adversary) 围绕不同目标进行的博弈。其中, 学习器的目标是<strong>对数据进行正确预测或分类</strong>, 敌手的目标则是<strong>诱使学习器对相关的数据做出错误的预测</strong></li>
+</ul>
+<hr>
+<h3 id="AML敌手模型"><a href="#AML敌手模型" class="headerlink" title="AML敌手模型"></a>AML敌手模型</h3><p>听不懂思密达，觉得很高级就copy了下来</p>
+<h4 id="敌手目标-Adversary-goal"><a href="#敌手目标-Adversary-goal" class="headerlink" title="敌手目标 (Adversary goal)"></a>敌手目标 (Adversary goal)</h4><ul>
+<li>完整性违规 (Integrity violation)<ul>
+<li>不影响合法用户对系统功能正常使用的同时, 达到规避检测的目的</li>
+</ul>
+</li>
+<li>可用性违规 (Availability violation) <ul>
+<li>危害合法用户对系统功能正常使用, 甚至造成系统对用户的拒绝服务</li>
+</ul>
+</li>
+</ul>
+<h4 id="敌手知识-Adversary-knowledge"><a href="#敌手知识-Adversary-knowledge" class="headerlink" title="敌手知识 (Adversary knowledge)"></a>敌手知识 (Adversary knowledge)</h4><p>攻击者掌握的机器学习模型的相关知识，可包括:</p>
+<ol>
+<li>训练数据 D；</li>
+<li>特征集X⊆Rd; </li>
+<li>模型结构和参数 f : X→ R</li>
+</ol>
+<ul>
+<li>白盒攻击：假设攻击者可以完全获取目标模型的结构和参数等信息 </li>
+<li>黑盒攻击：假设攻击者只能获取模型的最终决策结果</li>
+</ul>
+<h4 id="敌手能力-Adversary-capability"><a href="#敌手能力-Adversary-capability" class="headerlink" title="敌手能力 (Adversary capability)"></a>敌手能力 (Adversary capability)</h4><p>指攻击者对机器学习模型的操作权限</p>
+<ul>
+<li>训练阶段：投毒攻击, 后门攻击</li>
+<li>测试阶段：规避攻击, 隐私窃取</li>
+</ul>
+<p>敌手能力可以形式化为优化问题中的约束条件 </p>
+<hr>
+<h2 id="对抗攻击技术"><a href="#对抗攻击技术" class="headerlink" title="对抗攻击技术"></a>对抗攻击技术</h2><h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p>大概分为两类</p>
+<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/7_%E5%AF%B9%E6%8A%97%E6%94%BB%E5%87%BB%E5%88%86%E7%B1%BB.png" class="" title="对抗攻击分类">
+<p>数据投毒(Data poisoning )：归因性攻击（Causative attack）</p>
+<ul>
+<li>训练阶段</li>
+<li>攻击者通过干扰训练数据集来欺骗模型<ul>
+<li>训练集中加入恶意样本</li>
+<li>修改训练集的数据实例</li>
+<li>改变训练数据标签</li>
+</ul>
+</li>
+<li>攻击者试图干扰和破坏ML模型和算法）</li>
+</ul>
+<p>规避攻击(Evasion attack)：试探性攻击 (Exploratory attack)</p>
+<ul>
+<li>测试阶段</li>
+<li>攻击者无需修改ML模型，仅让模型出错，产生攻击者需要的输出</li>
+<li><strong>Evasion attack</strong> 是最常用的攻击手段</li>
+</ul>
+<p>其他分类：黑盒&#x2F;白盒攻击、有目标&#x2F;无目标攻击，此处不细讲</p>
+<h3 id="规避攻击"><a href="#规避攻击" class="headerlink" title="规避攻击"></a>规避攻击</h3><p>照例，先放张图</p>
+<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/8_%E5%AF%B9%E6%8A%97%E6%94%BB%E5%87%BB1.png" class="" title="规避攻击">
+
+<h4 id="1-基于模仿"><a href="#1-基于模仿" class="headerlink" title="1. 基于模仿"></a>1. 基于模仿</h4><p>采用启发式算法, 直接修改文件结构或内容 </p>
+<p>向恶意样本添加良性样本的特征, 或向良性样本中添加恶意样本的特征, 使得修改后的样本在实现恶意功能的同时, 将结构差异降至最低, 从而规避分类器的检测，如<strong>垃圾邮件规避攻击</strong>（好词插入，坏词混淆）</p>
+<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/9_%E5%9F%BA%E4%BA%8E%E6%A8%A1%E4%BB%BF%E7%9A%84%E8%A7%84%E9%81%BF%E6%94%BB%E5%87%BB.png" class="" title="基于模仿的规避攻击">
+
+<h4 id="2-基于梯度"><a href="#2-基于梯度" class="headerlink" title="2. 基于梯度"></a>2. 基于梯度</h4><p>利用梯度下降求解优化问题, 对输入样本执行细粒度的修改, 以最小化 (最大化) 样本被归类为恶意 (良性) 的概率 </p>
+<p>应用梯度下降函数, 在损失函数最可能增加的方向上扰动测试样本, 使恶意样本向着合法样本的区域移动, 从而被分类器错分为正常样本。</p>
+<ul>
+<li>L-BFGS：限制内存方法 (Limited-memory broyden fletcher goldfarb shanno)</li>
+<li>FGSM：快速梯度符号法 (Fast gradient sign method) </li>
+<li>JSMA：基于雅可比矩阵的显著图攻击算法 (Jacobian-base saliency map attack) </li>
+<li>C&amp;W 算法</li>
+</ul>
+<h4 id="3-基于迁移"><a href="#3-基于迁移" class="headerlink" title="3. 基于迁移"></a>3. 基于迁移</h4><p>利用了对抗样本的跨模型迁移性。可应用于无法获取模型梯度的各种攻击场景 </p>
+<p>基于对抗样本的跨模型迁移性。攻击者通过构建代理模型 (Surrogate model) 的方式, 利用已知机器学习模型构造对抗样本, 然后攻击相关的未知模型</p>
+<p>生成对抗网络 GAN（Generative adversarial networks ）<br>采用博弈论中的纳什均衡思想, 通过多回合的对抗训练, 使得生成器学到目标样本分布, 从而用于规避攻击</p>
+<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/10_GAN.png" class="" title="GAN">
+
+<hr>
+<h3 id="投毒攻击"><a href="#投毒攻击" class="headerlink" title="投毒攻击"></a>投毒攻击</h3><p>对训练数据进行修改或者添加少量数据进行污染, 寻求全局或局部分布的扰动, 进而破坏模型可用性和完整性, 降低机器学习系统性能。</p>
+<p>投毒攻击是对主流机器学习算法的一种重要威胁, 包括<strong>支持向量机、贝叶斯分类器、层次聚类以及 逻辑回归</strong>等常规算法都受到了投毒攻击的危害 </p>
+<p>针对数据库发起投毒攻击, 可以实现 “立竿见影”的效果, 同时得到极为丰厚的回报, 使得投毒攻击发生更为频繁。</p>
+<p>卡巴斯基实验室被指控向 VirusTotal 注入假阳性样本（将良性的、系统关键文件标记为恶意文件），当对手在新样本上训练病毒扫描器时, 这些扫描器会将合法的系统文件标记为恶意, 从而毒害竞争对手的杀毒产品</p>
+<ul>
+<li>可用性攻击：降低分类器分类精度并产生高误报率, 从而无法为正常用户提供服务, 甚至使系统拒绝服务</li>
+<li>完整性攻击：使机器学习产生较高漏报率, 降低成功检测到恶意活动的几率</li>
+</ul>
+<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/11_%E6%B2%B9%E8%9B%99%E6%94%BB%E5%87%BB.png" class="" title="油蛙攻击">
+
+<h2 id="常用规避攻击技术"><a href="#常用规避攻击技术" class="headerlink" title="常用规避攻击技术"></a>常用规避攻击技术</h2><h3 id="1-噪声攻击（Noise-attack）"><a href="#1-噪声攻击（Noise-attack）" class="headerlink" title="1.噪声攻击（Noise attack）"></a>1.噪声攻击（Noise attack）</h3><p>最简单的对抗攻击技术</p>
+<p>Noise is a random arrangement of pixels containing no information（不包含任何信息的随机像素排列）</p>
+<p>通过随机函数生成，是一种无目标的黑盒逃逸攻击</p>
+<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/12-%E5%99%AA%E5%A3%B0%E6%94%BB%E5%87%BB.png" class="" title="噪声攻击">
+
+<h3 id="2-语义攻击（Semantic-attack）"><a href="#2-语义攻击（Semantic-attack）" class="headerlink" title="2.语义攻击（Semantic attack）"></a>2.语义攻击（Semantic attack）</h3><h3 id="3-快速梯度符号攻击（FGSM，Fast-gradient-sign-method-attack）"><a href="#3-快速梯度符号攻击（FGSM，Fast-gradient-sign-method-attack）" class="headerlink" title="3.快速梯度符号攻击（FGSM，Fast gradient sign method attack）"></a>3.快速梯度符号攻击（FGSM，Fast gradient sign method attack）</h3><h3 id="4-基础迭代攻击（BIM，Basic-iterative-method-attack）"><a href="#4-基础迭代攻击（BIM，Basic-iterative-method-attack）" class="headerlink" title="4.基础迭代攻击（BIM，Basic iterative method attack）"></a>4.基础迭代攻击（BIM，Basic iterative method attack）</h3><h3 id="5-投影梯度下降攻击（PGD，Projected-gradient-descent-attack）"><a href="#5-投影梯度下降攻击（PGD，Projected-gradient-descent-attack）" class="headerlink" title="5.投影梯度下降攻击（PGD，Projected gradient descent attack）"></a>5.投影梯度下降攻击（PGD，Projected gradient descent attack）</h3><h3 id="6-深度欺骗攻击（DeepFool-attack-）"><a href="#6-深度欺骗攻击（DeepFool-attack-）" class="headerlink" title="6.深度欺骗攻击（DeepFool attack ）"></a>6.深度欺骗攻击（DeepFool attack ）</h3><h3 id="7-C-W攻击（CW-Carlini-Wagner-attack-）"><a href="#7-C-W攻击（CW-Carlini-Wagner-attack-）" class="headerlink" title="7.C&amp;W攻击（CW, Carlini-Wagner attack ）"></a>7.C&amp;W攻击（CW, Carlini-Wagner attack ）</h3><h2 id="对抗防御技术"><a href="#对抗防御技术" class="headerlink" title="对抗防御技术"></a>对抗防御技术</h2><h2 id="语音对抗攻击及防御技术"><a href="#语音对抗攻击及防御技术" class="headerlink" title="语音对抗攻击及防御技术"></a>语音对抗攻击及防御技术</h2><h3 id="语音对抗样本技术"><a href="#语音对抗样本技术" class="headerlink" title="语音对抗样本技术"></a>语音对抗样本技术</h3><h3 id="语音对抗防御技术"><a href="#语音对抗防御技术" class="headerlink" title="语音对抗防御技术"></a>语音对抗防御技术</h3>]]></content>
+      <categories>
+        <category>内容安全</category>
+      </categories>
   </entry>
   <entry>
     <title>网络木马</title>
@@ -514,141 +648,6 @@
       <tags>
         <tag>木马</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>对抗机器学习(AML)</title>
-    <url>/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/</url>
-    <content><![CDATA[<p><strong>机器学习自身安全吗？</strong></p>
-<hr>
-<blockquote>
-<p>本文为WHU_NCC内容安全课堂笔记（记了学完就忘，不记根本不学😭）内容碎片化且片面，仅供娱乐，别学习了</p>
-<p>第七讲——对抗机器学习（这是第一篇，前面的大概率不会补了）</p>
-</blockquote>
-<span id="more"></span>
-<hr>
-<h2 id="引入：ML-AML"><a href="#引入：ML-AML" class="headerlink" title="引入：ML &amp; AML"></a>引入：ML &amp; AML</h2><p>什么是机器学习，放张图不细讲惹（因为自己也不会）</p>
-<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/1_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.png" class="" title="机器学习">
-
-<p>那什么是对抗机器学习呢？</p>
-<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/2_%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.png" class="" title="对抗机器学习">
-<p>如上图，输入的图片是经过处理后的攻击图片，人眼很难分辨出与原图的差距，模型却把它们识别成了完全不同的东西（分别是鹈鹕、快艇和牛仔裤），听起来并没有多可怕，但试想一下，哪天你坐车里吃着火锅唱着歌，你的车载AI把前面的STOP路牌看成了限速120，想想都刺激（bushi）</p>
-<p>总之，这是一个亟需重视的领域，如果说在GPT等大模型出来之前，AML只是垃圾邮件对抗之类的小打小闹，那现在随着人工智能的井喷式发展，它可能就是悬在人类头上的“达摩克里斯之剑”了（突然严肃）</p>
-<hr>
-<h2 id="AML基本介绍"><a href="#AML基本介绍" class="headerlink" title="AML基本介绍"></a>AML基本介绍</h2><p>全称: Adversarial Machine Learning</p>
-<p>是机器学习和计算机安全的一个交叉领域，分为攻（欺骗检测器）防（确保准确）</p>
-<h3 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h3><p>先放图：</p>
-<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/3_%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%97%B6%E9%97%B4%E7%BA%BF.png" class="" title="对抗机器学习时间线">
-<p>开创于2004年. Dalvi等针对垃圾邮件过滤问题提出对抗分类 (Adversarial classification)概念，其核心思想是分析机器学习算法在遭受特定攻击时的安全性。（比我想得要早）</p>
-<p>以下为一个简单演示：</p>
-<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/4_%E5%9E%83%E5%9C%BE%E9%82%AE%E4%BB%B6%E5%88%86%E7%B1%BB.png" class="" title="垃圾邮件分类">
-<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/5_%E5%9E%83%E5%9C%BE%E9%82%AE%E4%BB%B6%E6%94%BB%E5%87%BB.png" class="" title="垃圾邮件攻击">
-<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/6_%E5%9E%83%E5%9C%BE%E9%82%AE%E4%BB%B6%E9%98%B2%E5%BE%A1.png" class="" title="垃圾邮件防御">
-<ul>
-<li>2005 年, Lowd 等提出对抗学习 (Adversarial learning) 概念</li>
-<li>2006年，Barreno 等提出机器学习系统的攻击分类和敌手建模 (Adversary Model）</li>
-<li>2010 年，Dasgupta 等将对抗机器学习形式化为学习器 (Learner) 与敌手 (Adversary) 围绕不同目标进行的博弈。其中, 学习器的目标是<strong>对数据进行正确预测或分类</strong>, 敌手的目标则是<strong>诱使学习器对相关的数据做出错误的预测</strong></li>
-</ul>
-<hr>
-<h3 id="AML敌手模型"><a href="#AML敌手模型" class="headerlink" title="AML敌手模型"></a>AML敌手模型</h3><p>听不懂思密达，觉得很高级就copy了下来</p>
-<h4 id="敌手目标-Adversary-goal"><a href="#敌手目标-Adversary-goal" class="headerlink" title="敌手目标 (Adversary goal)"></a>敌手目标 (Adversary goal)</h4><ul>
-<li>完整性违规 (Integrity violation)<ul>
-<li>不影响合法用户对系统功能正常使用的同时, 达到规避检测的目的</li>
-</ul>
-</li>
-<li>可用性违规 (Availability violation) <ul>
-<li>危害合法用户对系统功能正常使用, 甚至造成系统对用户的拒绝服务</li>
-</ul>
-</li>
-</ul>
-<h4 id="敌手知识-Adversary-knowledge"><a href="#敌手知识-Adversary-knowledge" class="headerlink" title="敌手知识 (Adversary knowledge)"></a>敌手知识 (Adversary knowledge)</h4><p>攻击者掌握的机器学习模型的相关知识，可包括:</p>
-<ol>
-<li>训练数据 D；</li>
-<li>特征集X⊆Rd; </li>
-<li>模型结构和参数 f : X→ R</li>
-</ol>
-<ul>
-<li>白盒攻击：假设攻击者可以完全获取目标模型的结构和参数等信息 </li>
-<li>黑盒攻击：假设攻击者只能获取模型的最终决策结果</li>
-</ul>
-<h4 id="敌手能力-Adversary-capability"><a href="#敌手能力-Adversary-capability" class="headerlink" title="敌手能力 (Adversary capability)"></a>敌手能力 (Adversary capability)</h4><p>指攻击者对机器学习模型的操作权限</p>
-<ul>
-<li>训练阶段：投毒攻击, 后门攻击</li>
-<li>测试阶段：规避攻击, 隐私窃取</li>
-</ul>
-<p>敌手能力可以形式化为优化问题中的约束条件 </p>
-<hr>
-<h2 id="对抗攻击技术"><a href="#对抗攻击技术" class="headerlink" title="对抗攻击技术"></a>对抗攻击技术</h2><h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p>大概分为两类</p>
-<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/7_%E5%AF%B9%E6%8A%97%E6%94%BB%E5%87%BB%E5%88%86%E7%B1%BB.png" class="" title="对抗攻击分类">
-<p>数据投毒(Data poisoning )：归因性攻击（Causative attack）</p>
-<ul>
-<li>训练阶段</li>
-<li>攻击者通过干扰训练数据集来欺骗模型<ul>
-<li>训练集中加入恶意样本</li>
-<li>修改训练集的数据实例</li>
-<li>改变训练数据标签</li>
-</ul>
-</li>
-<li>攻击者试图干扰和破坏ML模型和算法）</li>
-</ul>
-<p>规避攻击(Evasion attack)：试探性攻击 (Exploratory attack)</p>
-<ul>
-<li>测试阶段</li>
-<li>攻击者无需修改ML模型，仅让模型出错，产生攻击者需要的输出</li>
-<li><strong>Evasion attack</strong> 是最常用的攻击手段</li>
-</ul>
-<p>其他分类：黑盒&#x2F;白盒攻击、有目标&#x2F;无目标攻击，此处不细讲</p>
-<h3 id="规避攻击"><a href="#规避攻击" class="headerlink" title="规避攻击"></a>规避攻击</h3><p>照例，先放张图</p>
-<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/8_%E5%AF%B9%E6%8A%97%E6%94%BB%E5%87%BB1.png" class="" title="规避攻击">
-
-<h4 id="1-基于模仿"><a href="#1-基于模仿" class="headerlink" title="1. 基于模仿"></a>1. 基于模仿</h4><p>采用启发式算法, 直接修改文件结构或内容 </p>
-<p>向恶意样本添加良性样本的特征, 或向良性样本中添加恶意样本的特征, 使得修改后的样本在实现恶意功能的同时, 将结构差异降至最低, 从而规避分类器的检测，如<strong>垃圾邮件规避攻击</strong>（好词插入，坏词混淆）</p>
-<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/9_%E5%9F%BA%E4%BA%8E%E6%A8%A1%E4%BB%BF%E7%9A%84%E8%A7%84%E9%81%BF%E6%94%BB%E5%87%BB.png" class="" title="基于模仿的规避攻击">
-
-<h4 id="2-基于梯度"><a href="#2-基于梯度" class="headerlink" title="2. 基于梯度"></a>2. 基于梯度</h4><p>利用梯度下降求解优化问题, 对输入样本执行细粒度的修改, 以最小化 (最大化) 样本被归类为恶意 (良性) 的概率 </p>
-<p>应用梯度下降函数, 在损失函数最可能增加的方向上扰动测试样本, 使恶意样本向着合法样本的区域移动, 从而被分类器错分为正常样本。</p>
-<ul>
-<li>L-BFGS：限制内存方法 (Limited-memory broyden fletcher goldfarb shanno)</li>
-<li>FGSM：快速梯度符号法 (Fast gradient sign method) </li>
-<li>JSMA：基于雅可比矩阵的显著图攻击算法 (Jacobian-base saliency map attack) </li>
-<li>C&amp;W 算法</li>
-</ul>
-<h4 id="3-基于迁移"><a href="#3-基于迁移" class="headerlink" title="3. 基于迁移"></a>3. 基于迁移</h4><p>利用了对抗样本的跨模型迁移性。可应用于无法获取模型梯度的各种攻击场景 </p>
-<p>基于对抗样本的跨模型迁移性。攻击者通过构建代理模型 (Surrogate model) 的方式, 利用已知机器学习模型构造对抗样本, 然后攻击相关的未知模型</p>
-<p>生成对抗网络 GAN（Generative adversarial networks ）<br>采用博弈论中的纳什均衡思想, 通过多回合的对抗训练, 使得生成器学到目标样本分布, 从而用于规避攻击</p>
-<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/10_GAN.png" class="" title="GAN">
-
-<hr>
-<h3 id="投毒攻击"><a href="#投毒攻击" class="headerlink" title="投毒攻击"></a>投毒攻击</h3><p>对训练数据进行修改或者添加少量数据进行污染, 寻求全局或局部分布的扰动, 进而破坏模型可用性和完整性, 降低机器学习系统性能。</p>
-<p>投毒攻击是对主流机器学习算法的一种重要威胁, 包括<strong>支持向量机、贝叶斯分类器、层次聚类以及 逻辑回归</strong>等常规算法都受到了投毒攻击的危害 </p>
-<p>针对数据库发起投毒攻击, 可以实现 “立竿见影”的效果, 同时得到极为丰厚的回报, 使得投毒攻击发生更为频繁。</p>
-<p>卡巴斯基实验室被指控向 VirusTotal 注入假阳性样本（将良性的、系统关键文件标记为恶意文件），当对手在新样本上训练病毒扫描器时, 这些扫描器会将合法的系统文件标记为恶意, 从而毒害竞争对手的杀毒产品</p>
-<ul>
-<li>可用性攻击：降低分类器分类精度并产生高误报率, 从而无法为正常用户提供服务, 甚至使系统拒绝服务</li>
-<li>完整性攻击：使机器学习产生较高漏报率, 降低成功检测到恶意活动的几率</li>
-</ul>
-<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/11_%E6%B2%B9%E8%9B%99%E6%94%BB%E5%87%BB.png" class="" title="油蛙攻击">
-
-<h2 id="常用规避攻击技术"><a href="#常用规避攻击技术" class="headerlink" title="常用规避攻击技术"></a>常用规避攻击技术</h2><h3 id="1-噪声攻击（Noise-attack）"><a href="#1-噪声攻击（Noise-attack）" class="headerlink" title="1.噪声攻击（Noise attack）"></a>1.噪声攻击（Noise attack）</h3><p>最简单的对抗攻击技术</p>
-<p>Noise is a random arrangement of pixels containing no information（不包含任何信息的随机像素排列）</p>
-<p>通过随机函数生成，是一种无目标的黑盒逃逸攻击</p>
-<img src="/%E5%AF%B9%E6%8A%97%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-AML/12-%E5%99%AA%E5%A3%B0%E6%94%BB%E5%87%BB.png" class="" title="噪声攻击">
-
-<h3 id="2-语义攻击（Semantic-attack）"><a href="#2-语义攻击（Semantic-attack）" class="headerlink" title="2.语义攻击（Semantic attack）"></a>2.语义攻击（Semantic attack）</h3><h3 id="3-快速梯度符号攻击（FGSM，Fast-gradient-sign-method-attack）"><a href="#3-快速梯度符号攻击（FGSM，Fast-gradient-sign-method-attack）" class="headerlink" title="3.快速梯度符号攻击（FGSM，Fast gradient sign method attack）"></a>3.快速梯度符号攻击（FGSM，Fast gradient sign method attack）</h3><h3 id="4-基础迭代攻击（BIM，Basic-iterative-method-attack）"><a href="#4-基础迭代攻击（BIM，Basic-iterative-method-attack）" class="headerlink" title="4.基础迭代攻击（BIM，Basic iterative method attack）"></a>4.基础迭代攻击（BIM，Basic iterative method attack）</h3><h3 id="5-投影梯度下降攻击（PGD，Projected-gradient-descent-attack）"><a href="#5-投影梯度下降攻击（PGD，Projected-gradient-descent-attack）" class="headerlink" title="5.投影梯度下降攻击（PGD，Projected gradient descent attack）"></a>5.投影梯度下降攻击（PGD，Projected gradient descent attack）</h3><h3 id="6-深度欺骗攻击（DeepFool-attack-）"><a href="#6-深度欺骗攻击（DeepFool-attack-）" class="headerlink" title="6.深度欺骗攻击（DeepFool attack ）"></a>6.深度欺骗攻击（DeepFool attack ）</h3><h3 id="7-C-W攻击（CW-Carlini-Wagner-attack-）"><a href="#7-C-W攻击（CW-Carlini-Wagner-attack-）" class="headerlink" title="7.C&amp;W攻击（CW, Carlini-Wagner attack ）"></a>7.C&amp;W攻击（CW, Carlini-Wagner attack ）</h3><h2 id="对抗防御技术"><a href="#对抗防御技术" class="headerlink" title="对抗防御技术"></a>对抗防御技术</h2><h2 id="语音对抗攻击及防御技术"><a href="#语音对抗攻击及防御技术" class="headerlink" title="语音对抗攻击及防御技术"></a>语音对抗攻击及防御技术</h2><h3 id="语音对抗样本技术"><a href="#语音对抗样本技术" class="headerlink" title="语音对抗样本技术"></a>语音对抗样本技术</h3><h3 id="语音对抗防御技术"><a href="#语音对抗防御技术" class="headerlink" title="语音对抗防御技术"></a>语音对抗防御技术</h3>]]></content>
-      <categories>
-        <category>内容安全</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>欺骗攻击</title>
-    <url>/%E6%AC%BA%E9%AA%97%E6%94%BB%E5%87%BB/</url>
-    <content><![CDATA[<blockquote>
-<p>欺骗攻击是网络攻击一种重要手段。常见的欺骗攻击方式有：DNS欺骗攻击、Email欺骗攻击、Web欺骗攻击和IP欺骗攻击等</p>
-</blockquote>
-<span id="more"></span>
-
-<h2 id="DNS欺骗攻击"><a href="#DNS欺骗攻击" class="headerlink" title="DNS欺骗攻击"></a>DNS欺骗攻击</h2><h3 id="DNS工作原理"><a href="#DNS工作原理" class="headerlink" title="DNS工作原理"></a>DNS工作原理</h3><p>DNS(Domain Name System)<br>在传输层通常使用UDP协议，常用端口为53</p>
-<h3 id="DNS欺骗原理"><a href="#DNS欺骗原理" class="headerlink" title="DNS欺骗原理"></a>DNS欺骗原理</h3><h2 id="Email欺骗攻击"><a href="#Email欺骗攻击" class="headerlink" title="Email欺骗攻击"></a>Email欺骗攻击</h2><h2 id="Web欺骗攻击"><a href="#Web欺骗攻击" class="headerlink" title="Web欺骗攻击"></a>Web欺骗攻击</h2><h3 id="Web欺骗原理"><a href="#Web欺骗原理" class="headerlink" title="Web欺骗原理"></a>Web欺骗原理</h3><p>攻击者通过伪造某个WWW站点的影像拷贝，</p>
-<h2 id="IP欺骗攻击"><a href="#IP欺骗攻击" class="headerlink" title="IP欺骗攻击"></a>IP欺骗攻击</h2>]]></content>
   </entry>
   <entry>
     <title>网络蠕虫</title>

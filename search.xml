@@ -1,33 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>HTTP协议</title>
-    <url>/HTTP%E5%8D%8F%E8%AE%AE/</url>
+    <title>Information Retrieval</title>
+    <url>/8.%20%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/</url>
     <content><![CDATA[<blockquote>
-<p>尝试整理下计网的知识</p>
+<p>如何对一个信息检索系统进行评价</p>
 </blockquote>
 <span id="more"></span>
-
-<h2 id="HTTP基本概念"><a href="#HTTP基本概念" class="headerlink" title="HTTP基本概念"></a>HTTP基本概念</h2><p>RFC文档中的定义：</p>
-<img src="/HTTP%E5%8D%8F%E8%AE%AE/2.png" class="" title="HTTP定义">
+<h2 id="信息检索系统的评价"><a href="#信息检索系统的评价" class="headerlink" title="信息检索系统的评价"></a>信息检索系统的评价</h2><p>采用常规的方式来度量 ad hoc IR 系统的效果，需要一个测试集（test collection），由以下 3 个部分构成：</p>
 <ol>
-<li>首先是a stateless，一个无状态的协议。即连续的两个请求中，后一个请求不能依赖前一个请求中相应的字段或者head、头部等。</li>
-<li>第二是一个request&#x2F;response方式，基于一个连接，首先由客户端来发起请求，然后服务器在这个连接上发起一个response响应</li>
-<li>第三个关键词是extensible semantics，语义可扩展。比如说有些服务器还在使用很老的ICP1.0的版本，不支持HP1.1协议。但是浏览器是支持ICP1.1协议的，那么浏览器和服务器仍然可以正常的通讯。</li>
-<li>第四个关键词就是self-descriptive。即传递的消息是一个自描述的消息。从一个请求中就知道这段消息到底是一段视频一张图片还是一段音频，而不需要依赖于其他的请求。</li>
-<li>第五个关键词就是hypertext information，这是一个超文本系统，所传输的不只有文档，还有图片、音频视频等内容。</li>
+<li>一个文档集；</li>
+<li>一组用于测试的信息需求集合，信息需求可以表示成查询；</li>
+<li>一组相关性判定结果，对每个查询—文档对而言，通常会赋予一个二值判断结果——要么相关，要么不相关。</li>
 </ol>
-<h2 id="HTTP请求过程"><a href="#HTTP请求过程" class="headerlink" title="HTTP请求过程"></a>HTTP请求过程</h2><img src="/HTTP%E5%8D%8F%E8%AE%AE/1_HTTP%E8%AF%B7%E6%B1%82.png" class="" title="HTTP请求">
-<p>首先有一个服务器，监听打开了80或者443的web端口。浏览器从UIL中首先解析出来域名，然后根据域名去查询DNS，获取到域名对应的IP地址。接着浏览器用这个IP地址与服务器建立起了TCP连接。如果使用的是HTPS，那么还要完成TLS和SSL的握手。在建立好连接以后，需要构造HTTP请求。在构造请求过程中，需要填充相应的HTTP头部，包括上下文所需要的信息。最后通过这个链接发起HTTP请求。</p>
-<p>当服务器收到这个HTTP请求以后，完成资源的表述，把HTML页面或者javascript页面等作为包体返回给浏览器。浏览器在渲染引擎中就会解析这个响应。根据这个响应中具备的其他超链接、图片等资源，在再次发起新的HTTP请求，这就是最基本的浏览器发起HTTP请求的流程。</p>
-<h2 id="基于ABNF的HTTP协议消息"><a href="#基于ABNF的HTTP协议消息" class="headerlink" title="基于ABNF的HTTP协议消息"></a>基于ABNF的HTTP协议消息</h2><p>一个标准定义语法，用到了再学</p>
+<p>由于在不同的文档集和信息需求上的结果差异较大，所以需要在相对较大的测试集合上对不同信息需求的结果求平均。经验上发现 <strong>50</strong> 条信息需求基本足够（同时 50 也是满足需要的最小值）。</p>
+<p>需要注意的是，相关性判定是基于信息需求而不是基于查询来进行的，比如，有这样一个信息需求：在降低心脏病发作的风险方面，饮用红葡萄酒是否比饮用白葡萄酒更有效（原文是 whether drinking red wine is more effective at reducing your risk of heart attacks than drinking white wine）。该需求可能会表达成查询 wine AND red AND white AND heart AND attack AND effective。</p>
+<p>要评价一个系统，需要对信息需求进行显式的表达，以便利用它对返回文档进行相关性判定。</p>
+<p>为了避免过拟合，应给定一个或者多个开发测试集（development test collection），在这个开发测试集上调节参数直至最佳性能，然后测试者再将这些参数应用到最后的测试集上，最后在该测试集上得到的结果性能才是真实性能的无偏估计结果。</p>
+<h2 id="标准测试集"><a href="#标准测试集" class="headerlink" title="标准测试集"></a>标准测试集</h2><p>下面列出了一些常用的标准测试集及相关的评测会议，这里我们主要关注用于 ad hoc 信息检索系统评价的测试集，但是也提到了一些用于文本分类任务的测试集。</p>
+<ul>
+<li><strong>CRANFIELD Cranfield 测试集</strong>，它是对信息检索系统的效果进行精确定量评价的首个测试集，但是对现在来说它的规模上已经非常小，只能用于最基本的试验性工作。该测试集于 20世纪 50 年代末期在英国收集而得，总共包含 1 398 篇空气动力学期刊的文章摘要、225 个查询以及所有的（查询,文档）对的相关性判定结果。</li>
+<li><strong>TREC</strong> TREC（Text Retrieval Conference，文本检索会议），是从 1992 年开始由 NIST（National Institute of Standards and Technology，美国国家标准技术研究所）组织的大型 IR 系统的年度评测会议。这个框架下定义了很多任务，每个任务都有自己的测试集。但是，其中最著名的测试集还是用于 1992 到 1999 年间的最早 8 次 TREC Ad Hoc 任务的测试集。这些测试集总共由 6 张 CD 组成，包括 189 万篇文档（主要是新闻类文章，也包括其他类型的文章）、450 个信息需求及相关性判定，在 TREC 中每个信息需求也称为主题（topic），并用详细的文字进行描述。多个不同的测试集定义在上述数据集的子集上。由于这个子测试集的规模最大，主题也比较一致，该子测试集可能是未来可用的最佳子集。由于 TREC 中的文档集都相当大，所以评测中并没有完整的相关性判定。实际上，给定信息需求，NIST 评估者仅仅针对 TREC 所提交的每个系统的前 k 篇返回文档做相关性判定。</li>
+<li><strong>GOV2</strong> 近年来，NIST 在较大规模的文档集上进行了评价测试，这其中包括 2 500 万网页组成的 GOV2 文档。从 TREC 一开始，NIST 就提供了比已有供研究者使用的数据大几个数量级的测试集，GOV2 是目前易获得的、用于研究目的的最大规模的 Web 文档集。然而，GOV2 在规模上仍然比现有的大型搜索引擎厂商索引的网页至少要小 2 个数量级。</li>
+<li><strong>NTCIR</strong> 日本国立情报研究所的信息检索测试集（NII Test Collections for IR Systems）的简称。NTCIR 项目构造了多个和 TREC 文档集规模相当的文档集，其中大部分文档都集中关注东亚语言和跨语言检索任务。这里提到的跨语言检索指的是这样的一种检索任务：查询是一种语言，而待检索文档由另外一种或者多种语言所构成。详细内容请参考 [<a href="http://research.nii.ac.jp/ntcir/data/data-en.html]%E3%80%82">http://research.nii.ac.jp/ntcir/data/data-en.html]。</a></li>
+<li><strong>CLEF</strong> 跨语言评价论坛（Cross Language Evaluation Forum）的简称。该评价会议系列主要关注欧洲语言及它们之间的跨语言检索任务。详情请参考 [<a href="http://www.clef-campaign.org/]%E3%80%82">www.clef-campaign.org/]。</a></li>
+<li><strong>Reuters语料</strong> 包括 Reuters-21578 和 Reuters-RCV1 语料。对于文本分类任务，最常用的测试集一直是 Reuters-21578 语料，它由 21 578 篇新闻报道组成（参见第 13 章）。近年来，Reuters发布了一个更大规模的语料库 RCV1（Reuters Corpus Volume1），它包括 806 791 篇文档（参见第 4 章）。RCV1 的规模和丰富的标注信息为未来的研究提供了更好的基础。</li>
+<li><strong>20 Newsgroups</strong> 这是另一个广泛使用的文本分类语料，来自 Ken Lang 所收集的新闻组语料。 它从 20 个 Usenet 新闻组（新闻组的名字即类别的名称）的每个组中取 1 000 篇文章构成。去掉重复文章以后，通常所用的语料中包含 18 941 篇文章。</li>
+</ul>
+<h2 id="无序检索结果集合的评价"><a href="#无序检索结果集合的评价" class="headerlink" title="无序检索结果集合的评价"></a>无序检索结果集合的评价</h2><p>信息检索中最常用的两个基本指标是&#x3D;&#x3D;正确率和召回率&#x3D;&#x3D;。它们最早定义于一种非常简单的情况下：对于给定的查询，IR 系统返回一系列文档集合，其中的文档之间并不考虑先后顺序。后面将介绍如何将这些概念扩展到有序的检索中去。</p>
+<p>正确率（Precision，简记为 P）是返回的结果中相关文档所占的比例，定义为：<br>Precision &#x3D; 返回结果中相关文档的数目&#x2F;返回结果的数目 &#x3D; P(relevant | retrieved)</p>
+<p>召回率（Recall，简记为 R）是返回的相关文档占所有相关文档的比例，定义为：<br>Recall &#x3D; 返回结果中相关文档的数目&#x2F;所有相关文档的数目 &#x3D; P(retrieved | relevant)</p>
+<p>为了更好地理解上述概念，可以对照如下列联表（contingency table）：<br><img src="/8.%20%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/1-%E5%85%B3%E8%81%94%E8%A1%A8.png" alt="关联表"><br>于是有：</p>
+<ul>
+<li>P &#x3D; tp&#x2F;(tp + fp)</li>
+<li>R &#x3D; tp&#x2F;(tp + fn)</li>
+</ul>
+<p>一个很容易想到的指标是精确率（accuracy），即文档集中所有判断正确的文档所占的比例。计算公式为：(tp + tn)&#x2F;(tp + fp + fn + tn)。精确率指标在很多机器学习问题中的使用非常普遍，是一个非常适合这类问题的效果度量指标。但是在信息检索中，超过 99.9%的文档都是不相关文档。只需要简单地将所有的文档都判成不相关文档，就会获得非常高的精确率值，这显然是不合适的。</p>
+<p>普通用户非常关注高正确率，希望第一页的所有的结果都是相关的；相反地，一些专业的搜索人士（如律师助手、情报分析师等）却往往重视高召回率，有时甚至宁愿忍受极低的正确率也要获得高的召回率。对本机硬盘进行搜索的个人用户也常常关注召回率。<br>一个极端的情况是，对于某查询如果返回所有文档，显然此时的召回率为 1，但是此时的正确率往往却很低。一方面，相对于返回文档的数目而言，召回率是一个单调非减函数；另一方面，在一个好的系统中，正确率往往会随着返回文档数目的增加而降低。通常来说，我们希望在容许较小的错误率（此时会达到较高的正确率）的同时达到一定的召回率。</p>
+<p>一个融合了正确率和召回率的指标是 F 值（F measure），它是正确率和召回率的调和平均值，定义如下：<br><img src="/8.%20%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%9A%84%E8%AF%84%E4%BB%B7/2-F%E5%80%BC.png" alt="F值"><br>α ∈ [0, 1]，因此 β² ∈ [0, ∞]，默认情况下，平衡 F 值（balanced F measure）中正确率和召回率的权重相等，即 α &#x3D; 1&#x2F;2 或 β &#x3D; 1。尽管是从 α 的角度来体现出 F 是正确率和召回率的调和平均值，但上述等权重情况下我们可以用 β 的取值来记 F 值，此时记为 F1，它是Fβ&#x3D;1的省略形式。当 β &#x3D; 1 时，F 的计算公式可以简化为：Fβ&#x3D;1 &#x3D; 2PR&#x2F;(P+R)，β &lt; 1 表示强调正确率，而 β &gt; 1 表示强调召回率</p>
+<h2 id="有序检索结果集合的评价"><a href="#有序检索结果集合的评价" class="headerlink" title="有序检索结果集合的评价"></a>有序检索结果集合的评价</h2><p>8.5 节讨论了如何开发可靠的、内容充实的测试集。<br>随后，在 8.6 节我们回过头来介绍用户效用（User utility）的概念，并介绍如何通过文档的<br>相关性来对它进行近似估计。最关键的效用指标是用户满意度。响应速度和索引大小是用户满<br>意度的影响因子。“ 结果的相关性是最重要的因子” 这个假设看上去很合理，因为响应速度很快<br>但不相关的回答结果并不会令用户满意。然而，用户的满意度和系统设计者所理解的结果质量<br>概念之间并不完全一致。比如，用户的满意度通常都很大程度上依赖于用户界面的设计，包括<br>布局、架构清晰度及用户界面的响应等等因素，而这些因素与系统返回结果的质量无关。最后<br>我们会谈及其他质量检索结果度量的技术（见 8.7 节），特别是高质量的文档摘要片段的生成<br>方法，它对用户效用的影响很大，但是它并没有包括在基本的相关度排序模式中。</p>
 ]]></content>
       <categories>
-        <category>计算机网络</category>
+        <category>信息检索</category>
       </categories>
-      <tags>
-        <tag>HTTP</tag>
-      </tags>
   </entry>
   <entry>
     <title>Linux提权</title>
@@ -79,6 +94,35 @@
       <tags>
         <tag>漏洞</tag>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HTTP协议</title>
+    <url>/HTTP%E5%8D%8F%E8%AE%AE/</url>
+    <content><![CDATA[<blockquote>
+<p>尝试整理下计网的知识</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="HTTP基本概念"><a href="#HTTP基本概念" class="headerlink" title="HTTP基本概念"></a>HTTP基本概念</h2><p>RFC文档中的定义：</p>
+<img src="/HTTP%E5%8D%8F%E8%AE%AE/2.png" class="" title="HTTP定义">
+<ol>
+<li>首先是a stateless，一个无状态的协议。即连续的两个请求中，后一个请求不能依赖前一个请求中相应的字段或者head、头部等。</li>
+<li>第二是一个request&#x2F;response方式，基于一个连接，首先由客户端来发起请求，然后服务器在这个连接上发起一个response响应</li>
+<li>第三个关键词是extensible semantics，语义可扩展。比如说有些服务器还在使用很老的ICP1.0的版本，不支持HP1.1协议。但是浏览器是支持ICP1.1协议的，那么浏览器和服务器仍然可以正常的通讯。</li>
+<li>第四个关键词就是self-descriptive。即传递的消息是一个自描述的消息。从一个请求中就知道这段消息到底是一段视频一张图片还是一段音频，而不需要依赖于其他的请求。</li>
+<li>第五个关键词就是hypertext information，这是一个超文本系统，所传输的不只有文档，还有图片、音频视频等内容。</li>
+</ol>
+<h2 id="HTTP请求过程"><a href="#HTTP请求过程" class="headerlink" title="HTTP请求过程"></a>HTTP请求过程</h2><img src="/HTTP%E5%8D%8F%E8%AE%AE/1_HTTP%E8%AF%B7%E6%B1%82.png" class="" title="HTTP请求">
+<p>首先有一个服务器，监听打开了80或者443的web端口。浏览器从UIL中首先解析出来域名，然后根据域名去查询DNS，获取到域名对应的IP地址。接着浏览器用这个IP地址与服务器建立起了TCP连接。如果使用的是HTPS，那么还要完成TLS和SSL的握手。在建立好连接以后，需要构造HTTP请求。在构造请求过程中，需要填充相应的HTTP头部，包括上下文所需要的信息。最后通过这个链接发起HTTP请求。</p>
+<p>当服务器收到这个HTTP请求以后，完成资源的表述，把HTML页面或者javascript页面等作为包体返回给浏览器。浏览器在渲染引擎中就会解析这个响应。根据这个响应中具备的其他超链接、图片等资源，在再次发起新的HTTP请求，这就是最基本的浏览器发起HTTP请求的流程。</p>
+<h2 id="基于ABNF的HTTP协议消息"><a href="#基于ABNF的HTTP协议消息" class="headerlink" title="基于ABNF的HTTP协议消息"></a>基于ABNF的HTTP协议消息</h2><p>一个标准定义语法，用到了再学</p>
+]]></content>
+      <categories>
+        <category>计算机网络</category>
+      </categories>
+      <tags>
+        <tag>HTTP</tag>
       </tags>
   </entry>
   <entry>
@@ -136,7 +180,7 @@
 这里写"More"会在网页中隐藏后面内容,跳转到详情页才能看 -->
 
 <p>超链接用法:<br>[超链接显示名] (超链接地址 “超链接title”)<br><a href="%E8%B6%85%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80" title="超链接title">超链接显示名</a></p>
-<p><a href="mailto:&#x31;&#50;&#x33;&#64;&#113;&#113;&#x2e;&#x63;&#111;&#x6d;">&#x31;&#50;&#x33;&#64;&#113;&#113;&#x2e;&#x63;&#111;&#x6d;</a> &lt;邮箱&gt;</p>
+<p><a href="mailto:&#49;&#x32;&#51;&#64;&#113;&#113;&#46;&#99;&#x6f;&#x6d;">&#49;&#x32;&#51;&#64;&#113;&#113;&#46;&#99;&#x6f;&#x6d;</a> &lt;邮箱&gt;</p>
 <p><a href="https://123.com/">https://123.com</a> &lt;网址&gt;</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph TB</span><br><span class="line">  A(把大象放进去) --&gt; B&#123;&quot;冰箱小不小？&quot;&#125;</span><br><span class="line">  B --&gt; |不小| C[把冰箱门关上]</span><br><span class="line">  B --&gt;   |小| D[换个大点的冰箱]</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
@@ -588,6 +632,18 @@
       <tags>
         <tag>木马</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>欺骗攻击</title>
+    <url>/%E6%AC%BA%E9%AA%97%E6%94%BB%E5%87%BB/</url>
+    <content><![CDATA[<blockquote>
+<p>欺骗攻击是网络攻击一种重要手段。常见的欺骗攻击方式有：DNS欺骗攻击、Email欺骗攻击、Web欺骗攻击和IP欺骗攻击等</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="DNS欺骗攻击"><a href="#DNS欺骗攻击" class="headerlink" title="DNS欺骗攻击"></a>DNS欺骗攻击</h2><h3 id="DNS工作原理"><a href="#DNS工作原理" class="headerlink" title="DNS工作原理"></a>DNS工作原理</h3><p>DNS(Domain Name System)<br>在传输层通常使用UDP协议，常用端口为53</p>
+<h3 id="DNS欺骗原理"><a href="#DNS欺骗原理" class="headerlink" title="DNS欺骗原理"></a>DNS欺骗原理</h3><h2 id="Email欺骗攻击"><a href="#Email欺骗攻击" class="headerlink" title="Email欺骗攻击"></a>Email欺骗攻击</h2><h2 id="Web欺骗攻击"><a href="#Web欺骗攻击" class="headerlink" title="Web欺骗攻击"></a>Web欺骗攻击</h2><h3 id="Web欺骗原理"><a href="#Web欺骗原理" class="headerlink" title="Web欺骗原理"></a>Web欺骗原理</h3><p>攻击者通过伪造某个WWW站点的影像拷贝，</p>
+<h2 id="IP欺骗攻击"><a href="#IP欺骗攻击" class="headerlink" title="IP欺骗攻击"></a>IP欺骗攻击</h2>]]></content>
   </entry>
   <entry>
     <title>网络蠕虫</title>
